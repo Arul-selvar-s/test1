@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Transform your smile with personalised smile design at Elysian Dental Lounge, Kovilambakkam Chennai. Veneers, bonding, contouring and whitening by Dr. Yokesh Kumar R."/>
+  <title>Smile Designing in Kovilambakkam Chennai | Elysian Dental Lounge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cream:#F0F6FF;--warm:#E8F1FC;--sage:#4A8FD4;--sage-l:#BDD8F5;--sage-d:#183b56;--gold:#0b69ff;--dark:#0d1f2d;--mid:#2E5275;--light:#6B93B8;--border:#C5DDEF}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+    /* NAV */
+    nav{position:sticky;top:0;z-index:200;background:rgba(240,246,255,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 4rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .nav-logo-img{width:48px;height:48px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--border);padding:3px}
+    .nav-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:0.06em;color:var(--dark)}
+    .nav-name span{color:var(--sage-d);font-style:italic}
+    .nav-links{display:flex;gap:2.5rem}
+    .nav-links a{font-size:13px;color:var(--mid);text-decoration:none;letter-spacing:0.04em;transition:color 0.2s}
+    .nav-links a:hover{color:var(--sage-d)}
+    .nav-cta{background:var(--sage-d);color:#fff;padding:10px 22px;border:none;border-radius:30px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block}
+    .nav-cta:hover{background:var(--sage);transform:translateY(-1px)}
+    /* HERO */
+    .svc-hero{position:relative;height:460px;overflow:hidden}
+    .svc-hero img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.42)}
+    .svc-hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:3.5rem 5rem;background:linear-gradient(to top,rgba(13,31,45,0.92) 0%,transparent 65%)}
+    .svc-tag-badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--sage-l);background:rgba(11,105,255,0.28);padding:4px 14px;border-radius:20px;margin-bottom:1rem}
+    .svc-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,58px);font-weight:300;color:#fff;line-height:1.1;max-width:680px}
+    .svc-hero p{font-size:15px;color:rgba(255,255,255,0.65);margin-top:0.75rem;max-width:560px;line-height:1.75}
+    .svc-hero-actions{display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+    .btn-hero-p{background:#fff;color:var(--sage-d);padding:12px 26px;border-radius:30px;text-decoration:none;font-size:14px;font-weight:500;transition:all 0.2s;display:inline-block}
+    .btn-hero-p:hover{background:var(--sage-l);transform:translateY(-2px)}
+    .btn-hero-o{background:transparent;color:#fff;padding:12px 24px;border-radius:30px;text-decoration:none;font-size:14px;border:1px solid rgba(255,255,255,0.35);transition:all 0.2s;display:inline-block}
+    .btn-hero-o:hover{border-color:#fff}
+    /* BREADCRUMB */
+    .breadcrumb{background:#fff;border-bottom:1px solid var(--border);padding:0.85rem 5rem;font-size:12px;color:var(--light)}
+    .breadcrumb a{color:var(--light);text-decoration:none}
+    .breadcrumb a:hover{color:var(--sage-d)}
+    .breadcrumb span{margin:0 6px}
+    /* LAYOUT */
+    .page-wrap{max-width:1200px;margin:0 auto;padding:3.5rem 2rem;display:grid;grid-template-columns:1fr 300px;gap:3rem}
+    .main-col{display:flex;flex-direction:column;gap:0}
+    /* CONTENT SECTIONS */
+    .content-section{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center;padding:3rem 0;border-bottom:1px solid var(--border)}
+    .content-section:nth-child(even){direction:rtl}
+    .content-section:nth-child(even) > *{direction:ltr}
+    .content-section:last-of-type{border-bottom:none}
+    .content-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,2.5vw,34px);font-weight:400;color:var(--sage-d);margin-bottom:1rem;line-height:1.2}
+    .content-text p{font-size:15px;color:var(--mid);line-height:1.85;margin-bottom:0.9rem}
+    .content-text ul{padding-left:1.25rem;margin-bottom:1rem}
+    .content-text li{font-size:14px;color:var(--mid);margin-bottom:0.5rem;line-height:1.7}
+    .content-text li::marker{color:var(--sage-d)}
+    .content-text strong{color:var(--dark);font-weight:500}
+    .highlight-box{background:var(--warm);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:1.25rem 1.5rem;margin:1.25rem 0}
+    .highlight-box p{font-size:14px;color:var(--mid);margin:0;line-height:1.7}
+    .content-img img{width:100%;border-radius:20px;object-fit:cover;height:280px;display:block}
+    /* PROCESS STEPS */
+    .process-wrap{background:#fff;border:1px solid var(--border);border-radius:22px;padding:2.5rem;margin:2rem 0}
+    .process-wrap h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--sage-d);margin-bottom:2rem}
+    .steps{display:flex;flex-direction:column;gap:0}
+    .step{display:flex;gap:1.5rem;padding:1.25rem 0;border-bottom:1px solid var(--border);align-items:flex-start}
+    .step:last-child{border-bottom:none}
+    .step-num{width:36px;height:36px;border-radius:50%;background:var(--sage-d);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;flex-shrink:0;margin-top:2px}
+    .step-body h3{font-size:15px;font-weight:500;color:var(--dark);margin-bottom:4px}
+    .step-body p{font-size:13px;color:var(--light);line-height:1.7}
+    /* FAQ */
+    .faq-wrap{margin:2rem 0}
+    .faq-wrap h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--sage-d);margin-bottom:1.5rem}
+    .faq-item{background:#fff;border:1px solid var(--border);border-radius:14px;margin-bottom:0.75rem;overflow:hidden}
+    .faq-q{width:100%;display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.5rem;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--dark);text-align:left;gap:1rem}
+    .faq-q:hover{color:var(--sage-d)}
+    .faq-arrow{font-size:16px;color:var(--sage-d);transition:transform 0.3s;flex-shrink:0}
+    .faq-item.open .faq-arrow{transform:rotate(180deg)}
+    .faq-a{display:none;padding:0 1.5rem 1.25rem}
+    .faq-a p{font-size:14px;color:var(--mid);line-height:1.8}
+    .faq-item.open .faq-a{display:block}
+    /* RELATED */
+    .related-wrap{margin:2rem 0}
+    .related-wrap h2{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--dark);margin-bottom:1.25rem}
+    .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .related-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.25rem;text-align:center;text-decoration:none;color:var(--dark);transition:all 0.2s}
+    .related-card:hover{border-color:var(--sage-l);transform:translateY(-3px);box-shadow:0 8px 24px rgba(24,59,86,0.1)}
+    .related-icon{font-size:28px;margin-bottom:0.5rem}
+    .related-name{font-size:13px;color:var(--mid);font-weight:500}
+    /* SIDEBAR */
+    .sidebar{display:flex;flex-direction:column;gap:1.5rem}
+    .sidebar-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.5rem}
+    .sidebar-card h3{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--dark);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+    .cta-card{background:var(--sage-d);border-radius:16px;padding:1.75rem;text-align:center}
+    .cta-card h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:#fff;margin-bottom:0.75rem}
+    .cta-card p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:1.25rem}
+    .cta-card a{display:block;background:#fff;color:var(--sage-d);text-decoration:none;border-radius:30px;padding:11px;font-size:13px;font-weight:500;transition:all 0.2s}
+    .cta-card a:hover{background:var(--sage-l)}
+    .services-list a{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid);text-decoration:none;padding:8px 0;border-bottom:1px solid var(--border);transition:color 0.2s}
+    .services-list a:last-child{border-bottom:none}
+    .services-list a:hover{color:var(--sage-d)}
+    .services-list .s-dot{width:6px;height:6px;border-radius:50%;background:var(--sage-l);flex-shrink:0}
+    .why-list{display:flex;flex-direction:column;gap:0.75rem}
+    .why-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--mid);line-height:1.6}
+    .why-check{color:var(--sage-d);font-size:15px;flex-shrink:0;margin-top:1px}
+    /* FOOTER */
+    footer{background:var(--dark);padding:3rem 4rem 2rem;margin-top:3rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:1.5rem;flex-wrap:wrap}
+    .footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:#fff;font-weight:300;margin-bottom:0.5rem}
+    .footer-brand-name span{font-style:italic;color:var(--sage-l)}
+    .footer-tagline{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.7}
+    .footer-col h4{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.75rem}
+    .footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:0.45rem;transition:color 0.2s}
+    .footer-col a:hover{color:#fff}
+    .footer-bottom{display:flex;justify-content:space-between}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,0.3)}
+    .wa-btn{position:fixed;bottom:2rem;right:2rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s}
+    .wa-btn:hover{transform:scale(1.1)}
+    .wa-btn svg{width:28px;height:28px;fill:#fff}
+    @media(max-width:1000px){.page-wrap{grid-template-columns:1fr}.sidebar{display:none}.content-section{grid-template-columns:1fr}.content-section:nth-child(even){direction:ltr}.related-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:700px){nav{padding:0 1.5rem}.nav-links{display:none}.svc-hero{height:300px}.svc-hero-overlay{padding:2rem 1.5rem}.breadcrumb{padding:0.75rem 1.5rem}.page-wrap{padding:1.5rem}.process-wrap{padding:1.5rem}footer{padding:2rem 1.5rem}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .svc-hero-overlay>*{animation:fadeUp 0.6s ease both}.svc-hero-overlay>*:nth-child(1){animation-delay:0.1s}.svc-hero-overlay>*:nth-child(2){animation-delay:0.22s}.svc-hero-overlay>*:nth-child(3){animation-delay:0.36s}.svc-hero-overlay>*:nth-child(4){animation-delay:0.5s}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="elysian_dental_lounge_v2.html">
+    <img class="nav-logo-img" src="https://arul-selvar-s.github.io/yogi/Clinic logo png.png" alt="Logo" onerror="this.style.display='none'"/>
+    <span class="nav-name">Elysian <span>Dental</span> Lounge</span>
+  </a>
+  <div class="nav-links">
+    <a href="elysian_dental_lounge_v2.html#why">Why Us</a>
+    <a href="elysian_dental_lounge_v2.html#services">Services</a>
+    <a href="elysian_dental_lounge_v2.html#booking">Book</a>
+    <a href="blog.html">Blog</a>
+    <a href="elysian_dental_lounge_v2.html#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="elysian_dental_lounge_v2.html#booking">Book Appointment</a>
+</nav>
+
+<div class="svc-hero">
+  <img src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=1400&q=80" alt="Smile Designing at Elysian Dental Lounge Chennai"/>
+  <div class="svc-hero-overlay">
+    <span class="svc-tag-badge">Cosmetic Dentistry</span>
+    <h1>Smile Designing</h1>
+    <p>Transform your smile with personalised smile design at Elysian Dental Lounge, Kovilambakkam Chennai. Veneers, bonding, contouring and whitening by Dr. Yokesh Kumar R.</p>
+    <div class="svc-hero-actions">
+      <a class="btn-hero-p" href="elysian_dental_lounge_v2.html#booking">Book Appointment</a>
+      <a class="btn-hero-o" href="elysian_dental_lounge_v2.html#contact">Contact Us</a>
+    </div>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="elysian_dental_lounge_v2.html">Home</a><span>›</span>
+  <a href="elysian_dental_lounge_v2.html#services">Services</a><span>›</span>
+  Smile Designing
+</div>
+
+<div class="page-wrap">
+  <div class="main-col">
+    <div class="content-section">
+          <div class="content-text">
+            <h2>What Is Smile Designing?</h2>
+            <p>Smile designing is a personalised, multi-treatment approach to creating your ideal smile. It combines cosmetic dental procedures — such as veneers, teeth whitening, contouring, and bonding — into one coordinated plan based on your facial features, skin tone, and personal preferences.</p><p>Unlike individual cosmetic treatments, smile designing takes a full-picture approach. Dr. Yokesh Kumar R analyses your teeth, gums, lips, and face together to create a smile that looks completely natural and uniquely yours.</p>
+            
+            
+          </div>
+          <div class="content-img"><img src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=800&q=80" alt="Smile design before and after" loading="lazy"/></div>
+        </div>
+<div class="content-section">
+          <div class="content-text">
+            <h2>Treatments Included in Smile Designing</h2>
+            <p>A smile design plan is built from a combination of the following treatments, selected specifically for your case.</p>
+            <ul><li><strong>Porcelain Veneers</strong> — Ultra-thin shells bonded to the front of teeth to change their shape, colour, and size</li><li><strong>Teeth Whitening</strong> — Professional in-clinic whitening to brighten the overall shade</li><li><strong>Dental Bonding</strong> — Tooth-coloured composite resin applied to repair chips, gaps, and discolouration</li><li><strong>Tooth Contouring</strong> — Subtle reshaping of teeth to improve symmetry and appearance</li><li><strong>Gum Contouring</strong> — Reshaping the gumline to reduce a gummy smile or create more even proportions</li><li><strong>Crowns & Bridges</strong> — For teeth that are too damaged for veneers alone</li></ul>
+            
+          </div>
+          <div class="content-img"><img src="https://images.unsplash.com/photo-1521341957697-b93449760f30?w=800&q=80" alt="Smile designing treatment options" loading="lazy"/></div>
+        </div>
+<div class="content-section">
+          <div class="content-text">
+            <h2>What Results Can You Expect?</h2>
+            <p>Smile designing addresses every aspect of your smile — colour, shape, size, alignment, and gum appearance — to produce a result that is both beautiful and believable. Our before-and-after results speak for themselves.</p><p>The process starts with a consultation and digital smile preview, so you know exactly what your new smile will look like before any treatment begins.</p>
+            
+            <div class="highlight-box"><p><strong>Real results at Elysian Dental Lounge:</strong> Scroll up to see our actual patient before-and-after transformations — performed right here in Kovilambakkam, Chennai.</p></div>
+          </div>
+          
+        </div>
+
+    <div class="faq-wrap"><h2>Frequently Asked Questions</h2><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How long does smile designing take?<span class="faq-arrow">▾</span></button><div class="faq-a"><p>The timeline depends on which treatments are involved. Whitening alone takes one session. Full veneer cases typically take 2–3 visits over 2–3 weeks. We will give you a clear timeline at your consultation.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Are veneers permanent?<span class="faq-arrow">▾</span></button><div class="faq-a"><p>Veneers are long-lasting (10–15+ years) but not technically permanent — they can be replaced. A small amount of enamel is removed during placement, so the tooth will always need a veneer or crown covering it.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Will my smile look natural?<span class="faq-arrow">▾</span></button><div class="faq-a"><p>Yes. Modern porcelain veneers and bonding materials closely mimic the light-reflecting properties of natural enamel. When done well, even people close to you often cannot tell the difference.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is smile designing only for cosmetic purposes?<span class="faq-arrow">▾</span></button><div class="faq-a"><p>No — many smile design treatments also improve function. Restoring worn or chipped teeth protects them from further damage. Fixing gaps prevents food trapping and gum disease.</p></div></div></div>
+
+    <div class="related-wrap">
+      <h2>Explore Other Services</h2>
+      <div class="related-grid"><a class="related-card" href="service-prosthodontics.html"><div class="related-icon">👑</div><div class="related-name">Teeth Whitening / Prosthodontics</div></a>
+<a class="related-card" href="service-clearalign.html"><div class="related-icon">📐</div><div class="related-name">Clearalign</div></a>
+<a class="related-card" href="service-orthodontics.html"><div class="related-icon">🔧</div><div class="related-name">Orthodontics</div></a>
+<a class="related-card" href="service-implants.html"><div class="related-icon">🦷</div><div class="related-name">Implants</div></a></div>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="cta-card">
+      <h3>Ready to get started?</h3>
+      <p>Book a consultation with Dr. Yokesh Kumar. Available 7 days a week.</p>
+      <a href="elysian_dental_lounge_v2.html#booking">Book Appointment →</a>
+    </div>
+    <div class="sidebar-card">
+      <h3>All Services</h3>
+      <div class="services-list">
+        <a href="service-prosthodontics.html"><span class="s-dot"></span>Prosthodontics</a>
+        <a href="service-implants.html"><span class="s-dot"></span>Dental Implants</a>
+        <a href="service-orthodontics.html"><span class="s-dot"></span>Orthodontics</a>
+        <a href="service-rootcanal.html"><span class="s-dot"></span>Root Canal Treatment</a>
+        <a href="service-smile.html"><span class="s-dot"></span>Smile Designing</a>
+        <a href="service-paediatric.html"><span class="s-dot"></span>Paediatric Dentistry</a>
+        <a href="service-sedation.html"><span class="s-dot"></span>Sedation Dentistry</a>
+        <a href="service-clearalign.html"><span class="s-dot"></span>Clearalign</a>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <h3>Why Choose Us</h3>
+      <div class="why-list">
+        <div class="why-item"><span class="why-check">✓</span>Dr. Yokesh Kumar R — GP &amp; Orthodontist</div>
+        <div class="why-item"><span class="why-check">✓</span>5+ Years of Expert Care</div>
+        <div class="why-item"><span class="why-check">✓</span>500+ Satisfied Patients</div>
+        <div class="why-item"><span class="why-check">✓</span>4.9 Google Rating</div>
+        <div class="why-item"><span class="why-check">✓</span>Pain-free Treatments</div>
+        <div class="why-item"><span class="why-check">✓</span>Kovilambakkam, Chennai</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand-name">Elysian <span>Dental</span> Lounge</div><p class="footer-tagline">RAJA TOWERS, 2/461, Medavakkam Main Rd<br>Kovilambakkam, Chennai 600129<br>Mon–Sat: 10AM–9PM | Sun: 10AM–1PM</p></div>
+    <div class="footer-col"><h4>Services</h4><a href="service-prosthodontics.html">Prosthodontics</a><a href="service-implants.html">Dental Implants</a><a href="service-orthodontics.html">Orthodontics</a><a href="service-smile.html">Smile Designing</a><a href="service-clearalign.html">Clearalign</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:+919498052828">94980 52828</a><a href="tel:+919498062828">94980 62828</a><a href="https://wa.me/919498052828" target="_blank">WhatsApp Us</a></div>
+    <div class="footer-col"><h4>Follow Us</h4><a href="https://www.instagram.com/elysiandentallounge" target="_blank">📸 Instagram</a><a href="https://www.facebook.com/share/1Js1oQii7S/" target="_blank">👍 Facebook</a></div>
+  </div>
+  <div class="footer-bottom"><p class="footer-copy">© 2026 Elysian Dental Lounge. All rights reserved.</p><p class="footer-copy">Kovilambakkam, Chennai 🦷</p></div>
+</footer>
+<a class="wa-btn" href="https://wa.me/919498052828" target="_blank"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script>
+  function toggleFaq(btn){
+    var item=btn.parentElement;
+    document.querySelectorAll('.faq-item.open').forEach(function(el){if(el!==item)el.classList.remove('open')});
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
