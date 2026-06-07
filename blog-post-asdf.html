@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="asdf — Elysian Dental Lounge, Kovilambakkam Chennai. Expert dental advice by Dr. Yokesh Kumar R."/>
+  <title>asdf | Elysian Dental Lounge Blog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cream:#F0F6FF;--warm:#E8F1FC;--sage-l:#BDD8F5;--sage-d:#183b56;--gold:#0b69ff;--dark:#0d1f2d;--mid:#2E5275;--light:#6B93B8;--border:#C5DDEF}
+    html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+    nav{position:sticky;top:0;z-index:200;background:rgba(240,246,255,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 4rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .nav-logo-img{width:48px;height:48px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--border);padding:3px}
+    .nav-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:0.06em;color:var(--dark)}
+    .nav-name span{color:var(--sage-d);font-style:italic}
+    .nav-links{display:flex;gap:2.5rem}
+    .nav-links a{font-size:13px;color:var(--mid);text-decoration:none;transition:color 0.2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--sage-d);font-weight:500}
+    .nav-cta{background:var(--sage-d);color:#fff;padding:10px 22px;border:none;border-radius:30px;font-size:13px;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block}
+    .nav-cta:hover{background:#4A8FD4;transform:translateY(-1px)}
+    .post-hero{position:relative;height:440px;overflow:hidden}
+    .post-hero img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.42)}
+    .post-hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:3.5rem 5rem;background:linear-gradient(to top,rgba(13,31,45,0.92) 0%,transparent 65%)}
+    .post-cat-badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage-l);background:rgba(11,105,255,0.28);padding:4px 14px;border-radius:20px;margin-bottom:0.75rem}
+    .post-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,50px);font-weight:300;color:#fff;line-height:1.15;max-width:720px}
+    .post-hero-meta{margin-top:0.75rem;font-size:13px;color:rgba(255,255,255,0.55);display:flex;gap:1.5rem}
+    .breadcrumb{background:#fff;border-bottom:1px solid var(--border);padding:0.85rem 5rem;font-size:12px;color:var(--light)}
+    .breadcrumb a{color:var(--light);text-decoration:none}.breadcrumb a:hover{color:var(--sage-d)}.breadcrumb span{margin:0 6px}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--sage-d);text-decoration:none;margin:1.5rem 2rem 0;font-weight:500}
+    .post-layout{max-width:860px;margin:1.5rem auto 4rem;padding:0 2rem}
+    .post-content{background:#fff;border:1px solid var(--border);border-radius:20px;padding:3rem;line-height:1.85}
+    .post-content h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--sage-d);margin:2rem 0 0.75rem}
+    .post-content h3{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;color:var(--dark);margin:1.5rem 0 0.5rem}
+    .post-content p{font-size:15px;color:var(--mid);margin-bottom:1.1rem}
+    .post-content ul{padding-left:1.4rem;margin-bottom:1.1rem}
+    .post-content li{font-size:15px;color:var(--mid);margin-bottom:0.5rem;line-height:1.7}
+    .post-content li::marker{color:var(--sage-d)}
+    .post-content strong{color:var(--dark);font-weight:500}
+    .post-content em{font-style:italic;color:var(--mid)}
+    .post-content a{color:var(--sage-d);font-weight:500}
+    .highlight-box{background:var(--warm);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:1.25rem 1.5rem;margin:1.5rem 0}
+    .highlight-box p{font-size:14px;color:var(--mid);margin:0;line-height:1.75}
+    .book-cta{background:var(--sage-d);border-radius:16px;padding:2rem;text-align:center;margin-top:2.5rem}
+    .book-cta h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:#fff;margin-bottom:0.5rem}
+    .book-cta p{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:1.25rem}
+    .book-cta a{display:inline-block;background:#fff;color:var(--sage-d);text-decoration:none;border-radius:30px;padding:12px 28px;font-size:13px;font-weight:500;transition:all 0.2s}
+    .book-cta a:hover{background:var(--sage-l)}
+    footer{background:var(--dark);padding:2.5rem 4rem 2rem;margin-top:3rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:1.25rem;flex-wrap:wrap}
+    .footer-brand{font-family:'Cormorant Garamond',serif;font-size:18px;color:#fff;font-weight:300}
+    .footer-brand span{font-style:italic;color:var(--sage-l)}
+    .footer-col h4{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.6rem}
+    .footer-col a{display:block;font-size:12px;color:rgba(255,255,255,0.5);text-decoration:none;margin-bottom:0.4rem;transition:color 0.2s}
+    .footer-col a:hover{color:#fff}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,0.3)}
+    .wa-btn{position:fixed;bottom:2rem;right:2rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.2s}
+    .wa-btn:hover{transform:scale(1.1)}.wa-btn svg{width:28px;height:28px;fill:#fff}
+    @media(max-width:700px){nav{padding:0 1.5rem}.nav-links{display:none}.post-hero{height:280px}.post-hero-overlay{padding:2rem 1.5rem}.breadcrumb{padding:0.75rem 1.5rem}.post-layout{padding:0 1rem}.post-content{padding:1.5rem}.back-link{margin:1rem 1rem 0}footer{padding:2rem 1.5rem}}
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="elysian_dental_lounge_v2.html">
+    <img class="nav-logo-img" src="https://arul-selvar-s.github.io/yogi/Clinic logo png.png" alt="Logo" onerror="this.style.display='none'"/>
+    <span class="nav-name">Elysian <span>Dental</span> Lounge</span>
+  </a>
+  <div class="nav-links">
+    <a href="elysian_dental_lounge_v2.html#why">Why Us</a>
+    <a href="elysian_dental_lounge_v2.html#services">Services</a>
+    <a href="elysian_dental_lounge_v2.html#booking">Book</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="elysian_dental_lounge_v2.html#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="elysian_dental_lounge_v2.html#booking">Book Appointment</a>
+</nav>
+<div class="post-hero">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQBDgMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABQYDBAcBAgj/xAA+EAABAwMCBAMFBQcCBwEAAAABAAIDBAUREiEGMUFREyJxBxQyYYEVUpGhsSMzQmLB0eHw8SU0cpKistIW/8QAGQEBAAMBAQAAAAAAAAAAAAAAAAIDBAEF/8QAIxEAAwACAgICAwEBAAAAAAAAAAECAxESIQQxE0EiMlEjFP/aAAwDAQACEQMRAD8A7iiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIi8JwMoD5c9rBl7gAO60a670lGG+LM1usEtz1woDiS6Sg5jI0sPw9VQrpPUPeyOSR4afgdnKzX5CnoujC6LBxJ7RBFb8W/S2pDzzOdgucXb2i3H3wVEcr2OawAtB21d/xW7UW0u1SbHPxAKp8WWv3eJsrWgEnzEKMZ1T0TrA5RZKT2mV2bc6ZxkMTnOfv8RVzsXtNknuRNYw+E4Y05xjmuQ8N2c1TfHc3IBGknkrhSWpjARjnspZM8Q9I5GBtbOvWzjSmrpS3RhoOM5Vmp6iOoYHxOy0rjMFM6njjZTbEbh57qyWe+S0j2tqpJCcgZHIj5rmPyVXsVgaOj5Xq1qGqZV07ZozkOH4LZWpGcIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCxVGfAfjngrKtO6SBlDKXP0Atxq7Lj9BHNqyvHvssUvx6sEZWpPEyaIhrS5vPB5hVO53+Cluz4A2WY6/iwd/mCp2GplpofHqXNawjI1EtK8PLNKuz2MaXHozR0kYhJa/AI+F3MFU7jGJ07GxO9RhWWlM1fM2QyeHC52QCdyF88RW+m+ypXayZByP6Jj3NbGRJrRB8Hxn3BscmGaefz5qxNDIxz1EnYLLa7DDFb2EPOrSCR6qOqzPQ1IjeNQ79wuZeVU2SxcVOiWjqdGxGPXotiOpinPht3PX5qJbJ47MlhG38B1EqOlvYo5mRQ00j3uePKRv+SjiVbO5OOjrHCUz2TOpeTWjJaeytyoHCV0dNcaVskel8zCDk7gYyr+vZwPcHk5lqgiIryoIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIDwqH4qMYstQZHacDLTq07+qmFSPaBeDFD7hT+aWTYjbKhbSXZKFtnMXuq66odUcPMEkgfpkfI0HSf7KcitcshYK2o8STA8V2nIB7DsvKEvpoXQMDQXHLywY/E9SslYaqfxKK2vY2bRqBedgfmV5Tr5K0el+k7JU0MFO+Dyx+bYNG+AsFzfSvmbA6PIBB23BwqjRx8UWmrjivYkEXmxKWgtLh0DhzBG6t9NPG/wACfw2uz1BVjjXRBVsmAImMilEYax5ABHML252aguVPJDO0E74eOYKhOIbhIy1VFRSNe6owGQQtGdbycclqcLW7ieKqNRcqktpZWeaKobpe5+R8IHLl1Tg9HORidaZ6Nj6SmdHDUYxGZMhrvQhRVpoai1vqJ7lB4skYL3SBxxj5ZwSr1Wuiq4SyfGRsO/qCol9PJWUk1BUD4mkA42cOxWZXwekX65LbNfhOuZLxHS1DWPEWolrfod8FdhY8Pblp2XEaCjloSGDIEZwBg7Lp/DN2bVwshk2l07nuVv8AFyz+pj8nG1+RYUXi9W4yBERAEREAREQBERAEREAREQBERAEREAREQBERAfEjxG0vccNaMkrmN+qWVl0lkZgsB5rol3d4dtqZAMlkZdj03XMoGuqHOeds9Fh8ymp0avGnbbNWqdpY2PAYwkDP+VDyVM1m4jhmD8wTM0uydsH1UxW0nkdrf8WwO5J+qiK6EPg0y+aRjA7PXGVhwPVG3KtySddrrJWtc+R0LGgtYXbcv91r01wEVT4UYaWk6c56KvXC+C3shdUteBLhoJ5DDW8x+Kxu4itbIpZi3A206TyOOi3fG67RlVSXSnpS2sYWTEDTlvcE9lN6XU0EjtTpZHjSC7moPg+ohu1nZWRiVrGPLWF+xd6K0Dw5aFsgJLs8hzIUa6WjqW+yCkD44w6U6D1yei+6XWSMkH552XtXLHK5zGEnQcctj3GVjp4nNdkuAYeRC86/2NkfqZamIufqa4auo7ras08lDWMIZssEsTSGucS3Tvq6r4E7o34cRgfxLuKuN8kQyLlOjpsEomiZI3k4ZWVRHDlWKmjaNWS0KXXvRXJbPJpaegiIpHAiIgCIiAIiIAiIgCIiAIiIAi8ymUB6i8ysU9VBTt1TSsYP5jhc3/QjLleqArOKrdASI3Old/INvxVavntAqaSM+60bGno6Qk/kovJKJqKLhxJO2nsVdI7l4RZ9Tt/Vc2pajyEAY081W7lxpd7w57aqqJp2EO8JrQ0EgqRtVxjrIYmRAOeXcvn1KweX+TTRr8Za3snHiHDjnLv4nHnlU/ieYxSU4wXhx0joA08wp58rjkZ3zuQfy9VVeO6rFA3Ts9ruY6D5LNiW7Rqv9Sbslroa6jLrjTU1VSuOkte5xLMdc9Fi4d4FsbeM65krI6u2tiBp4nO1aXnofTH5qrcFR8S3q4Sz2WtbTtbhkgcMtA9CrfQcH322XM1NPfs1Mp1vL2Atee3y+i9eFxXZ5ldvoulLTwsowyCF0UUbiGxxyDDcbZwldK2jtjvCc0SyO8OAO6E83FV+98R3Szt/4tbBgAeHNA7LT3LiVU6u/VN1qmuEsYAGRGXbtGen0/RY83TNWJ76OhWx8Bp44m4Jb8RPPKzGBkO7CBq3+R+irNK57Io54HEuBBc3PMHmpqnrNQDH7hxyCsGtvbNVLXoyVj3indJCBqDfhd3UO64Q1bNL2tjk6hwwR6dlu3KobFBJnbrzULPG58eKqIOfH/GBu4evdcaC9HQOBqkMjNO9xJJ2J6q4rmPA88DKxsZldsfKCeXyXTQV7HjVuEeZnWrPURFoKQiIgCIiAIiIAiIgC8ytW43Cmt1M6oq5AyNv4k9h81TqvjqolBFBRNjb9+Z2T+AUKtT7JTLr0XouAGScDuVFV3EdsohiSoD3fdj8xXO6+5XG4HXU1L3jnoadLR9FHSeNpdIWODGjOWrPfkpejRHjt+y6VnHbtRFFSN25GZ39AsDeOa1wx7lBq76nY/BVay0kszHyyA5zuHdOuP8AXZSsVI3V2+izvyK/pasEr6N2W+3OryZalzAf4Y/KFpnLydbi4nqTyWYU+OfJeGPAGBzUHlde2SWNL6NV7NG/xeqqHE80kUmkBxDuuVeXsBYR1VO4xk0xeHgZClje6OUtIpLqks1tGdb24A/qtqyVctpqYppXktcDt3CjZH/tgTsBzPyWOapFRO+okz4MI0sb6Ba6jaKJemXKhvrZtYaC/BGnA+Innj5BfF8iFXRODxgvzjCrVhqG0lU+aUEtDMNHPJPZWKtrjJEI2jU4NydsY25LHccL2jXF8p0yq2G+1/DFW8UrjpkwXNxzUpU+0S5T1scrMxsa7Jb33Wu+3CtfSyMe0YjDX9xhxb/T8lrssTGV80E0vmazW0Ac89PVbFln7M3xV9H1W8TXjiWobSVVT+wc/YYxpGVv0EMcRBkj1GNxY1/6ZWjR2iUCoMY0jxAdWc4wei+4Ks010lhlLjFK4B7SMYORv+ChkpX1JZilx7L/AGl8ukasNxvv+n5rbNU0NaQ0tJJGOzx0VchqJabD43mVrXcu45fj/ZbbLkyeQx7hz9LgT+R/BefSNnskakOuVJK3Vg6Mf2WegqC+kEVQdTmDB7rDRysjdMf4D8Q7f6KySsbFVue3fP7wY5KPs5rRKcPPiprvG8Y0OGD1yfmuqxnLQe4yuHxz+61sQDtLXHbJ2/Fdotb3PoIHPxksHI5XpeG/x0ef5K/LZtoiLYZQiIgCIiAIiIDwlaN0u1Da4fErqhkY6Nzkn0C+OIbkLTaZ6s7uaMMb3ceS5FUTS1k5nqnOlmeclzjnHyVWTJwRZjx8zd4lvUl8ubJvM2ni/cs6D547la7HB2+oYHRY2x4wDzKkLbaxK7xJc6ewWF06e2bElC0jLboRUPLGtzqHNTU9tENI4FmkHBIW/YrfCNWmHGORK2bzK2npHF4BwOqz5ofHZbjv8tEFao2OpyQObicrII/MTgYWlZa6OWgD2kYOQMf9RUi0gNyDnKzzsupLZifHkjHdeSt22G6yyEbEd19414yrdlbNPwiBkhc74vcZKyRuV1CduGLlnFTiKufbdaMVdlWRdFEkkPiOb22WtO94Y2NoOnOT81t1UZiGrHqtR5cQHtXoyzKyYpQ6orII4xkR7NPc8yVZJ6eOkjcdyManOJ6qtWGVkFSyplIDIWkhvdfct2krpXySfuwScd+gVOSG2TitGWjmeyQOIDWOBOMcsFTJP/EBUuwQ7Aa083nG2PzUZGY3aHbYa3B+vJbbnCSlhccOdG8fhhU3PZdFkxbqd0r5DJGGAnIaOxXt34bhqZQY26JJR5T8x0WpS3QNkidIQ0tOkkduoVwa5lTTjw3guY3UCO4/wsdu8ddGmeNoqnub6fD9DnDHnaO46hZ6aNrnRbA6mDB9f8qw0jWVDXCVpL4yQ442wf8AdQs4FDI5jt2sdgH5ZUZp10yTSSNCuqpaGpbUNJ8Jz9D28898LbnnfLSiponkzRNIAznVj+FfM4bWe9QP07jWzsq7b7h7jcJInZ8F53GfhctU4+S6M7vTJqO7QXKNrPgmachvTK7twnOajh+ieeYjwfovzHUSmlvDnAgNLw8bdCu/+yqvfV8PGOQYMMpaN+YO63YZU+jFley6oiK8oCIiAIi16msp6RhdU1EUQ/ncAgM6w1NTFSxulnkaxjepKhKviaJzXNtsZqHfeOzB9VXK2pnlDp7hL4sw+Fh2a30Cz5PImPRdGGq9kZ7QeK/ep6ehiZppgfEJdzeen05qEgmb4Ak2zzI7qB46FU6uFWMEMd5tJ5NwP7rDwcay7SCkjDjof539AFWv9FyZd1D4ot9GH1Mg8vl9FcrJFGwZeBt94LNbLPFSUrdTRqLfiKj7zcYaGGQOlazAyXE4AWXLTnpFsJUuyfnu1LRsc9zmtbhc8404oE1pqX0gc4lpEeBuThQ32nX8QVng0VHVSxNODI5ulp9Mq4WXhSLxPeLlKTMzIjZG/Ajzz9VW3XNKiamUtoqvs6ndJQ+7SZDi0OGeuytsL3xuLHHlzXtdw99mvjrINJ0EanNHxDlv9FjrsQh1QW6cNOfVQqdvZLktGw6XLBp7A/VfcM2pu+xCh/tBkkbDG7SdWFmpa7EbXyt0uJII7opIuybfhzAub8S0wdUSkg810MygwBzOYVU4hhaCHfeVsrTIt7Od11Hlh8p3UNNTFo0tbgK83CmcKUFo6HcKvSUx23zvuStkUzPXsrD3yHXz0jmO2VnBLY2sbyGN1s3Kj8GOXSA0vIJGeyw2+PxmDJ0xtOXOPVafaK/s3XzhsMjW83kAegAWe01xe8Qyn48jPbstaFsFRUOY1rgzVhji7n9FgjpJGVckZO8Ts5PMqqktE17JaAtM88Unxag9h7nGCrVw3XPLix2OmB1VRhibHKwuOXk7Y6DsrHYMxyuecY33CzZ5TkvxNpklU3j7Jr2ykZbKdLm56cl9X+SJ0PjQcizUCDlVe9VTftFkE5zGZCQfugnmvqsrjFTtDXaxjcHvlVTh9Mm8vtHsdU+WIxsPmdEWNdnmfmoatfJUObIGaZtOH56+vdZ6OUNm0tf5H78uR6rNR09VUzNgkgc8avJLjBx6rWko7M73RqCqaXxOma5mW7h2/Jd99kNTTy2GSOF+XMk3aeYC57b+BLfUPe+tllkfpyAxxBAUzwrSVfCt4pm0csktHK8iQHmcnAyF2c8b0jmTDSWzsq9Xy3uvpajKEREByya6VtVJ+2vEzmEeZsZDR+SweNQtlkMjxPgA5c7U5XOk4FsVOMGnkm6/tZD+gwpijs9uov8Ak6Cnh2xlkYBP1WX4Kftl3y69IocbrlIGtoLfPI3GQ4NwPzWaDhO+V8sclbLHTRjJ0atTguiNG3LCHkurxo+zjzUzkHGnBtLTUkoN3f4jgDI0gDA/yt+11Fus1qiiixGMBvlbglbvtP4bEtK+80xndIwtE8LTkPbnmB3GVy/iFtc8RCGGdoLdQGk7Ht+qVj09JdHZvovdw42ZPOyipogQ/ZzuQHZanE1wNEaSA0tPNJI4NjkcdTmvO2cHpuua3CjuVFBG+NjpJNADSGk4yVgqK2vjq2eWqllY1uo6TpB5nGyfDO9nVkLXV8Q3sVM9IytMPu0hZI7YF3orLwzxfSmWKiuEss0jnBhlA+HPXbouU3a5mpusb6uGXGjS8RZaXn+qmbPwzcq5s0tutNwYHtzGxpIIPfJ3/NLxTS9CcmmfoZjYWs8N5BY9u+TkELm3E9x+z/HjDZpKPQP2kTC4ROB2yemP0K6PFw9G+KD3qpqZCxjW6Wv0jYfLf81JUduo6GEw0lLHEwnLg0fEe57qE+N1ph5v4fn5le6NxbGSY3Yec77kdFM0l1groTTudl+Mbc2nuF2KrsVqrCTVW6llJ5l0Qz+KjP8A8Nw+P3VD4JznMbyMei6/G/hz5mc7st0mbMaOpwXM2z94LPc3xztBaCRqON+mArnPwBbH/u5qmM6gQdQJ9FhuHAENUWaK58ek9Ix/dQ/56J/KjmNylDKYaAcaP/Inl+CiIyx4e/m1/QrqdV7NZXMcILg3J++08+iiJvZdc4qUx01TBIQ4kAkt2U1jaIvIjmtxs81YKaSmdtg+JnkMn+yr9VIaSpNMzaJgIHdx7lddu3Bd/pbbJHBTvecbiJ4JOAP1wuWVXD17bVYr6GpjkJ5vjP8ARWxv7ONr6Nuze5PbAHPEbmnfPLKt9LQ0HvXvQa2Rrxkb5BKoLKapgkkjZF8J38Rq2oLrUUPkGWNOxbzCruORZF8WdIo7Za7jV657fCQwDVpJBKn6Kz2N4zDb2sjdsQx51D0VZ4Ru1JXUrBLgTZx6q3W2RlNUOfk4wSMrHqpetmrnFI0rhwlw7R5q6ijdUA8zI8uAPotahtNudVmWK1UghkbgM0bf7qcr6+nfTSNkaXQS7P35diOyp9bS3Ggn1Ud3Z4XxMbI0Zx6hSTrZxVKJGX2dwVD3VtFoimaTiE/CR2W5TUPu76ankjDRCTtp+I989V801zqGUUTqi4wOcSAdBxn5KVqeIaKa3PkI8VkQGrQdz6FTr8yKpJkPTzUxulW5srmsbD8AO+c7r44duM1bcpJ3sMcTD5Q87jHJQtdI+GT7YjY+MS5jawnJOSNz9FIUtZTQGoqJXhznN8oPQ4Ubn1o7F/jpnSLZxNQ1GIKiojjqOWCcalOtc08iOWea/MsNwbHV1lU+cY8fLWg5Jbj+6neFblcoSyUVU4qJZXSRAuOGs2wDnoVri6S0zJWNe0foBFpWesFfb46gc3ZB9RsVuq9eihhERdAREQHhAcMEZHZY3QREZdEw+rQiIDGaWmzj3eL/ALAjaKl0giniHowIi4D4db6IyMJo6cnuYxstljWtGGtAA7DCIug+gvURAEREAREQBERAeL5fFG/42Nd6hEQGlNZrZUbzUFM8nqYwoa4+z7ha4AmotMOT1Zlp/JEUdHdlfrvZtYbcwPtxrKYgg+SYH/2BSgskb/Fa+rqnaBsdTf8A5RFTUrZbLZPUPCdrl89SJp8fwySeX8BhSrLDaQNH2fT6QMYLF6inEohVMxnhuynb7Np8D+RIeF7LTsMcVvhawnJHdEVnFENsyScPWl8TY30ELmNOQC3koWq4BsL2uDIZog7JIjkxzXqKDS2d2yn3f2bWGkM88Rq9WnOl0oI5eiibBaYXOpGGacDVkkOGT0AO3zXiLlJE5b0dtoKWKjo4oIG4jY3AWwiK1FZ//9k=" alt="asdf"/>
+  <div class="post-hero-overlay">
+    <span class="post-cat-badge">Patient Stories</span>
+    <h1>asdf</h1>
+    <div class="post-hero-meta"><span>By Dr. Yokesh Kumar R</span><span>•</span><span>March 1, 2026</span></div>
+  </div>
+</div>
+<div class="breadcrumb">
+  <a href="elysian_dental_lounge_v2.html">Home</a><span>›</span>
+  <a href="blog.html">Blog</a><span>›</span>asdf
+</div>
+<a class="back-link" href="blog.html">← Back to Blog</a>
+<div class="post-layout">
+  <article class="post-content">
+    <p>asuidfhklasdfj</p>
+<p>sdf';kasd</p>
+<p>f</p>
+<p>asd</p>
+<p>f</p>
+<p>asdf</p>
+<p>asd</p>
+<p>f</p>
+    <div class="book-cta">
+      <h3>Have questions about your dental health?</h3>
+      <p>Dr. Yokesh Kumar R is available 7 days a week. Book a consultation today.</p>
+      <a href="elysian_dental_lounge_v2.html#booking">Book Appointment →</a>
+    </div>
+  </article>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand">Elysian <span>Dental</span> Lounge</div></div>
+    <div class="footer-col"><h4>Quick Links</h4><a href="elysian_dental_lounge_v2.html#services">Services</a><a href="elysian_dental_lounge_v2.html#booking">Book Appointment</a><a href="blog.html">Blog</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:+919498052828">94980 52828</a><a href="https://wa.me/919498052828" target="_blank">WhatsApp Us</a></div>
+  </div>
+  <div class="footer-copy">© 2026 Elysian Dental Lounge. Kovilambakkam, Chennai 🦷</div>
+</footer>
+<a class="wa-btn" href="https://wa.me/919498052828" target="_blank"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+</body>
+</html>
