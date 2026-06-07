@@ -4,216 +4,160 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Blog — Elysian Dental Lounge | Dental Health Tips & Advice</title>
+  <meta name="description" content="Dental health tips, treatment guides and expert advice from Dr. Yokesh Kumar R at Elysian Dental Lounge, Medavakkam, Chennai."/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --cream: #F0F6FF; --warm: #E8F1FC;
-      --sage: #4A8FD4; --sage-l: #BDD8F5; --sage-d: #183b56;
-      --gold: #0b69ff; --gold-l: #BDD8F5;
-      --dark: #0d1f2d; --mid: #2E5275; --light: #6B93B8;
-      --border: #C5DDEF;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); }
-
-    /* NAV */
+/* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 200;
-      background: rgba(240,246,255,0.96); backdrop-filter: blur(14px);
+      background: rgba(250,248,244,0.96);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 0 4rem; display: flex; align-items: center;
-      justify-content: space-between; height: 68px;
+      padding: 0 4rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
     }
-    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo-img { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: #fff; border: 1px solid var(--border); padding: 3px; }
-    .nav-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; letter-spacing: 0.06em; color: var(--dark); }
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo-img {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: contain; background: #fff;
+      border: 1px solid var(--border); padding: 3px;
+    }
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400; letter-spacing: 0.06em;
+      color: var(--dark);
+    }
     .nav-name span { color: var(--sage-d); font-style: italic; }
     .nav-links { display: flex; gap: 2.5rem; }
-    .nav-links a { font-size: 13px; color: var(--mid); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--sage-d); font-weight: 500; }
-    .nav-cta { background: var(--sage-d); color: #fff; padding: 10px 22px; border: none; border-radius: 30px; font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
-    .nav-cta:hover { background: var(--sage); transform: translateY(-1px); }
-
-    /* HERO BANNER */
-    .blog-hero {
-      background: var(--sage-d); padding: 5rem 4rem 4rem;
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .blog-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 60% 0%, rgba(11,105,255,0.18) 0%, transparent 70%);
-    }
-    .blog-hero-label {
-      display: inline-block; font-size: 11px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--gold-l);
-      margin-bottom: 1rem; font-weight: 500;
-    }
-    .blog-hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(38px, 5vw, 64px); font-weight: 300;
-      color: #fff; line-height: 1.1; margin-bottom: 1rem;
-    }
-    .blog-hero h1 em { font-style: italic; color: var(--sage-l); }
-    .blog-hero p { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 480px; margin: 0 auto; line-height: 1.8; }
-
-    /* CATEGORY PILLS */
-    .category-bar {
-      background: #fff; border-bottom: 1px solid var(--border);
-      padding: 0 4rem; display: flex; gap: 0.5rem;
-      overflow-x: auto; scrollbar-width: none;
-    }
-    .category-bar::-webkit-scrollbar { display: none; }
-    .cat-pill {
-      flex-shrink: 0; padding: 12px 18px; font-size: 13px;
-      color: var(--mid); cursor: pointer; border-bottom: 2px solid transparent;
-      transition: all 0.2s; white-space: nowrap; background: none; border-top: none; border-left: none; border-right: none;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .cat-pill:hover { color: var(--sage-d); }
-    .cat-pill.active { color: var(--sage-d); border-bottom-color: var(--sage-d); font-weight: 500; }
-
-    /* MAIN LAYOUT */
-    .blog-layout {
-      max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 300px;
-      gap: 3rem; padding: 3.5rem 4rem;
-    }
-
-    /* POSTS GRID */
-    .posts-grid { display: flex; flex-direction: column; gap: 2rem; }
-
-    /* BLOG CARD — Partha style with date badge */
-    .post-card {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: 20px; overflow: hidden;
-      display: grid; grid-template-columns: 260px 1fr;
-      transition: all 0.25s; text-decoration: none; color: inherit;
-    }
-    .post-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(24,59,86,0.1); border-color: var(--sage-l); }
-    .post-thumb {
-      position: relative; overflow: hidden;
-      background: var(--warm);
-    }
-    .post-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
-    .post-card:hover .post-thumb img { transform: scale(1.04); }
-    .post-date-badge {
-      position: absolute; top: 14px; left: 14px;
-      background: var(--sage-d); color: #fff;
-      border-radius: 10px; padding: 6px 10px; text-align: center;
-      line-height: 1.1;
-    }
-    .post-date-badge .day { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; display: block; }
-    .post-date-badge .month { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.8; }
-    .post-body { padding: 1.75rem 2rem; display: flex; flex-direction: column; justify-content: center; gap: 0.75rem; }
-    .post-cat {
-      display: inline-block; font-size: 10px; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gold); background: rgba(11,105,255,0.08);
-      padding: 3px 10px; border-radius: 20px;
-    }
-    .post-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 400; color: var(--dark);
-      line-height: 1.25; text-decoration: none;
-    }
-    .post-card:hover .post-title { color: var(--sage-d); }
-    .post-excerpt { font-size: 13px; color: var(--light); line-height: 1.75; }
-    .post-readmore {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 13px; font-weight: 500; color: var(--sage-d);
-      text-decoration: none; margin-top: 0.25rem;
-      transition: gap 0.2s;
-    }
-    .post-readmore:hover { gap: 10px; }
-
-    /* FEATURED POST (first one, full width) */
-    .post-card.featured {
-      grid-template-columns: 1fr;
-      grid-template-rows: 280px auto;
-    }
-    .post-card.featured .post-thumb { height: 280px; }
-    .post-card.featured .post-title { font-size: 28px; }
-    .post-card.featured .post-excerpt { font-size: 14px; }
-
-    /* SIDEBAR */
-    .blog-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-    .sidebar-card {
-      background: #fff; border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.5rem;
-    }
-    .sidebar-card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 18px; font-weight: 400; margin-bottom: 1rem;
-      color: var(--dark); padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-cats { display: flex; flex-direction: column; gap: 0.5rem; }
-    .sidebar-cats a {
+    .nav-links a {
       font-size: 13px; color: var(--mid); text-decoration: none;
-      padding: 6px 0; border-bottom: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      transition: color 0.2s;
+      letter-spacing: 0.04em; transition: color 0.2s;
     }
-    .sidebar-cats a:hover { color: var(--sage-d); }
-    .sidebar-cats a:last-child { border-bottom: none; }
-    .cat-count { font-size: 11px; background: var(--warm); color: var(--light); padding: 2px 8px; border-radius: 10px; }
-    .sidebar-recent { display: flex; flex-direction: column; gap: 1rem; }
-    .recent-item { display: flex; gap: 10px; align-items: flex-start; text-decoration: none; color: inherit; }
-    .recent-thumb { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; flex-shrink: 0; background: var(--warm); }
-    .recent-title { font-size: 13px; color: var(--dark); line-height: 1.5; font-weight: 400; }
-    .recent-date { font-size: 11px; color: var(--light); margin-top: 3px; }
-    .recent-item:hover .recent-title { color: var(--sage-d); }
-    .cta-sidebar {
-      background: var(--sage-d); border-radius: 16px;
-      padding: 1.75rem; text-align: center;
+    .nav-links a:hover { color: var(--sage-d); }
+    .nav-cta {
+      background: var(--sage-d); color: #fff;
+      padding: 10px 22px; border: none; border-radius: 30px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      letter-spacing: 0.04em; cursor: pointer; text-decoration: none;
+      transition: all 0.2s; display: inline-block;
     }
-    .cta-sidebar h3 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: #fff; margin-bottom: 0.75rem; }
-    .cta-sidebar p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 1.25rem; }
-    .cta-sidebar a { display: block; background: #fff; color: var(--sage-d); text-decoration: none; border-radius: 30px; padding: 11px; font-size: 13px; font-weight: 500; transition: all 0.2s; }
-    .cta-sidebar a:hover { background: var(--gold-l); }
+    .nav-cta:hover { background: #1a5fa8; transform: translateY(-1px); }
 
-    /* FOOTER */
-    footer { background: var(--dark); padding: 3rem 4rem 2rem; margin-top: 3rem; }
-    .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #fff; font-weight: 300; margin-bottom: 0.5rem; }
-    .footer-brand-name span { font-style: italic; color: var(--sage-l); }
-    .footer-tagline { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; }
-    .footer-col h4 { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.75rem; }
-    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 0.45rem; transition: color 0.2s; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cream:#F0F6FF;--warm:#E8F1FC;--sage:#4A8FD4;--sage-l:#BDD8F5;--sage-d:#183b56;--gold:#0b69ff;--dark:#0d1f2d;--mid:#2E5275;--light:#6B93B8;--border:#C5DDEF}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark)}
+    
+    .blog-hero{background:var(--sage-d);padding:5rem 4rem 4rem;text-align:center;position:relative;overflow:hidden}
+    .blog-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 0%,rgba(11,105,255,0.18) 0%,transparent 70%)}
+    .blog-hero-label{display:inline-block;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-l);margin-bottom:1rem;font-weight:500;position:relative}
+    .blog-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,64px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:1rem;position:relative}
+    .blog-hero h1 em{font-style:italic;color:var(--sage-l)}
+    .blog-hero p{font-size:15px;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto;line-height:1.8;position:relative}
+    .category-bar{background:#fff;border-bottom:1px solid var(--border);padding:0 4rem;display:flex;gap:0.5rem;overflow-x:auto;scrollbar-width:none}
+    .category-bar::-webkit-scrollbar{display:none}
+    .cat-pill{flex-shrink:0;padding:12px 18px;font-size:13px;color:var(--mid);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'DM Sans',sans-serif}
+    .cat-pill:hover{color:var(--sage-d)}
+    .cat-pill.active{color:var(--sage-d);border-bottom-color:var(--sage-d);font-weight:500}
+    .blog-layout{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:3.5rem 4rem}
+    .loading-state{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:4rem;color:var(--light)}
+    .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--sage-d);border-radius:50%;animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--light)}
+    .empty-state h3{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--mid);margin-bottom:0.5rem}
+    .posts-grid{display:flex;flex-direction:column;gap:2rem}
+    .post-card{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:260px 1fr;transition:all 0.25s;text-decoration:none;color:inherit}
+    .post-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(24,59,86,0.1);border-color:var(--sage-l)}
+    .post-thumb{position:relative;overflow:hidden;background:var(--warm);min-height:180px}
+    .post-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s}
+    .thumb-placeholder{width:100%;height:100%;min-height:180px;display:flex;align-items:center;justify-content:center;font-size:40px;background:var(--warm)}
+    .post-card:hover .post-thumb img{transform:scale(1.04)}
+    .post-date-badge{position:absolute;top:14px;left:14px;background:var(--sage-d);color:#fff;border-radius:10px;padding:6px 10px;text-align:center;line-height:1.1}
+    .post-date-badge .day{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;display:block}
+    .post-date-badge .month{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;opacity:0.8}
+    .post-body{padding:1.75rem 2rem;display:flex;flex-direction:column;justify-content:center;gap:0.75rem}
+    .post-cat{display:inline-block;font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);background:rgba(11,105,255,0.08);padding:3px 10px;border-radius:20px}
+    .post-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--dark);line-height:1.25}
+    .post-card:hover .post-title{color:var(--sage-d)}
+    .post-excerpt{font-size:13px;color:var(--light);line-height:1.75}
+    .post-readmore{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--sage-d);margin-top:0.25rem;transition:gap 0.2s}
+    .post-card:hover .post-readmore{gap:10px}
+    .post-card.featured{grid-template-columns:1fr;grid-template-rows:300px auto}
+    .post-card.featured .post-thumb{height:300px;min-height:300px}
+    .post-card.featured .post-title{font-size:28px}
+    .post-card.featured .post-excerpt{font-size:14px}
+    .blog-sidebar{display:flex;flex-direction:column;gap:1.5rem}
+    .sidebar-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.5rem}
+    .sidebar-card h3{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:1rem;color:var(--dark);padding-bottom:0.75rem;border-bottom:1px solid var(--border)}
+    .sidebar-cats a{font-size:13px;color:var(--mid);text-decoration:none;padding:7px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;transition:color 0.2s;cursor:pointer}
+    .sidebar-cats a:hover{color:var(--sage-d)}
+    .sidebar-cats a:last-child{border-bottom:none}
+    .cat-count{font-size:11px;background:var(--warm);color:var(--light);padding:2px 8px;border-radius:10px}
+    .sidebar-recent{display:flex;flex-direction:column;gap:1rem}
+    .recent-item{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:inherit}
+    .recent-thumb{width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;background:var(--warm)}
+    .recent-title{font-size:13px;color:var(--dark);line-height:1.5}
+    .recent-date{font-size:11px;color:var(--light);margin-top:3px}
+    .recent-item:hover .recent-title{color:var(--sage-d)}
+    .cta-sidebar{background:var(--sage-d);border-radius:16px;padding:1.75rem;text-align:center}
+    .cta-sidebar h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:#fff;margin-bottom:0.75rem;border:none;padding:0}
+    .cta-sidebar p{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:1.25rem}
+    .cta-sidebar a{display:block;background:#fff;color:var(--sage-d);text-decoration:none;border-radius:30px;padding:11px;font-size:13px;font-weight:500;transition:all 0.2s}
+    .cta-sidebar a:hover{background:var(--sage-l)}
+    
+    
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .post-card{animation:fadeUp 0.45s ease both}
+    @media(max-width:900px){
+      .blog-layout{grid-template-columns:1fr;padding:2rem 1.5rem}
+      .blog-sidebar{display:none}
+      .post-card{grid-template-columns:1fr;grid-template-rows:200px auto}
+      .post-thumb{height:200px;min-height:200px}
+      .blog-hero{padding:3.5rem 1.5rem 3rem}
+      nav{padding:0 1.5rem}
+      .nav-links{display:none}
+      .category-bar{padding:0 1.5rem}
+      footer{padding:2rem 1.5rem}
+    }
+
+    /* ── FOOTER ── */
+    footer { background: #0d1f2d; padding: 4rem 4.5rem 2.5rem; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #fff; font-weight: 300; margin-bottom: 0.75rem; }
+    .footer-brand span { font-style: italic; color: var(--sage-l); }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .footer-col h4 { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+    .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.55); text-decoration: none; margin-bottom: 0.6rem; transition: color 0.2s; }
     .footer-col a:hover { color: #fff; }
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
-    .wa-btn { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; width: 54px; height: 54px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform 0.2s; }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-btn {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: #25D366; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none; transition: transform 0.2s;
+    }
     .wa-btn:hover { transform: scale(1.1); }
     .wa-btn svg { width: 28px; height: 28px; fill: #fff; }
 
-    @media (max-width: 900px) {
-      .blog-layout { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
-      .blog-sidebar { display: none; }
-      .post-card { grid-template-columns: 1fr; grid-template-rows: 200px auto; }
-      .post-thumb { height: 200px; }
-      .blog-hero { padding: 3.5rem 1.5rem 3rem; }
-      nav { padding: 0 1.5rem; }
-      .nav-links { display: none; }
-      .category-bar { padding: 0 1.5rem; }
-      footer { padding: 2rem 1.5rem; }
+    @media (max-width: 1024px) {
+      .footer-top { grid-template-columns: 1fr 1fr; }
     }
-
-    /* FADE IN */
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .post-card { animation: fadeUp 0.5s ease both; }
-    .post-card:nth-child(1) { animation-delay: 0.05s; }
-    .post-card:nth-child(2) { animation-delay: 0.12s; }
-    .post-card:nth-child(3) { animation-delay: 0.19s; }
-    .post-card:nth-child(4) { animation-delay: 0.26s; }
-    .post-card:nth-child(5) { animation-delay: 0.33s; }
-    .post-card:nth-child(6) { animation-delay: 0.40s; }
+    @media (max-width: 600px) {
+      footer { padding: 2.5rem 1.75rem 2rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a class="nav-brand" href="elysian_dental_lounge_v2.html">
     <img class="nav-logo-img" src="https://arul-selvar-s.github.io/yogi/Clinic logo png.png" alt="Logo" onerror="this.style.display='none'"/>
@@ -230,164 +174,58 @@
   <a class="nav-cta" href="elysian_dental_lounge_v2.html#booking">Book Appointment</a>
 </nav>
 
-<!-- HERO -->
 <div class="blog-hero">
   <div class="blog-hero-label">Elysian Dental Lounge</div>
   <h1>Dental Health <em>Tips & Advice</em></h1>
   <p>Expert insights from Dr. Yokesh Kumar — helping you understand your oral health better, one article at a time.</p>
 </div>
 
-<!-- CATEGORIES -->
-<div class="category-bar">
-  <button class="cat-pill active" onclick="filterPosts('all')">All Posts</button>
-  <button class="cat-pill" onclick="filterPosts('oral-health')">Oral Health</button>
-  <button class="cat-pill" onclick="filterPosts('cosmetic')">Cosmetic Dentistry</button>
-  <button class="cat-pill" onclick="filterPosts('orthodontics')">Orthodontics</button>
-  <button class="cat-pill" onclick="filterPosts('kids')">Kids Dentistry</button>
-  <button class="cat-pill" onclick="filterPosts('implants')">Implants</button>
-  <button class="cat-pill" onclick="filterPosts('tips')">Daily Tips</button>
+<div class="category-bar" id="categoryBar">
+  <button class="cat-pill active" onclick="filterPosts('all',this)">All Posts</button>
+  <button class="cat-pill" onclick="filterPosts('Oral Health',this)">Oral Health</button>
+  <button class="cat-pill" onclick="filterPosts('Cosmetic Dentistry',this)">Cosmetic Dentistry</button>
+  <button class="cat-pill" onclick="filterPosts('Orthodontics',this)">Orthodontics</button>
+  <button class="cat-pill" onclick="filterPosts('Dental Implants',this)">Dental Implants</button>
+  <button class="cat-pill" onclick="filterPosts('Kids Dentistry',this)">Kids Dentistry</button>
+  <button class="cat-pill" onclick="filterPosts('Daily Tips',this)">Daily Tips</button>
+  <button class="cat-pill" onclick="filterPosts('Patient Stories',this)">Patient Stories</button>
+  <button class="cat-pill" onclick="filterPosts('Clinic News',this)">Clinic News</button>
 </div>
 
-<!-- LAYOUT -->
 <div class="blog-layout">
-
-  <!-- POSTS -->
   <div class="posts-grid" id="postsGrid">
-
-    <!-- POST 1 — FEATURED -->
-    <a class="post-card featured" href="blog-post-1.html" data-cat="oral-health">
-      <div class="post-thumb">
-        <img src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80" alt="Teeth Health"/>
-        <div class="post-date-badge"><span class="day">13</span><span class="month">Apr</span></div>
-      </div>
-      <div class="post-body">
-        <span class="post-cat">Oral Health</span>
-        <div class="post-title">How to Keep Your Teeth Healthy Between Dental Visits</div>
-        <p class="post-excerpt">Simple daily habits that make a big difference — from the right brushing technique to the foods that secretly protect your enamel. Dr. Yokesh Kumar shares his top patient tips.</p>
-        <span class="post-readmore">Read more →</span>
-      </div>
-    </a>
-
-    <!-- POST 2 -->
-    <a class="post-card" href="blog-post-2.html" data-cat="orthodontics">
-      <div class="post-thumb">
-        <img src="https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=600&q=80" alt="Clearalign vs Braces"/>
-        <div class="post-date-badge"><span class="day">08</span><span class="month">Apr</span></div>
-      </div>
-      <div class="post-body">
-        <span class="post-cat">Orthodontics</span>
-        <div class="post-title">Clearalign vs Traditional Braces — What's Right for You?</div>
-        <p class="post-excerpt">We break down the differences, comfort levels, costs, and ideal candidates for each option so you can make the right choice for your smile.</p>
-        <span class="post-readmore">Read more →</span>
-      </div>
-    </a>
-
-    <!-- POST 3 -->
-    <a class="post-card" href="blog-post-3.html" data-cat="cosmetic">
-      <div class="post-thumb">
-        <img src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=600&q=80" alt="Teeth Whitening"/>
-        <div class="post-date-badge"><span class="day">02</span><span class="month">Apr</span></div>
-      </div>
-      <div class="post-body">
-        <span class="post-cat">Cosmetic Dentistry</span>
-        <div class="post-title">Is Teeth Whitening Safe? Everything You Need to Know</div>
-        <p class="post-excerpt">Dr. Yokesh Kumar answers the most common questions patients ask before their first whitening session — including what to expect, how long it lasts, and who it's best for.</p>
-        <span class="post-readmore">Read more →</span>
-      </div>
-    </a>
-
-    <!-- POST 4 -->
-    <a class="post-card" href="blog-post-4.html" data-cat="implants">
-      <div class="post-thumb">
-        <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&q=80" alt="Dental Implants"/>
-        <div class="post-date-badge"><span class="day">25</span><span class="month">Mar</span></div>
-      </div>
-      <div class="post-body">
-        <span class="post-cat">Dental Implants</span>
-        <div class="post-title">Dental Implants vs Dentures — Which Is the Better Choice?</div>
-        <p class="post-excerpt">Missing teeth? We compare both options honestly — lifespan, comfort, cost, and daily maintenance — so you know exactly what you're signing up for.</p>
-        <span class="post-readmore">Read more →</span>
-      </div>
-    </a>
-
-    <!-- POST 5 -->
-    <a class="post-card" href="blog-post-5.html" data-cat="kids">
-      <div class="post-thumb">
-        <img src="https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=600&q=80" alt="Kids Dentistry"/>
-        <div class="post-date-badge"><span class="day">18</span><span class="month">Mar</span></div>
-      </div>
-      <div class="post-body">
-        <span class="post-cat">Kids Dentistry</span>
-        <div class="post-title">When Should Your Child First Visit a Dentist?</div>
-        <p class="post-excerpt">Most parents wait too long for their child's first dental visit. Here's what our paediatric team recommends — and how to make the experience fun, not scary.</p>
-        <span class="post-readmore">Read more →</span>
-      </div>
-    </a>
-
-    <!-- POST 6 -->
-    <a class="post-card" href="blog-post-6.html" data-cat="tips">
-      <div class="post-thumb">
-        <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80" alt="Root Canal"/>
-        <div class="post-date-badge"><span class="day">10</span><span class="month">Mar</span></div>
-      </div>
-      <div class="post-body">
-        <span class="post-cat">Daily Tips</span>
-        <div class="post-title">Root Canal Treatment — It's Not as Scary as You Think</div>
-        <p class="post-excerpt">The words "root canal" make most patients nervous. But with modern techniques, the procedure is no more uncomfortable than getting a filling. Here's what really happens.</p>
-        <span class="post-readmore">Read more →</span>
-      </div>
-    </a>
-
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading posts...</p>
+    </div>
   </div>
 
-  <!-- SIDEBAR -->
   <aside class="blog-sidebar">
-
     <div class="cta-sidebar">
       <h3>Ready to book a visit?</h3>
       <p>Available 7 days a week. Confirmation within 2 hours.</p>
       <a href="elysian_dental_lounge_v2.html#booking">Book Appointment →</a>
     </div>
-
     <div class="sidebar-card">
       <h3>Categories</h3>
-      <div class="sidebar-cats">
-        <a href="#" onclick="filterPosts('oral-health')">Oral Health <span class="cat-count">2</span></a>
-        <a href="#" onclick="filterPosts('orthodontics')">Orthodontics <span class="cat-count">1</span></a>
-        <a href="#" onclick="filterPosts('cosmetic')">Cosmetic Dentistry <span class="cat-count">1</span></a>
-        <a href="#" onclick="filterPosts('implants')">Dental Implants <span class="cat-count">1</span></a>
-        <a href="#" onclick="filterPosts('kids')">Kids Dentistry <span class="cat-count">1</span></a>
-        <a href="#" onclick="filterPosts('tips')">Daily Tips <span class="cat-count">1</span></a>
+      <div class="sidebar-cats" id="sidebarCats">
+        <a href="#">Loading...</a>
       </div>
     </div>
-
     <div class="sidebar-card">
       <h3>Recent Posts</h3>
-      <div class="sidebar-recent">
-        <a class="recent-item" href="blog-post-1.html">
-          <img class="recent-thumb" src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=120&q=70" alt=""/>
-          <div><div class="recent-title">How to Keep Your Teeth Healthy</div><div class="recent-date">Apr 13, 2026</div></div>
-        </a>
-        <a class="recent-item" href="blog-post-2.html">
-          <img class="recent-thumb" src="https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=120&q=70" alt=""/>
-          <div><div class="recent-title">Clearalign vs Traditional Braces</div><div class="recent-date">Apr 8, 2026</div></div>
-        </a>
-        <a class="recent-item" href="blog-post-3.html">
-          <img class="recent-thumb" src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=120&q=70" alt=""/>
-          <div><div class="recent-title">Is Teeth Whitening Safe?</div><div class="recent-date">Apr 2, 2026</div></div>
-        </a>
+      <div class="sidebar-recent" id="sidebarRecent">
+        <p style="font-size:13px;color:var(--light)">Loading...</p>
       </div>
     </div>
-
   </aside>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
+  <div class="footer-top">
     <div>
-      <div class="footer-brand-name">Elysian <span>Dental</span> Lounge</div>
-      <p class="footer-tagline">RAJA TOWERS, 2/461, Medavakkam Main Rd<br>Kovilambakkam, Chennai 600129<br><br>Mon–Sat: 10AM–9PM &nbsp;|&nbsp; Sun: 10AM–1PM</p>
+      <div class="footer-brand">Elysian <span>Dental</span> Lounge</div>
+      <p class="footer-tagline">RAJA TOWERS, 2/461, Medavakkam Main Rd<br>Medavakkam, Chennai 600129<br><br>Mon–Sat: 10AM–9PM &nbsp;|&nbsp; Sun: 10AM–1PM</p>
     </div>
     <div class="footer-col">
       <h4>Quick Links</h4>
@@ -411,7 +249,7 @@
   </div>
   <div class="footer-bottom">
     <p class="footer-copy">© 2026 Elysian Dental Lounge. All rights reserved.</p>
-    <p class="footer-copy">Kovilambakkam, Chennai 🦷</p>
+    <p class="footer-copy">Medavakkam, Chennai 🦷</p>
   </div>
 </footer>
 
@@ -420,17 +258,83 @@
 </a>
 
 <script>
-  function filterPosts(cat) {
-    document.querySelectorAll('.cat-pill').forEach(function(p) { p.classList.remove('active'); });
-    event.target.classList.add('active');
-    document.querySelectorAll('.post-card').forEach(function(card) {
-      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
-    });
+const GITHUB_USER   = "arul-selvar-s";
+const GITHUB_REPO   = "yogi";
+const GITHUB_BRANCH = "main";
+
+let allPosts = [];
+
+async function loadPosts() {
+  try {
+    const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/posts.json?t=${Date.now()}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('fetch failed');
+    const data = await res.json();
+    allPosts = (data.posts || []).filter(p => !p.draft);
+  } catch(e) {
+    allPosts = fallbackPosts();
   }
+  renderPosts(allPosts);
+  buildSidebar(allPosts);
+}
+
+function fallbackPosts() {
+  return [
+    {id:'p1',title:'How to Keep Your Teeth Healthy Between Dental Visits',category:'Oral Health',dateDisplay:'April 13, 2026',day:'13',month:'Apr',excerpt:'Simple daily habits that make a big difference — from the right brushing technique to the foods that secretly protect your enamel.',image:'https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80',filename:'blog-post-1.html'},
+    {id:'p2',title:'Clearalign vs Traditional Braces — What\'s Right for You?',category:'Orthodontics',dateDisplay:'April 8, 2026',day:'08',month:'Apr',excerpt:'We break down the differences, comfort levels, costs, and ideal candidates for each option.',image:'https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=800&q=80',filename:'blog-post-2.html'},
+    {id:'p3',title:'Is Teeth Whitening Safe? Everything You Need to Know',category:'Cosmetic Dentistry',dateDisplay:'April 2, 2026',day:'02',month:'Apr',excerpt:'Dr. Yokesh Kumar answers the most common questions patients ask before their first whitening session.',image:'https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=800&q=80',filename:'blog-post-3.html'}
+  ];
+}
+
+function renderPosts(posts) {
+  const grid = document.getElementById('postsGrid');
+  if (!posts.length) {
+    grid.innerHTML = '<div class="empty-state"><h3>No posts yet</h3><p>Check back soon — new articles coming weekly!</p></div>';
+    return;
+  }
+  grid.innerHTML = posts.map((p, i) => `
+    <a class="post-card${i===0?' featured':''}" href="${p.filename}" data-cat="${p.category}" style="animation-delay:${i*0.07}s">
+      <div class="post-thumb">
+        ${p.image ? `<img src="${p.image}" alt="${p.title}" loading="${i<3?'eager':'lazy'}"/>` : `<div class="thumb-placeholder">🦷</div>`}
+        <div class="post-date-badge">
+          <span class="day">${p.day||'01'}</span>
+          <span class="month">${p.month||'Jan'}</span>
+        </div>
+      </div>
+      <div class="post-body">
+        <span class="post-cat">${p.category}</span>
+        <div class="post-title">${p.title}</div>
+        <p class="post-excerpt">${p.excerpt}</p>
+        <span class="post-readmore">Read more →</span>
+      </div>
+    </a>`).join('');
+}
+
+function filterPosts(cat, btn) {
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const filtered = cat === 'all' ? allPosts : allPosts.filter(p => p.category === cat);
+  renderPosts(filtered);
+}
+
+function buildSidebar(posts) {
+  const counts = {};
+  posts.forEach(p => { counts[p.category] = (counts[p.category]||0)+1; });
+  document.getElementById('sidebarCats').innerHTML = Object.entries(counts).map(([cat,n]) =>
+    `<a href="#" onclick="filterPosts('${cat}',null);return false">${cat}<span class="cat-count">${n}</span></a>`
+  ).join('') || '<a href="#">No categories yet</a>';
+
+  document.getElementById('sidebarRecent').innerHTML = posts.slice(0,3).map(p => `
+    <a class="recent-item" href="${p.filename}">
+      ${p.image ? `<img class="recent-thumb" src="${p.image}" alt="" loading="lazy"/>` : `<div class="recent-thumb" style="display:flex;align-items:center;justify-content:center;font-size:22px">🦷</div>`}
+      <div>
+        <div class="recent-title">${p.title.length>55?p.title.slice(0,55)+'...':p.title}</div>
+        <div class="recent-date">${p.dateDisplay||p.date||''}</div>
+      </div>
+    </a>`).join('') || '<p style="font-size:13px;color:var(--light)">No posts yet.</p>';
+}
+
+loadPosts();
 </script>
 </body>
 </html>

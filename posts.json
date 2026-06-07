@@ -1,0 +1,43 @@
+{
+  "posts": [
+    {
+      "id": "post-001",
+      "title": "How to Keep Your Teeth Healthy Between Dental Visits",
+      "category": "Oral Health",
+      "date": "2026-04-13",
+      "dateDisplay": "April 13, 2026",
+      "day": "13",
+      "month": "Apr",
+      "excerpt": "Simple daily habits that make a big difference — from the right brushing technique to the foods that secretly protect your enamel.",
+      "image": "https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80",
+      "filename": "blog-post-1.html",
+      "author": "Dr. Yokesh Kumar R"
+    },
+    {
+      "id": "post-002",
+      "title": "Clearalign vs Traditional Braces — What's Right for You?",
+      "category": "Orthodontics",
+      "date": "2026-04-08",
+      "dateDisplay": "April 8, 2026",
+      "day": "08",
+      "month": "Apr",
+      "excerpt": "We break down the differences, comfort levels, costs, and ideal candidates for each option so you can make the right choice for your smile.",
+      "image": "https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=800&q=80",
+      "filename": "blog-post-2.html",
+      "author": "Dr. Yokesh Kumar R"
+    },
+    {
+      "id": "post-003",
+      "title": "Is Teeth Whitening Safe? Everything You Need to Know",
+      "category": "Cosmetic Dentistry",
+      "date": "2026-04-02",
+      "dateDisplay": "April 2, 2026",
+      "day": "02",
+      "month": "Apr",
+      "excerpt": "Dr. Yokesh Kumar answers the most common questions patients ask before their first whitening session.",
+      "image": "https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=800&q=80",
+      "filename": "blog-post-3.html",
+      "author": "Dr. Yokesh Kumar R"
+    }
+  ]
+}
