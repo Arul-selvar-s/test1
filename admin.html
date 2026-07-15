@@ -46,6 +46,17 @@
     }
     .login-btn:hover{background:#0b69ff;transform:translateY(-1px)}
     .login-error{font-size:13px;color:#ef4444;margin-top:0.75rem;display:none}
+    .forgot-link{
+      display:block;margin-top:1rem;font-size:12px;color:#6B93B8;
+      text-decoration:underline;cursor:pointer;background:none;border:none;
+      font-family:'DM Sans',sans-serif;
+    }
+    .forgot-link:hover{color:#183b56}
+    .reset-box{display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #C5DDEF;text-align:left}
+    .reset-box label{font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:#6B93B8;display:block;margin-bottom:6px}
+    .reset-msg{font-size:12px;margin-top:0.5rem;display:none}
+    .reset-msg.err{color:#ef4444}
+    .reset-msg.ok{color:#16a34a}
 
     /* ── MAIN LAYOUT ── */
     .admin-wrap{display:none;min-height:100vh;flex-direction:column}
@@ -327,6 +338,16 @@
     <input type="password" id="loginPass" placeholder="Password" autocomplete="off"/>
     <button class="login-btn" onclick="doLogin()">Sign In →</button>
     <div class="login-error" id="loginError">Wrong username or password.</div>
+    <button class="forgot-link" onclick="toggleReset()">Forgot password?</button>
+
+    <div class="reset-box" id="resetBox">
+      <label>Recovery Key</label>
+      <input type="password" id="recoveryKey" placeholder="Enter recovery key" autocomplete="off"/>
+      <label>New Password</label>
+      <input type="password" id="newLoginPass" placeholder="New password (min 6 chars)" autocomplete="off"/>
+      <button class="login-btn" style="margin-top:0.25rem" onclick="doReset()">Reset Password</button>
+      <div class="reset-msg" id="resetMsg"></div>
+    </div>
   </div>
 </div>
 
@@ -553,6 +574,7 @@ Write naturally — the site will format it beautifully for your patients!" onin
 // ════════════════════════════════════════════
 const DEFAULT_USER = "admin";
 const DEFAULT_PASS = "elysian2026";
+const RECOVERY_KEY = "elysian-recover-9821"; // Change this to something only you know, then re-upload to GitHub
 
 // ════════════════════════════════════════════
 // AUTH
@@ -598,6 +620,41 @@ function changePassword() {
   document.getElementById('currentPass').value = '';
   document.getElementById('newPass').value = '';
   document.getElementById('confirmPass').value = '';
+}
+
+// ════════════════════════════════════════════
+// FORGOT PASSWORD (no devtools needed)
+// ════════════════════════════════════════════
+function toggleReset() {
+  const box = document.getElementById('resetBox');
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+}
+
+function doReset() {
+  const key = document.getElementById('recoveryKey').value.trim();
+  const nw  = document.getElementById('newLoginPass').value;
+  const msg = document.getElementById('resetMsg');
+
+  if (key !== RECOVERY_KEY) {
+    msg.textContent = 'Wrong recovery key.';
+    msg.className = 'reset-msg err';
+    msg.style.display = 'block';
+    return;
+  }
+  if (nw.length < 6) {
+    msg.textContent = 'New password must be at least 6 characters.';
+    msg.className = 'reset-msg err';
+    msg.style.display = 'block';
+    return;
+  }
+
+  localStorage.setItem('edl_pass', nw);
+  localStorage.setItem('edl_user', 'admin');
+  msg.textContent = 'Password reset! You can sign in now with username "admin".';
+  msg.className = 'reset-msg ok';
+  msg.style.display = 'block';
+  document.getElementById('recoveryKey').value = '';
+  document.getElementById('newLoginPass').value = '';
 }
 
 // ════════════════════════════════════════════
@@ -924,7 +981,7 @@ function buildPostHtml(title, category, dateDisp, author, image, contentHtml, fi
     .nav-links{display:flex;gap:2.5rem}
     .nav-links a{font-size:13px;color:var(--mid);text-decoration:none;transition:color 0.2s}
     .nav-links a:hover,.nav-links a.active{color:var(--sage-d);font-weight:500}
-    .nav-cta{background:var(--sage-d);color:#fff;padding:10px 22px;border:none;border-radius:30px;font-size:13px;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block}
+    .nav-cta{background:var(--sage-d);color:#fff;padding:10px 22px;border:none;border-radius:30px;font-size:13px;cursor:pointer;text-decoration:none;display:inline-block}
     .nav-cta:hover{background:#4A8FD4;transform:translateY(-1px)}
     .post-hero{position:relative;height:440px;overflow:hidden}
     .post-hero img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.42)}
