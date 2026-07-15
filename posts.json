@@ -74,14 +74,16 @@
       "id": "post-003",
       "title": "Is Teeth Whitening Safe? Everything You Need to Know",
       "category": "Cosmetic Dentistry",
-      "date": "2026-04-02",
-      "dateDisplay": "April 2, 2026",
-      "day": "02",
-      "month": "Apr",
+      "date": "2026-07-16",
+      "dateDisplay": "July 16, 2026",
+      "day": "16",
+      "month": "Jul",
       "excerpt": "Dr. Yokesh Kumar answers the most common questions patients ask before their first whitening session.",
       "image": "https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=800&q=80",
       "filename": "blog-post-3.html",
-      "author": "Dr. Yokesh Kumar R"
+      "author": "Dr. Yokesh Kumar R",
+      "draft": false,
+      "content": "fuch ypusdfhsdklfh"
     }
   ]
 }
