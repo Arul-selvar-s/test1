@@ -345,6 +345,10 @@
       <input type="password" id="recoveryKey" placeholder="Enter recovery key" autocomplete="off"/>
       <label>New Password</label>
       <input type="password" id="newLoginPass" placeholder="New password (min 6 chars)" autocomplete="off"/>
+      <div id="resetTokenBox" style="display:none">
+        <label style="margin-top:0.75rem">GitHub Token (one-time on a new device)</label>
+        <input type="password" id="resetToken" class="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"/>
+      </div>
       <button class="login-btn" style="margin-top:0.25rem" onclick="doReset()">Reset Password</button>
       <div class="reset-msg" id="resetMsg"></div>
     </div>
@@ -570,22 +574,56 @@ Write naturally — the site will format it beautifully for your patients!" onin
 
 <script>
 // ════════════════════════════════════════════
-// CONFIG — Default credentials (change in settings)
+// CONFIG
 // ════════════════════════════════════════════
 const DEFAULT_USER = "admin";
 const DEFAULT_PASS = "elysian2026";
-const RECOVERY_KEY = "elysian-recover-9821"; // Change this to something only you know, then re-upload to GitHub
+const RECOVERY_KEY = "fuckyou";
+const DEFAULT_GH_USER   = "Arul-selvar-s";
+const DEFAULT_GH_REPO   = "test1";
+const DEFAULT_GH_BRANCH = "main";
+const AUTH_FILE = "auth.json";
 
 // ════════════════════════════════════════════
-// AUTH
+// AUTH — credentials live in auth.json on GitHub, so the
+// same username/password works instantly on every browser,
+// device, and incognito window. localStorage is no longer
+// the source of truth for login — GitHub is.
 // ════════════════════════════════════════════
-function doLogin() {
+async function fetchAuth() {
+  try {
+    const { user, repo, branch } = getSettings();
+    const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${AUTH_FILE}?t=${Date.now()}`;
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('no auth file yet');
+    const data = await r.json();
+    return { username: data.username || DEFAULT_USER, password: data.password || DEFAULT_PASS };
+  } catch(e) {
+    return { username: DEFAULT_USER, password: DEFAULT_PASS };
+  }
+}
+
+async function writeAuth(username, password) {
+  let sha = null;
+  try {
+    const f = await ghGet(AUTH_FILE);
+    sha = f.sha;
+  } catch(e) { /* file doesn't exist yet — will be created */ }
+  const content = JSON.stringify({ username, password }, null, 2);
+  await ghPut(AUTH_FILE, content, 'Update admin login credentials', sha);
+}
+
+async function doLogin() {
   const u = document.getElementById('loginUser').value.trim();
   const p = document.getElementById('loginPass').value;
-  const savedPass = localStorage.getItem('edl_pass') || DEFAULT_PASS;
-  const savedUser = localStorage.getItem('edl_user') || DEFAULT_USER;
+  const btn = document.querySelector('.login-btn');
+  const originalLabel = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Checking...';
 
-  if (u === savedUser && p === savedPass) {
+  const auth = await fetchAuth();
+  btn.disabled = false; btn.textContent = originalLabel;
+
+  if (u === auth.username && p === auth.password) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminWrap').style.display = 'flex';
     document.getElementById('adminWrap').style.flexDirection = 'column';
@@ -607,33 +645,47 @@ function doLogout() {
   document.getElementById('adminWrap').style.display = 'none';
 }
 
-function changePassword() {
+async function changePassword() {
   const cur = document.getElementById('currentPass').value;
   const nw  = document.getElementById('newPass').value;
   const cf  = document.getElementById('confirmPass').value;
-  const savedPass = localStorage.getItem('edl_pass') || DEFAULT_PASS;
-  if (cur !== savedPass) return showToast('Current password is wrong.', 'error');
+
+  const auth = await fetchAuth();
+  if (cur !== auth.password) return showToast('Current password is wrong.', 'error');
   if (nw.length < 6) return showToast('New password must be at least 6 characters.', 'error');
   if (nw !== cf) return showToast('Passwords do not match.', 'error');
-  localStorage.setItem('edl_pass', nw);
-  showToast('Password changed successfully!', 'success');
-  document.getElementById('currentPass').value = '';
-  document.getElementById('newPass').value = '';
-  document.getElementById('confirmPass').value = '';
+
+  const { token } = getSettings();
+  if (!token) return showToast('Add your GitHub Token in Settings first, then try again.', 'error');
+
+  try {
+    await writeAuth(auth.username, nw);
+    showToast('Password changed! It now works on every browser instantly.', 'success');
+    document.getElementById('currentPass').value = '';
+    document.getElementById('newPass').value = '';
+    document.getElementById('confirmPass').value = '';
+  } catch(e) {
+    showToast('Error saving password: ' + e.message, 'error');
+  }
 }
 
 // ════════════════════════════════════════════
-// FORGOT PASSWORD (no devtools needed)
+// FORGOT PASSWORD — updates auth.json on GitHub, so the
+// reset applies immediately to every browser/device.
+// Writing to GitHub always needs a GitHub Token; if this
+// browser doesn't have one saved yet, it asks for it once
+// (right here) and remembers it for next time.
 // ════════════════════════════════════════════
 function toggleReset() {
   const box = document.getElementById('resetBox');
   box.style.display = box.style.display === 'block' ? 'none' : 'block';
 }
 
-function doReset() {
-  const key = document.getElementById('recoveryKey').value.trim();
-  const nw  = document.getElementById('newLoginPass').value;
-  const msg = document.getElementById('resetMsg');
+async function doReset() {
+  const key   = document.getElementById('recoveryKey').value.trim();
+  const nw    = document.getElementById('newLoginPass').value;
+  const typedToken = document.getElementById('resetToken').value.trim();
+  const msg   = document.getElementById('resetMsg');
 
   if (key !== RECOVERY_KEY) {
     msg.textContent = 'Wrong recovery key.';
@@ -648,13 +700,35 @@ function doReset() {
     return;
   }
 
-  localStorage.setItem('edl_pass', nw);
-  localStorage.setItem('edl_user', 'admin');
-  msg.textContent = 'Password reset! You can sign in now with username "admin".';
+  let { token } = getSettings();
+  if (!token && !typedToken) {
+    msg.textContent = 'This is a new device — paste your GitHub Token below once to confirm the reset.';
+    msg.className = 'reset-msg err';
+    msg.style.display = 'block';
+    document.getElementById('resetTokenBox').style.display = 'block';
+    return;
+  }
+  if (typedToken) {
+    token = typedToken;
+    localStorage.setItem('gh_token', typedToken); // remember for this browser going forward
+  }
+
+  msg.textContent = 'Resetting...';
   msg.className = 'reset-msg ok';
   msg.style.display = 'block';
-  document.getElementById('recoveryKey').value = '';
-  document.getElementById('newLoginPass').value = '';
+
+  try {
+    await writeAuth(DEFAULT_USER, nw);
+    msg.textContent = 'Password reset! This works now on every browser and device — sign in with username "admin".';
+    msg.className = 'reset-msg ok';
+    document.getElementById('recoveryKey').value = '';
+    document.getElementById('newLoginPass').value = '';
+    document.getElementById('resetToken').value = '';
+    document.getElementById('resetTokenBox').style.display = 'none';
+  } catch(e) {
+    msg.textContent = 'Error: ' + e.message;
+    msg.className = 'reset-msg err';
+  }
 }
 
 // ════════════════════════════════════════════
@@ -682,17 +756,17 @@ function saveSettings() {
 }
 
 function loadSettings() {
-  document.getElementById('ghUser').value   = localStorage.getItem('gh_user')   || '';
-  document.getElementById('ghRepo').value   = localStorage.getItem('gh_repo')   || '';
-  document.getElementById('ghBranch').value = localStorage.getItem('gh_branch') || 'main';
+  document.getElementById('ghUser').value   = localStorage.getItem('gh_user')   || DEFAULT_GH_USER;
+  document.getElementById('ghRepo').value   = localStorage.getItem('gh_repo')   || DEFAULT_GH_REPO;
+  document.getElementById('ghBranch').value = localStorage.getItem('gh_branch') || DEFAULT_GH_BRANCH;
   document.getElementById('ghToken').value  = localStorage.getItem('gh_token')  || '';
 }
 
 function getSettings() {
   return {
-    user:   localStorage.getItem('gh_user'),
-    repo:   localStorage.getItem('gh_repo'),
-    branch: localStorage.getItem('gh_branch') || 'main',
+    user:   localStorage.getItem('gh_user')   || DEFAULT_GH_USER,
+    repo:   localStorage.getItem('gh_repo')   || DEFAULT_GH_REPO,
+    branch: localStorage.getItem('gh_branch') || DEFAULT_GH_BRANCH,
     token:  localStorage.getItem('gh_token'),
   };
 }
