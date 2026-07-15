@@ -378,7 +378,11 @@
   <!-- ══ TAB: NEW POST ══ -->
   <div class="content" id="tab-new">
     <div class="form-card">
-      <h2>Create New Blog Post</h2>
+      <div id="editBanner" style="display:none;background:rgba(11,105,255,0.15);border:1px solid rgba(11,105,255,0.3);border-radius:12px;padding:0.85rem 1.25rem;margin-bottom:1.5rem;align-items:center;justify-content:space-between;gap:1rem">
+        <span style="font-size:13px;color:#93c5fd">✏️ Editing: <strong id="editBannerTitle" style="color:#fff"></strong></span>
+        <button class="btn-edit" onclick="cancelEdit()" type="button">Cancel Edit</button>
+      </div>
+      <h2 id="formHeading">Create New Blog Post</h2>
 
       <div class="form-row">
         <div class="form-group">
@@ -457,7 +461,7 @@ Write naturally — the site will format it beautifully for your patients!" onin
 
       <div class="publish-row">
         <button class="btn-publish" id="publishBtn" onclick="publishPost()">
-          <span>🚀</span> Publish to Website
+          <span id="publishBtnIcon">🚀</span> <span id="publishBtnLabel">Publish to Website</span>
         </button>
         <button class="btn-preview" onclick="showPreview()">👁 Preview</button>
         <button class="btn-draft" onclick="saveDraft()">💾 Save Draft</button>
@@ -939,6 +943,9 @@ function searchPosts(q) {
 // ════════════════════════════════════════════
 // PUBLISH POST
 // ════════════════════════════════════════════
+let editingPostId = null;
+let editingPostFilename = null;
+
 async function publishPost(isDraft=false) {
   const title    = document.getElementById('postTitle').value.trim();
   const category = document.getElementById('postCategory').value;
@@ -947,6 +954,7 @@ async function publishPost(isDraft=false) {
   const content  = document.getElementById('postContent').value.trim();
   const author   = document.getElementById('postAuthor').value.trim() || 'Dr. Yokesh Kumar R';
   const dateVal  = document.getElementById('postDate').value || new Date().toISOString().split('T')[0];
+  const isEditing = !!editingPostId;
 
   if (!isDraft) {
     if (!title)    return showToast('Please enter a post title.', 'error');
@@ -957,14 +965,17 @@ async function publishPost(isDraft=false) {
   }
 
   const { user, repo, token } = getSettings();
-  if (!user || !repo || !token) {
-    return showToast('Please set your GitHub details in Settings first.', 'error');
+  if (!token) {
+    return showToast('Please add your GitHub Token in Settings first.', 'error');
   }
 
   const btn = document.getElementById('publishBtn');
+  const icon = document.getElementById('publishBtnIcon');
+  const label = document.getElementById('publishBtnLabel');
   btn.disabled = true;
-  btn.innerHTML = '<span>⏳</span> Publishing...';
-  showToast('Publishing your post to the live site...', 'loading');
+  icon.textContent = '⏳';
+  label.textContent = isEditing ? 'Updating...' : 'Publishing...';
+  showToast(isEditing ? 'Updating your post...' : 'Publishing your post to the live site...', 'loading');
   setProgress(10);
 
   try {
@@ -977,18 +988,24 @@ async function publishPost(isDraft=false) {
     const longMon  = longMonths[dateObj.getMonth()];
     const year     = dateObj.getFullYear();
     const dateDisp = `${longMon} ${parseInt(day)}, ${year}`;
-    const id       = 'post-' + Date.now();
+
+    // Reuse id/filename when editing; create fresh ones when publishing new
+    const id       = isEditing ? editingPostId : 'post-' + Date.now();
     const slug     = slugify(title);
-    const filename = `blog-post-${slug}.html`;
+    const filename = isEditing ? editingPostFilename : `blog-post-${slug}.html`;
 
     setProgress(25);
 
-    // 2. Build the HTML post page
+    // 2. Build the HTML post page (store raw markdown too, so it can be edited later)
     const contentHtml = markdownToHtml(content);
     const postHtml = buildPostHtml(title, category, dateDisp, author, image, contentHtml, filename);
 
-    // 3. Upload the post HTML file to GitHub
-    await ghPut(filename, postHtml, `Add blog post: ${title}`);
+    // 3. Upload the post HTML file to GitHub (overwrites in place when editing)
+    let existingFileSha = null;
+    if (isEditing) {
+      try { const f = await ghGet(filename); existingFileSha = f.sha; } catch(e) {}
+    }
+    await ghPut(filename, postHtml, isEditing ? `Update blog post: ${title}` : `Add blog post: ${title}`, existingFileSha);
     setProgress(55);
 
     // 4. Load current posts.json
@@ -1003,28 +1020,39 @@ async function publishPost(isDraft=false) {
 
     setProgress(75);
 
-    // 5. Prepend new post to the list
-    const newPost = { id, title, category, date: dateVal, dateDisplay: dateDisp, day, month, excerpt, image, filename, author, draft: isDraft };
-    existingPosts.unshift(newPost);
+    // 5. Insert/replace the post in the list
+    const postObj = { id, title, category, date: dateVal, dateDisplay: dateDisp, day, month, excerpt, image, filename, author, draft: isDraft, content };
+    if (isEditing) {
+      const idx = existingPosts.findIndex(p => p.id === id);
+      if (idx > -1) existingPosts[idx] = postObj;
+      else existingPosts.unshift(postObj);
+    } else {
+      existingPosts.unshift(postObj);
+    }
 
     // 6. Save updated posts.json
     const jsonContent = JSON.stringify({ posts: existingPosts }, null, 2);
-    await ghPut('posts.json', jsonContent, `Update posts.json: add "${title}"`, jsonSha);
+    await ghPut('posts.json', jsonContent, isEditing ? `Update posts.json: edit "${title}"` : `Update posts.json: add "${title}"`, jsonSha);
     setProgress(90);
 
     // 7. Rebuild blog.html dynamically
     await rebuildBlogPage(existingPosts);
     setProgress(100);
 
-    showToast(isDraft ? 'Draft saved!' : '🎉 Post published! It will be live in 1–2 minutes.', 'success');
+    showToast(isEditing ? '✅ Post updated!' : (isDraft ? 'Draft saved!' : '🎉 Post published! It will be live in 1–2 minutes.'), 'success');
+    cancelEdit();
     clearForm();
+    allPosts = existingPosts;
+    renderPosts(allPosts);
+    document.getElementById('postCountBadge').textContent = allPosts.length + ' Posts';
 
   } catch(err) {
     console.error(err);
     showToast('Error: ' + (err.message || 'Something went wrong. Check Settings.'), 'error');
   } finally {
     btn.disabled = false;
-    btn.innerHTML = '<span>🚀</span> Publish to Website';
+    icon.textContent = '🚀';
+    label.textContent = editingPostId ? 'Update Post' : 'Publish to Website';
     setTimeout(() => setProgress(0), 1500);
   }
 }
@@ -1218,7 +1246,50 @@ async function deletePost(id, filename) {
 // EDIT POST (load into form)
 // ════════════════════════════════════════════
 function editPost(id) {
-  showToast('Edit: Open the post file directly on GitHub to edit content. Coming in next update!', 'loading');
+  const post = allPosts.find(p => p.id === id);
+  if (!post) return showToast('Could not find that post.', 'error');
+
+  editingPostId = post.id;
+  editingPostFilename = post.filename;
+
+  document.getElementById('postTitle').value    = post.title || '';
+  document.getElementById('postCategory').value = post.category || '';
+  document.getElementById('postExcerpt').value  = post.excerpt || '';
+  document.getElementById('postImage').value    = post.image || '';
+  document.getElementById('postAuthor').value   = post.author || 'Dr. Yokesh Kumar R';
+  document.getElementById('postDate').value     = post.date || '';
+
+  if (post.content) {
+    document.getElementById('postContent').value = post.content;
+  } else {
+    document.getElementById('postContent').value = '';
+    showToast('This older post has no saved draft text — re-write the content below, then Update.', 'error');
+  }
+
+  updateCharCount('postTitle','titleCount',100);
+  updateCharCount('postExcerpt','excerptCount',180);
+  updateCharCount('postContent','contentCount',99999);
+  previewImage();
+
+  document.getElementById('editBanner').style.display = 'flex';
+  document.getElementById('editBannerTitle').textContent = post.title;
+  document.getElementById('formHeading').textContent = 'Edit Blog Post';
+  document.getElementById('publishBtnLabel').textContent = 'Update Post';
+
+  // Switch to the New Post tab
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab')[0].classList.add('active');
+  ['new','posts','settings'].forEach(t => document.getElementById('tab-'+t).style.display = 'none');
+  document.getElementById('tab-new').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function cancelEdit() {
+  editingPostId = null;
+  editingPostFilename = null;
+  document.getElementById('editBanner').style.display = 'none';
+  document.getElementById('formHeading').textContent = 'Create New Blog Post';
+  document.getElementById('publishBtnLabel').textContent = 'Publish to Website';
 }
 
 // ════════════════════════════════════════════
