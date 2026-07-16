@@ -437,7 +437,7 @@
           <button class="tb-btn" onclick="insertHeading()">H2</button>
           <button class="tb-btn" onclick="insertHeading3()">H3</button>
           <button class="tb-btn" onclick="insertMd('\n- ','')">• List</button>
-          <button class="tb-btn" onclick="insertMd('\n> ','')">Quote</button>
+          <button class="tb-btn" onclick="insertTipBox()">💬 Tip Box</button>
           <button class="tb-btn" onclick="insertLink()">🔗 Link</button>
           <button class="tb-btn" onclick="insertMd('\n---\n','')">— Divider</button>
         </div>
@@ -808,6 +808,11 @@ function insertMd(before, after) {
 
 function insertHeading()  { insertMd('\n## ', ''); }
 function insertHeading3() { insertMd('\n### ', ''); }
+function insertTipBox() {
+  const label = prompt('Label for this box (leave blank for none):', "Dr. Yokesh Kumar's take");
+  const prefix = (label && label.trim()) ? `\n> **${label.trim()}:** ` : '\n> ';
+  insertMd(prefix, '');
+}
 function insertLink() {
   const url = prompt('Enter URL:');
   const text = prompt('Enter link text:') || url;
@@ -818,19 +823,46 @@ function slugify(str) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
-function markdownToHtml(md) {
-  return md
-    .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+function inlineFormat(text) {
+  return text
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,   '<em>$1</em>')
-    .replace(/^\- (.+)$/gm,  '<li>$1</li>')
-    .replace(/((<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>')
-    .replace(/^> (.+)$/gm, '<div class="highlight-box"><p>$1</p></div>')
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:var(--sage-d);font-weight:500">$1</a>')
-    .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0"/>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/^(?!<[hul]|<div|<hr)(.+)$/gm, '<p>$1</p>');
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:var(--sage-d);font-weight:500">$1</a>');
+}
+
+function markdownToHtml(md) {
+  const lines = md.replace(/\r\n/g, '\n').split('\n');
+  const blocks = [];
+  let para = [];
+  let list = [];
+
+  function flushPara() {
+    if (para.length) {
+      blocks.push('<p>' + inlineFormat(para.join(' ')) + '</p>');
+      para = [];
+    }
+  }
+  function flushList() {
+    if (list.length) {
+      blocks.push('<ul>' + list.map(li => '<li>' + inlineFormat(li) + '</li>').join('') + '</ul>');
+      list = [];
+    }
+  }
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (line === '') { flushPara(); flushList(); continue; }
+    if (/^## /.test(line))  { flushPara(); flushList(); blocks.push('<h2>' + inlineFormat(line.slice(3)) + '</h2>'); continue; }
+    if (/^### /.test(line)) { flushPara(); flushList(); blocks.push('<h3>' + inlineFormat(line.slice(4)) + '</h3>'); continue; }
+    if (/^- /.test(line))   { flushPara(); list.push(line.slice(2)); continue; }
+    if (/^> /.test(line))   { flushPara(); flushList(); blocks.push('<div class="highlight-box"><p>' + inlineFormat(line.slice(2)) + '</p></div>'); continue; }
+    if (/^---$/.test(line)) { flushPara(); flushList(); blocks.push('<hr style="border:none;border-top:1px solid var(--border);margin:1.5rem 0"/>'); continue; }
+    flushList();
+    para.push(line);
+  }
+  flushPara();
+  flushList();
+  return blocks.join('\n');
 }
 
 function showToast(msg, type='success') {
@@ -951,7 +983,7 @@ async function publishPost(isDraft=false) {
   const category = document.getElementById('postCategory').value;
   const excerpt  = document.getElementById('postExcerpt').value.trim();
   const image    = document.getElementById('postImage').value.trim();
-  const content  = document.getElementById('postContent').value.trim();
+  let   content  = document.getElementById('postContent').value.trim();
   const author   = document.getElementById('postAuthor').value.trim() || 'Dr. Yokesh Kumar R';
   const dateVal  = document.getElementById('postDate').value || new Date().toISOString().split('T')[0];
   const isEditing = !!editingPostId;
@@ -962,6 +994,16 @@ async function publishPost(isDraft=false) {
     if (!excerpt)  return showToast('Please enter a short excerpt.', 'error');
     if (!image)    return showToast('Please enter a cover image URL.', 'error');
     if (!content)  return showToast('Please write the post content.', 'error');
+  }
+
+  // Every post ends with the same consultation note + a Book Appointment link
+  // scoped to this post's category. Skipped if already present (e.g. re-saving
+  // an edit), so it never gets duplicated.
+  if (content && !content.includes('proper clinical examination')) {
+    const catLabel = category || '';
+    content = content
+      + `\n\n> The only way to know which is right for you is a proper clinical examination. Come in for a consultation and Dr. Yokesh Kumar will give you an honest recommendation based on your specific case.`
+      + `\n\n[Book a free ${catLabel} consultation →](https://arul-selvar-s.github.io/test1/elysian_dental_lounge_v2.html#booking)`;
   }
 
   const { user, repo, token } = getSettings();
