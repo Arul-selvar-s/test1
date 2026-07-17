@@ -917,6 +917,42 @@ async function ghDelete(path, message, sha) {
 }
 
 // ════════════════════════════════════════════
+// SAFE JSON WRITE — GitHub sometimes returns a 409 "sha does not
+// match" error if you write again very soon after a previous write
+// (its servers haven't fully caught up yet). This wraps read+write
+// in a retry loop: on that specific conflict, it waits a moment,
+// re-fetches the truly current file, re-applies your change on top
+// of that fresh copy, and tries again — a few times if needed.
+// ════════════════════════════════════════════
+async function ghPutJsonWithRetry(path, mutateFn, message, maxRetries=4) {
+  let lastErr;
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    let sha = null, currentData = null;
+    try {
+      const f = await ghGet(path);
+      sha = f.sha;
+      currentData = JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g,'')))));
+    } catch(e) { /* file doesn't exist yet — currentData stays null */ }
+
+    const resultData = mutateFn(currentData);
+    const newContent = JSON.stringify(resultData, null, 2);
+    try {
+      await ghPut(path, newContent, message, sha);
+      return resultData;
+    } catch(err) {
+      lastErr = err;
+      const isConflict = err.message && (err.message.includes('does not match') || err.message.includes('"status": "409"') || err.message.includes('409'));
+      if (isConflict && attempt < maxRetries - 1) {
+        await new Promise(r => setTimeout(r, 500 + attempt * 400));
+        continue; // loop again: re-fetch fresh sha + fresh data, re-apply mutateFn, retry write
+      }
+      throw err;
+    }
+  }
+  throw lastErr;
+}
+
+// ════════════════════════════════════════════
 // LOAD POSTS from GitHub posts.json
 // ════════════════════════════════════════════
 let allPosts = [];
@@ -1081,9 +1117,22 @@ async function publishPost(isDraft=false) {
     await ghPut(filename, postHtml, isEditing ? `Update blog post: ${title}` : `Add blog post: ${title}`, existingFileSha);
     setProgress(75);
 
-    // 7. Save updated posts.json
-    const jsonContent = JSON.stringify({ posts: existingPosts }, null, 2);
-    await ghPut('posts.json', jsonContent, isEditing ? `Update posts.json: edit "${title}"` : `Update posts.json: add "${title}"`, jsonSha);
+    // 7. Save updated posts.json (auto-retries if GitHub reports a stale-version conflict)
+    const savedData = await ghPutJsonWithRetry('posts.json', (currentData) => {
+      const d = currentData || { posts: [] };
+      const list = d.posts || [];
+      if (isEditing) {
+        const idx = list.findIndex(p => p.id === id);
+        if (idx > -1) list[idx] = postObj;
+        else list.unshift(postObj);
+      } else {
+        // avoid duplicating if a retry re-runs this after a partial earlier success
+        if (!list.some(p => p.id === id)) list.unshift(postObj);
+      }
+      d.posts = list;
+      return d;
+    }, isEditing ? `Update posts.json: edit "${title}"` : `Update posts.json: add "${title}"`);
+    existingPosts = savedData.posts;
     setProgress(90);
 
     // 8. Rebuild blog.html dynamically
@@ -1328,11 +1377,12 @@ async function deletePost(id, filename) {
       await ghDelete(filename, `Delete post: ${filename}`, f.sha);
     } catch(e) { /* file may not exist */ }
 
-    // Update posts.json
-    const jsonFile = await ghGet('posts.json');
-    const data = JSON.parse(decodeURIComponent(escape(atob(jsonFile.content.replace(/\n/g,'')))));
-    data.posts = data.posts.filter(p => p.id !== id);
-    await ghPut('posts.json', JSON.stringify(data, null, 2), `Remove post ${id}`, jsonFile.sha);
+    // Update posts.json (auto-retries if GitHub reports a stale-version conflict)
+    const data = await ghPutJsonWithRetry('posts.json', (currentData) => {
+      const d = currentData || { posts: [] };
+      d.posts = (d.posts || []).filter(p => p.id !== id);
+      return d;
+    }, `Remove post ${id}`);
 
     // Rebuild blog page
     await rebuildBlogPage(data.posts);
