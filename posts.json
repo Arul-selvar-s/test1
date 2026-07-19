@@ -1,6 +1,21 @@
 {
   "posts": [
     {
+      "id": "post-1784454260241",
+      "title": "Tester 1",
+      "category": "Oral Health",
+      "date": "2026-07-19",
+      "dateDisplay": "July 19, 2026",
+      "day": "19",
+      "month": "Jul",
+      "excerpt": "Get it done now",
+      "image": "https://ibb.co/m5hSmjsvHi",
+      "filename": "blog-post-tester-1.html",
+      "author": "Dr. Yokesh Kumar R",
+      "draft": false,
+      "content": "Hi first try tester 1\n\n> The only way to know which is right for you is a proper clinical examination. Come in for a consultation and Dr. Yokesh Kumar will give you an honest recommendation based on your specific case.\n\n[Book a free Oral Health consultation →](https://arul-selvar-s.github.io/test1/elysian_dental_lounge_v2.html#booking)"
+    },
+    {
       "id": "post-1784239671312",
       "title": "dfg",
       "category": "Daily Tips",
