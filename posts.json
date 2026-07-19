@@ -1,6 +1,21 @@
 {
   "posts": [
     {
+      "id": "post-1784454774953",
+      "title": "Hi tester",
+      "category": "Dental Implants",
+      "date": "2026-07-19",
+      "dateDisplay": "July 19, 2026",
+      "day": "19",
+      "month": "Jul",
+      "excerpt": "Dental implants",
+      "image": "https://ibb.co/ccTdqFH5",
+      "filename": "blog-post-hi-tester.html",
+      "author": "Dr. Yokesh Kumar R",
+      "draft": false,
+      "content": "Hi\n\n> The only way to know which is right for you is a proper clinical examination. Come in for a consultation and Dr. Yokesh Kumar will give you an honest recommendation based on your specific case.\n\n[Book a free Dental Implants consultation →](https://arul-selvar-s.github.io/test1/elysian_dental_lounge_v2.html#booking)"
+    },
+    {
       "id": "post-1784454337769",
       "title": "T2",
       "category": "Cosmetic Dentistry",
