@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Elysian Dental Lounge – Chennai</title>
+  <title>Elysian Dental Lounge – Dentist in Medavakkam, Chennai</title>
+  <meta name="description" content="Elysian Dental Lounge in Medavakkam, Chennai – dental implants, orthodontics, root canal treatment, smile designing, paediatric dentistry and more by Dr. Yokesh Kumar R. Book your appointment today."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Elysian Dental Lounge – Dentist in Medavakkam, Chennai"/>
+  <meta property="og:description" content="Expert, affordable and hygienic dental care in Medavakkam, Chennai. Book your appointment today."/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1119,22 +1123,22 @@
       </div>
 
     </div>
-    <div class="booking-form reveal-right" id="booking-form">
+    <form class="booking-form reveal-right" id="booking-form" novalidate>
       <h3>Book an Appointment</h3>
       <div class="form-row">
-        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name"/></div>
-        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 94980 52828"/></div>
+        <div class="form-group"><label for="f-name">Full Name</label><input type="text" id="f-name" name="name" placeholder="Your name" autocomplete="name" maxlength="80" required/></div>
+        <div class="form-group"><label for="f-phone">Phone Number</label><input type="tel" id="f-phone" name="phone" placeholder="+91 94980 52828" autocomplete="tel" inputmode="tel" maxlength="20" required/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>Preferred Date</label><input type="date" id="appt-date" min="" onchange="updateTimeSlots()"/></div>
-        <div class="form-group"><label>Preferred Time</label>
-          <select id="appt-time">
+        <div class="form-group"><label for="appt-date">Preferred Date</label><input type="date" id="appt-date" name="date" min="" onchange="updateTimeSlots()" required/></div>
+        <div class="form-group"><label for="appt-time">Preferred Time</label>
+          <select id="appt-time" name="time" required>
             <option value="">— Select a date first —</option>
           </select>
         </div>
       </div>
-      <div class="form-group"><label>Select Service</label>
-        <select>
+      <div class="form-group"><label for="f-service">Select Service</label>
+        <select id="f-service" name="service">
           <option>General Checkup</option>
           <option>Prosthodontics</option>
           <option>Dental Implants</option>
@@ -1146,9 +1150,12 @@
           <option>Clearalign</option>
         </select>
       </div>
-      <div class="form-group"><label>Message (optional)</label><input type="text" placeholder="Any concern or question?"/></div>
-      <button class="btn-submit" onclick="alert('Thank you! We will call you to confirm your appointment shortly. 😊')">Confirm Appointment →</button>
-    </div>
+      <div class="form-group"><label for="f-message">Message (optional)</label><input type="text" id="f-message" name="message" placeholder="Any concern or question?" maxlength="300"/></div>
+      <input type="checkbox" name="botcheck" id="f-botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true"/>
+      <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      <button type="submit" class="btn-submit">Confirm Appointment →</button>
+      <p class="form-privacy">We use your details only to contact you about your appointment.</p>
+    </form>
   </div>
 </section>
 
@@ -1178,7 +1185,7 @@
       <div class="ba-pill before">Before</div>
       <div class="ba-pill after">After</div>
     </div>
-    <div class="ba-case-label">← Drag to reveal · Replace with your actual patient photos</div>
+    <div class="ba-case-label">← Drag to reveal</div>
   </div>
 </section>
 
@@ -1311,13 +1318,6 @@
         </div>
       </div>
       <div class="contact-item">
-        <div class="c-icon">🌐</div>
-        <div>
-          <div class="c-label">Website</div>
-          <div class="c-val"><a href="#">Elysiandental.com</a></div>
-        </div>
-      </div>
-      <div class="contact-item">
         <div class="c-icon">📱</div>
         <div>
           <div class="c-label">Social Media</div>
@@ -1340,7 +1340,7 @@
 
 
 <!-- 360° CLINIC VIEW -->
-<section class="view360-section" id="clinic-view">
+<section class="view360-section" id="clinic-view" hidden>
   <div class="sec-label reveal">Virtual Tour</div>
   <h2 class="sec-title reveal">See our <em>clinic space</em></h2>
   <div class="view360-box reveal">
@@ -1590,5 +1590,7 @@
   });
 </script>
 
+<script src="site-enhancements.js" defer></script>
+<script src="appointment-form.js" defer></script>
 </body>
 </html>

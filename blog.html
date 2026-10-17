@@ -159,19 +159,19 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="elysian_dental_lounge_v2.html">
+  <a class="nav-brand" href="index.html">
     <img class="nav-logo-img" src="https://arul-selvar-s.github.io/yogi/Clinic logo png.png" alt="Logo" onerror="this.style.display='none'"/>
     <span class="nav-name">Elysian <span>Dental</span> Lounge</span>
   </a>
   <div class="nav-links">
-    <a href="elysian_dental_lounge_v2.html#why">Why Us</a>
-    <a href="elysian_dental_lounge_v2.html#services">Services</a>
-    <a href="elysian_dental_lounge_v2.html#booking">Book</a>
-    <a href="elysian_dental_lounge_v2.html#reviews">Reviews</a>
+    <a href="index.html#why">Why Us</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#booking">Book</a>
+    <a href="index.html#reviews">Reviews</a>
     <a href="blog.html" class="active">Blog</a>
-    <a href="elysian_dental_lounge_v2.html#contact">Contact</a>
+    <a href="index.html#contact">Contact</a>
   </div>
-  <a class="nav-cta" href="elysian_dental_lounge_v2.html#booking">Book Appointment</a>
+  <a class="nav-cta" href="index.html#booking">Book Appointment</a>
 </nav>
 
 <div class="blog-hero">
@@ -204,7 +204,7 @@
     <div class="cta-sidebar">
       <h3>Ready to book a visit?</h3>
       <p>Available 7 days a week. Confirmation within 2 hours.</p>
-      <a href="elysian_dental_lounge_v2.html#booking">Book Appointment →</a>
+      <a href="index.html#booking">Book Appointment →</a>
     </div>
     <div class="sidebar-card">
       <h3>Categories</h3>
@@ -229,11 +229,11 @@
     </div>
     <div class="footer-col">
       <h4>Quick Links</h4>
-      <a href="elysian_dental_lounge_v2.html#why">Why Choose Us</a>
-      <a href="elysian_dental_lounge_v2.html#services">Services</a>
-      <a href="elysian_dental_lounge_v2.html#booking">Book Appointment</a>
+      <a href="index.html#why">Why Choose Us</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#booking">Book Appointment</a>
       <a href="blog.html">Blog</a>
-      <a href="elysian_dental_lounge_v2.html#contact">Contact</a>
+      <a href="index.html#contact">Contact</a>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
@@ -270,9 +270,9 @@ async function loadPosts() {
     const res = await fetch(url);
     if (!res.ok) throw new Error('fetch failed');
     const data = await res.json();
-    allPosts = (data.posts || []).filter(p => !p.draft);
+    allPosts = (data.posts || []).filter(p => !p.draft).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
   } catch(e) {
-    allPosts = fallbackPosts();
+    allPosts = fallbackPosts().filter(p => p.filename === 'blog-post-2.html');
   }
   renderPosts(allPosts);
   buildSidebar(allPosts);
@@ -336,5 +336,6 @@ function buildSidebar(posts) {
 
 loadPosts();
 </script>
+<script src="site-enhancements.js" defer></script>
 </body>
 </html>
