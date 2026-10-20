@@ -1,6 +1,19 @@
 {
   "posts": [
     {
+      "id": "testing",
+      "title": "Testing",
+      "category": "Daily Tips",
+      "author": "Dr. Yokesh Kumar R",
+      "date": "2026-10-20",
+      "dateDisplay": "October 20, 2026",
+      "day": "20",
+      "month": "Oct",
+      "excerpt": "Test 1 on today rjrirbrji",
+      "image": "images/blog/1000337304.webp",
+      "filename": "blog-post-testing.html"
+    },
+    {
       "id": "clearalign-vs-traditional-braces",
       "title": "Clearalign vs Traditional Braces — What's Right for You?",
       "category": "Orthodontics",
