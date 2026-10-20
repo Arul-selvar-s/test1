@@ -57,6 +57,17 @@ LEGACY_FILENAMES = {
 
 CATEGORIES = ["Oral Health", "Cosmetic Dentistry", "Orthodontics", "Dental Implants",
               "Kids Dentistry", "Daily Tips", "Patient Stories", "Clinic News"]
+# Treatments that have their own page (service-<key>.html). Used for the "Related treatment" setting.
+SERVICES = {
+    "prosthodontics": "Prosthodontics",
+    "implants": "Dental Implants",
+    "orthodontics": "Orthodontics",
+    "smile": "Smile Designing",
+    "clearalign": "Clearalign",
+    "rootcanal": "Root Canal Treatment",
+    "sedation": "Sedation Dentistry",
+    "paediatric": "Paediatric Dentistry",
+}
 CLINIC = "Elysian Dental Lounge"
 BIG_IMAGE_BYTES = 600 * 1024
 
@@ -256,6 +267,20 @@ def load_articles(problems):
                              "why": "'%s' is not one of the usual categories, so it will not appear under a category button on the blog page." % category,
                              "fix": "Choose one of the categories offered in the editor."})
 
+        raw_services = fm.get("services") or []
+        if isinstance(raw_services, str):
+            raw_services = [raw_services]
+        services = []
+        for sv in raw_services:
+            key = str(sv).strip().lower()
+            if key in SERVICES:
+                if key not in services:
+                    services.append(key)
+            else:
+                problems.append({"article": name, "field": "Related treatment", "level": "note",
+                                 "why": "'%s' is not a treatment that has its own page, so it was ignored." % sv,
+                                 "fix": "Open the article and choose the related treatment from the list offered."})
+
         filename = LEGACY_FILENAMES.get(slug, "blog-post-%s.html" % slug)
         if filename in used_files:
             problem("Title", "Another article already uses the same web address (%s)." % filename, "Change the title of one of them slightly.")
@@ -266,6 +291,7 @@ def load_articles(problems):
             "slug": slug, "source": name, "filename": filename, "title": title, "date": d, "category": category,
             "excerpt": excerpt, "image": image, "alt": str(fm.get("image_alt") or title).strip(),
             "author": str(fm.get("author") or "Dr. Yokesh Kumar R").strip(), "status": status, "body_md": text_body,
+            "services": services,
         })
     return posts
 
@@ -315,7 +341,11 @@ def build_pages(live, site_url, template):
         meta.append('<script type="application/ld+json">%s</script>' % json.dumps(ld, ensure_ascii=False).replace("</", "<\\/"))
 
         hero = ('<img src="%s" alt="%s" fetchpriority="high"/>' % (esc(p["image"]), esc(p["alt"]))) if p["image"] else ""
-        values = {"SEO_META": "\n  ".join(meta), "HERO_IMG": hero, "CATEGORY": esc(p["category"]), "AUTHOR": esc(p["author"]),
+        related = ""
+        if p["services"]:
+            links = ", ".join('<a href="service-%s.html">%s</a>' % (k, esc(SERVICES[k])) for k in p["services"])
+            related = '<p class="related-svc">Related treatment: %s &middot; <a href="index.html#booking-form">Book an appointment</a></p>' % links
+        values = {"RELATED": related, "SEO_META": "\n  ".join(meta), "HERO_IMG": hero, "CATEGORY": esc(p["category"]), "AUTHOR": esc(p["author"]),
                   "DATE_DISPLAY": esc(date_display(p["date"])), "BODY": render_body(p["body_md"]), "POST_NAV": nav,
                   "SIDEBAR_CATS": side, "TITLE": esc(p["title"])}
         page = re.sub(r"\{\{(\w+)\}\}", lambda m: values.get(m.group(1), m.group(0)), template)
@@ -346,7 +376,7 @@ def build_posts_json(live):
         items.append({"id": p["slug"], "title": p["title"], "category": p["category"], "author": p["author"],
                       "date": p["date"].isoformat(), "dateDisplay": date_display(p["date"]),
                       "day": p["date"].strftime("%d"), "month": p["date"].strftime("%b"),
-                      "excerpt": p["excerpt"], "image": p["image"], "filename": p["filename"]})
+                      "excerpt": p["excerpt"], "image": p["image"], "filename": p["filename"], "services": p["services"]})
     return write_if_changed(ROOT / "posts.json", json.dumps({"posts": items}, ensure_ascii=False, indent=2) + "\n")
 
 
@@ -382,8 +412,9 @@ def build_status_page(posts, problems, site_url):
 
     def card(p, extra=""):
         link = ('<a href="../%s">%s</a>' % (esc(p["filename"]), esc(p["title"]))) if p["status"] == "live" else esc(p["title"])
-        return '<div class="card">%s<span class="pill">%s</span><div class="muted">%s &middot; %s</div>%s</div>' % (
-            link, esc(p["category"]), esc(date_display(p["date"])), esc(p["source"]), extra)
+        svc = (" &middot; Related: " + esc(", ".join(SERVICES[k] for k in p["services"]))) if p["services"] else ""
+        return '<div class="card">%s<span class="pill">%s</span><div class="muted">%s &middot; %s%s</div>%s</div>' % (
+            link, esc(p["category"]), esc(date_display(p["date"])), esc(p["source"]), svc, extra)
 
     out = []
     out.append("<h2>Live on the website (%d)</h2>" % len(live))

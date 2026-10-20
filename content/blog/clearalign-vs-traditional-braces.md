@@ -2,6 +2,9 @@
 title: Clearalign vs Traditional Braces — What's Right for You?
 date: 2026-04-08
 category: Orthodontics
+services:
+  - clearalign
+  - orthodontics
 excerpt: We break down the differences, comfort levels, costs, and ideal candidates for each option.
 image: https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=1200&q=80
 author: Dr. Yokesh Kumar R
@@ -62,4 +65,4 @@ Metal or ceramic brackets bonded to each tooth, connected by a wire that is peri
 
 > The only way to know which is right for you is a proper clinical examination. Come in for a consultation and Dr. Yokesh Kumar will give you an honest recommendation based on your specific case.
 
-[Book a free orthodontics consultation →](index.html#booking)
+[Book a free orthodontics consultation →](index.html#booking-form)

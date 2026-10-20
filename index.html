@@ -472,7 +472,8 @@
 
     /* ── BLOG SECTION ── */
     .blog-section { background: var(--warm); padding: 3.5rem 4.5rem; }
-    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.5rem; margin: 3rem auto 0; max-width: 900px; }
+    .blog-grid.one { max-width: 440px; }
     .blog-card {
       background: #fff; border: 1px solid var(--border);
       border-radius: 20px; overflow: hidden; transition: all 0.25s;
@@ -501,6 +502,7 @@
     a.blog-card { display: block; text-decoration: none; color: inherit; }
     .blog-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .blog-all { text-align: center; margin-top: 2rem; }
+    #booking-form { scroll-margin-top: 96px; }  /* 'Book appointment' links land with the form fully visible below the menu */
 
 
     /* ── WHATSAPP FLOAT ── */
@@ -1611,8 +1613,9 @@
     .then(function (r) { if (!r.ok) throw new Error('status ' + r.status); return r.json(); })
     .then(function (d) {
       var posts = (d.posts || []).filter(function (p) { return !p.draft; })
-        .sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 3);
+        .sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 2);   // only the 2 newest on the homepage
       if (!posts.length) return;
+      grid.className = 'blog-grid' + (posts.length === 1 ? ' one' : '');
       grid.innerHTML = posts.map(function (p) {
         var thumb = p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" width="400" height="160"/>' : '\uD83E\uDDB7';
         return '<a class="blog-card" href="' + esc(p.filename) + '"><div class="blog-thumb">' + thumb + '</div><div class="blog-body">' +

@@ -68,6 +68,22 @@ collections:
           - Clinic News
         hint: 'Decides which button on the Blog page this article appears under.'
 
+      - label: Related treatment(s)
+        name: services
+        widget: select
+        multiple: true
+        required: false
+        options:
+          - { label: Prosthodontics, value: prosthodontics }
+          - { label: Dental Implants, value: implants }
+          - { label: Orthodontics, value: orthodontics }
+          - { label: Smile Designing, value: smile }
+          - { label: Clearalign, value: clearalign }
+          - { label: Root Canal Treatment, value: rootcanal }
+          - { label: Sedation Dentistry, value: sedation }
+          - { label: Paediatric Dentistry, value: paediatric }
+        hint: 'Optional. If the article is about one of our treatments, choose it: the article then also appears on that treatment page, newest first.'
+
       - label: Short excerpt
         name: excerpt
         widget: text
