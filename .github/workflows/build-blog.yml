@@ -1,0 +1,53 @@
+# Builds the blog pages automatically.
+# Runs: (1) whenever an article, photo or the builder changes, (2) every night so scheduled articles go live,
+# (3) when someone presses "Run workflow" on the Actions page.
+name: Build blog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'images/**'
+      - 'tools/**'
+      - 'CNAME'
+      - '.github/workflows/build-blog.yml'
+  schedule:
+    - cron: '35 18 * * *'   # 12:05 AM India time every day
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-blog
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install helper packages
+        run: pip install markdown pyyaml
+
+      - name: Build blog pages
+        run: python tools/build_blog.py
+
+      - name: Save the generated pages
+        run: |
+          git config user.name "Elysian blog builder"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing changed - nothing to save."
+          else
+            git commit -m "Update blog pages (automatic)"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

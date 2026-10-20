@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>Blog Editor – Elysian Dental Lounge</title>
+  <link href="config.yml" type="text/yaml" rel="cms-config-url"/>
+  <style>
+    body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;margin:0;background:#F0F6FF;color:#0d1f2d}
+    #load-msg{max-width:520px;margin:18vh auto 0;padding:1.5rem;text-align:center;line-height:1.6}
+    #load-msg h1{font-size:1.25rem;margin:0 0 .5rem}
+    #load-msg.err{background:#fdecec;border:1px solid #f5b5b5;border-radius:12px}
+    #load-msg a{color:#0b5ed7}
+  </style>
+</head>
+<body>
+  <div id="load-msg">
+    <h1>Loading the blog editor…</h1>
+    <p>This takes a few seconds. If nothing appears, open the <a href="guide.html">help guide</a>.</p>
+  </div>
+  <script>
+    // Hide the "loading" note as soon as the editor has drawn itself.
+    (function () {
+      var msg = document.getElementById('load-msg');
+      try {
+        new MutationObserver(function (_, obs) {
+          for (var i = 0; i < document.body.children.length; i++) {
+            var n = document.body.children[i];
+            if (n !== msg && n.tagName !== 'SCRIPT') { msg.style.display = 'none'; obs.disconnect(); return; }
+          }
+        }).observe(document.body, { childList: true });
+      } catch (e) { /* the note simply stays visible */ }
+    })();
+    function editorFailed() {
+      var msg = document.getElementById('load-msg');
+      msg.className = 'err';
+      msg.innerHTML = '<h1>The editor could not be loaded</h1>' +
+        '<p><b>Why:</b> the editor program is downloaded from the internet each time, and that download failed. ' +
+        'Usual causes: no internet connection, or an ad-blocker / office network blocking <b>unpkg.com</b>.</p>' +
+        '<p><b>What to do:</b> check the internet, refresh the page (Ctrl+F5), or try another browser or network. ' +
+        'If it still fails, see the <a href="guide.html">help guide</a>.</p>';
+    }
+  </script>
+  <!-- Sveltia CMS: the blog editor. Do not add type="module" to this tag. -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" onerror="editorFailed()"></script>
+</body>
+</html>

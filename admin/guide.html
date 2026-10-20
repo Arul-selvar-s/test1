@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/>
+<title>Blog Help Guide – Elysian Dental Lounge</title>
+<style>
+  :root{--bg:#F0F6FF;--ink:#0d1f2d;--mute:#4f7396;--line:#C5DDEF;--card:#fff;--brand:#183b56;--link:#0b5ed7;--warn:#fff8e1}
+  @media (prefers-color-scheme:dark){:root{--bg:#0d1f2d;--ink:#e8f1fc;--mute:#9bb8d4;--line:#2a4560;--card:#14293a;--brand:#9cc7f0;--link:#8ab8ff;--warn:#3a3220}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  main{max-width:820px;margin:0 auto;padding:1.25rem 16px 4rem}
+  h1{font-size:1.7rem;margin:.5rem 0}
+  h2{font-size:1.25rem;margin:2.2rem 0 .6rem;color:var(--brand)}
+  h3{font-size:1.02rem;margin:1.4rem 0 .3rem}
+  a{color:var(--link)}
+  .quick{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}
+  .quick a{display:inline-block;padding:.7rem 1.1rem;border-radius:999px;background:var(--brand);color:var(--bg);text-decoration:none;font-weight:600;min-height:44px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;margin:.8rem 0}
+  .warn{background:var(--warn)}
+  table{border-collapse:collapse;width:100%;margin:.6rem 0;font-size:.95rem}
+  th,td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left;vertical-align:top}
+  th{background:var(--card)}
+  .scroll{overflow-x:auto}
+  code{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:0 .35rem}
+  ol li,ul li{margin:.3rem 0}
+  .mute{color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>Blog Help Guide</h1>
+<p class="mute">For the person who looks after the Elysian Dental Lounge website. No coding is needed for anything on this page.</p>
+
+<div class="quick">
+  <a href="./">Open the blog editor</a>
+  <a href="status.html">See blog status</a>
+</div>
+
+<h2>1. How it works, in four lines</h2>
+<div class="card">
+  You write an article in the <b>blog editor</b> and press save. A few minutes later the website shows it on the <b>Blog page</b>, on its own page, and in the <b>Latest articles</b> section of the homepage. Nothing else to upload or edit.
+  The <b>Blog status</b> page lists every article and says in plain English if one is not showing, and why.
+</div>
+
+<h2>2. First time only: signing in</h2>
+<p>The editor uses a GitHub account (GitHub is where the website files are kept). There is no separate password for the website; you sign in with a one-time “access token”, which is like a long password made just for this editor.</p>
+<ol>
+  <li><b>Owner gives you access.</b> The person who owns the GitHub project adds your GitHub account as a collaborator with <b>Write</b> access (GitHub → the project → Settings → Collaborators). You must accept the invitation email.</li>
+  <li><b>Make your token.</b> On GitHub click your picture → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.
+    <ul>
+      <li>Name: <code>Blog editor</code></li>
+      <li>Expiration: pick the longest offered (note the date in your calendar; see “Token expired” below).</li>
+      <li>Repository access: <b>Only select repositories</b> → choose <b>test1</b>.</li>
+      <li>Permissions → Repository permissions → <b>Contents: Read and write</b>. Leave everything else alone.</li>
+      <li>Press <b>Generate token</b> and copy it (you only see it once).</li>
+    </ul>
+  </li>
+  <li>Open the <a href="./">blog editor</a>, press <b>Sign In with Token</b>, paste the token, and continue.</li>
+</ol>
+<div class="card warn"><b>Keep the token private</b> like a password. Only sign in on your own computer or phone. If you ever lose it or think someone saw it, delete it on GitHub (same Settings page) and make a new one; nothing on the website breaks.</div>
+
+<h2>3. Writing and publishing an article</h2>
+<ol>
+  <li>In the editor choose <b>Blog articles</b> → <b>New Blog article</b>.</li>
+  <li>Fill in the boxes (see the table below).</li>
+  <li>When it is ready switch <b>Show on website</b> ON, then press <b>Save</b> (top right).</li>
+  <li>Wait 2 to 4 minutes, then open the website and refresh (Ctrl+F5 on a computer). If it is not there, open <a href="status.html">Blog status</a>: it will say why.</li>
+</ol>
+<div class="scroll"><table>
+<tr><th>Box</th><th>What to put</th></tr>
+<tr><td>Article title</td><td>5 to 100 characters. Appears as the page heading.</td></tr>
+<tr><td>Publish date</td><td>The day it goes live. A future date <b>schedules</b> the article; it appears early that morning (India time) automatically.</td></tr>
+<tr><td>Category</td><td>One of the eight categories. Decides which button on the Blog page lists it.</td></tr>
+<tr><td>Short excerpt</td><td>One or two sentences (20 to 180 characters) shown on the blog list and in Google.</td></tr>
+<tr><td>Cover photo</td><td>Main picture. Use photos you own or have permission to use. Landscape (wide) photos look best. The editor shrinks big photos; if Blog status ever says a photo is large, upload a smaller one.</td></tr>
+<tr><td>Photo description</td><td>A few words describing the photo for people who cannot see it. Optional.</td></tr>
+<tr><td>Author</td><td>Already filled in as Dr. Yokesh Kumar R. Change only if someone else wrote it.</td></tr>
+<tr><td>Show on website</td><td>OFF = hidden draft. ON = patients can read it.</td></tr>
+<tr><td>Article text</td><td>Use the toolbar: headings, bold, bullet lists, links. Never include a real patient’s name or medical details.</td></tr>
+</table></div>
+
+<h3>Change, hide or delete an article</h3>
+<ul>
+  <li><b>Change:</b> open it in the editor, edit, press Save. The page updates in a few minutes.</li>
+  <li><b>Hide for now:</b> switch <b>Show on website</b> OFF and Save. It disappears from the website but you keep the text.</li>
+  <li><b>Delete:</b> open it and use the Delete option in the editor. Its page is removed automatically. (Anyone who saved the old link will see a “not found” page.)</li>
+</ul>
+
+<h2>4. If something looks wrong</h2>
+<p>Always start with the <a href="status.html">Blog status</a> page; it names the article and the exact box that needs fixing.</p>
+<div class="scroll"><table>
+<tr><th>What you see</th><th>Why it happens</th><th>What to do</th></tr>
+<tr><td>I saved an article but it is not on the website</td><td>Usual reasons: <b>Show on website</b> is OFF, the date is in the future, or the website is still updating (takes 2 to 4 minutes).</td><td>Open Blog status. It lists the article under Live, Scheduled, Drafts or Problems and explains.</td></tr>
+<tr><td>Blog status lists a “Problem”</td><td>A required box is empty or wrong (for example no category, no text, an unreadable date).</td><td>Open that article in the editor, fix the box it names, Save.</td></tr>
+<tr><td>Blog status says the cover photo is missing</td><td>The photo file was not uploaded properly, so the article is shown without it.</td><td>Open the article, choose the cover photo again, Save.</td></tr>
+<tr><td>The editor page stays blank or says it could not be loaded</td><td>The editor program is downloaded from the internet each time. No internet, or an ad-blocker or office network is blocking <b>unpkg.com</b>.</td><td>Check your internet, refresh with Ctrl+F5, try another browser or network, or turn the ad-blocker off for this page.</td></tr>
+<tr><td>“Bad credentials”, “Unauthorized” or the editor keeps asking you to sign in</td><td>Your token is wrong, was deleted, or has <b>expired</b> (tokens last up to one year).</td><td>Make a new token (section 2) and sign in again.</td></tr>
+<tr><td>“Resource not accessible by personal access token”, “Not Found” or Save fails</td><td>The token was not given <b>Contents: Read and write</b> for the project <b>test1</b>, or your GitHub account does not have Write access.</td><td>Make a new token exactly as in section 2, and ask the owner to confirm you are a collaborator with Write access.</td></tr>
+<tr><td>A scheduled article did not appear on its day</td><td>The nightly check did not run. GitHub switches off nightly jobs on projects with no activity for 60 days.</td><td>On GitHub open the project → <b>Actions</b> tab → <b>Build blog</b>. If it says the workflow is disabled press <b>Enable workflow</b>, then <b>Run workflow</b>.</td></tr>
+<tr><td>A red ✗ appears next to “Build blog” in the Actions tab</td><td>The automatic builder stopped. Click the red entry: it prints a plain sentence saying which article or file is the problem.</td><td>Fix what it names (usually one article) and Save again; the builder retries by itself. Otherwise send that sentence to your web developer.</td></tr>
+<tr><td>Appointment enquiries are not reaching your email</td><td>Not part of the blog. The form sends through Web3Forms.</td><td>Sign in to your Web3Forms account, check that the email address is verified and that the access key matches, and look in the spam folder.</td></tr>
+</table></div>
+
+<h2>5. When you connect your own domain name (for example elysiandental.com)</h2>
+<p>The blog needs <b>no changes</b>. The editor, the blog pages, the sitemap and the Google information all pick up the new address by themselves.</p>
+<ol>
+  <li>On GitHub: the project → <b>Settings</b> → <b>Pages</b> → <b>Custom domain</b>. Type the domain and Save. GitHub shows the DNS records to add at the company where you bought the domain; add them there and tick <b>Enforce HTTPS</b> when it becomes available.</li>
+  <li>GitHub adds a file called <code>CNAME</code> to the project. The next automatic build reads it. To do this straight away: Actions → <b>Build blog</b> → <b>Run workflow</b>.</li>
+  <li>The editor now lives at <code>your-domain/admin/</code>. Sign in with your token again once on the new address (the token itself still works).</li>
+  <li>In Web3Forms, add the new domain if your key is restricted to certain websites.</li>
+  <li>In Google Search Console add the new site and submit <code>your-domain/sitemap.xml</code>. Update the website link on your Google Business Profile.</li>
+</ol>
+<p class="mute">Pages that were made before the domain was connected may be saved by Google under the old github.io address for a while; this sorts itself out.</p>
+
+<h2>6. Good habits</h2>
+<ul>
+  <li>Write for patients in simple language. Do not promise results or compare with other clinics; check claims against Dental Council advertising rules.</li>
+  <li>Do not put patient names, photos or medical details in articles without written consent.</li>
+  <li>Use the editor for blog work only. Do not rename or delete files directly on GitHub unless your web developer asks you to.</li>
+  <li>Bookmark this guide and the Blog status page.</li>
+</ul>
+</main>
+</body>
+</html>

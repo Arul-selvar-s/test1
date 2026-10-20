@@ -258,32 +258,36 @@
 </a>
 
 <script>
-const GITHUB_USER   = "Arul-selvar-s";
-const GITHUB_REPO   = "test1";
-const GITHUB_BRANCH = "main";
-
 let allPosts = [];
+
+// Text from posts.json is shown on the page, so make it safe first.
+function esc(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
 async function loadPosts() {
   try {
-    const url = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${GITHUB_BRANCH}/posts.json?t=${Date.now()}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('fetch failed');
+    // posts.json sits next to this page, so this works on any web address.
+    const res = await fetch('posts.json', {cache: 'no-cache'});
+    if (!res.ok) throw new Error('posts.json answered with status ' + res.status);
     const data = await res.json();
-    allPosts = (data.posts || []).filter(p => !p.draft).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-  } catch(e) {
-    allPosts = fallbackPosts().filter(p => p.filename === 'blog-post-2.html');
+    allPosts = (data.posts || []).filter(p => !p.draft)
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+  } catch (e) {
+    console.error('Blog list could not be loaded:', e);
+    document.getElementById('postsGrid').innerHTML =
+      '<div class="empty-state"><h3>We could not load the articles right now</h3>' +
+      '<p>Please refresh the page in a moment. If this keeps happening, call us on 94980 52828.</p></div>';
+    buildSidebar([]);
+    return;
   }
   renderPosts(allPosts);
   buildSidebar(allPosts);
-}
-
-function fallbackPosts() {
-  return [
-    {id:'p1',title:'How to Keep Your Teeth Healthy Between Dental Visits',category:'Oral Health',dateDisplay:'April 13, 2026',day:'13',month:'Apr',excerpt:'Simple daily habits that make a big difference — from the right brushing technique to the foods that secretly protect your enamel.',image:'https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=800&q=80',filename:'blog-post-1.html'},
-    {id:'p2',title:'Clearalign vs Traditional Braces — What\'s Right for You?',category:'Orthodontics',dateDisplay:'April 8, 2026',day:'08',month:'Apr',excerpt:'We break down the differences, comfort levels, costs, and ideal candidates for each option.',image:'https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=800&q=80',filename:'blog-post-2.html'},
-    {id:'p3',title:'Is Teeth Whitening Safe? Everything You Need to Know',category:'Cosmetic Dentistry',dateDisplay:'April 2, 2026',day:'02',month:'Apr',excerpt:'Dr. Yokesh Kumar answers the most common questions patients ask before their first whitening session.',image:'https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=800&q=80',filename:'blog-post-3.html'}
-  ];
+  const wanted = new URLSearchParams(location.search).get('cat');
+  if (wanted) {
+    const pill = [...document.querySelectorAll('.cat-pill')].find(b => b.textContent.trim() === wanted);
+    filterPosts(wanted, pill || null);
+  }
 }
 
 function renderPosts(posts) {
@@ -293,18 +297,18 @@ function renderPosts(posts) {
     return;
   }
   grid.innerHTML = posts.map((p, i) => `
-    <a class="post-card${i===0?' featured':''}" href="${p.filename}" data-cat="${p.category}" style="animation-delay:${i*0.07}s">
+    <a class="post-card${i===0?' featured':''}" href="${esc(p.filename)}" data-cat="${esc(p.category)}" style="animation-delay:${i*0.07}s">
       <div class="post-thumb">
-        ${p.image ? `<img src="${p.image}" alt="${p.title}" loading="${i<3?'eager':'lazy'}"/>` : `<div class="thumb-placeholder">🦷</div>`}
+        ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="${i<3?'eager':'lazy'}"/>` : `<div class="thumb-placeholder">🦷</div>`}
         <div class="post-date-badge">
-          <span class="day">${p.day||'01'}</span>
-          <span class="month">${p.month||'Jan'}</span>
+          <span class="day">${esc(p.day||'01')}</span>
+          <span class="month">${esc(p.month||'Jan')}</span>
         </div>
       </div>
       <div class="post-body">
-        <span class="post-cat">${p.category}</span>
-        <div class="post-title">${p.title}</div>
-        <p class="post-excerpt">${p.excerpt}</p>
+        <span class="post-cat">${esc(p.category)}</span>
+        <div class="post-title">${esc(p.title)}</div>
+        <p class="post-excerpt">${esc(p.excerpt)}</p>
         <span class="post-readmore">Read more →</span>
       </div>
     </a>`).join('');
@@ -321,15 +325,15 @@ function buildSidebar(posts) {
   const counts = {};
   posts.forEach(p => { counts[p.category] = (counts[p.category]||0)+1; });
   document.getElementById('sidebarCats').innerHTML = Object.entries(counts).map(([cat,n]) =>
-    `<a href="#" onclick="filterPosts('${cat}',null);return false">${cat}<span class="cat-count">${n}</span></a>`
+    `<a href="blog.html?cat=${encodeURIComponent(cat)}">${esc(cat)}<span class="cat-count">${n}</span></a>`
   ).join('') || '<a href="#">No categories yet</a>';
 
   document.getElementById('sidebarRecent').innerHTML = posts.slice(0,3).map(p => `
-    <a class="recent-item" href="${p.filename}">
-      ${p.image ? `<img class="recent-thumb" src="${p.image}" alt="" loading="lazy"/>` : `<div class="recent-thumb" style="display:flex;align-items:center;justify-content:center;font-size:22px">🦷</div>`}
+    <a class="recent-item" href="${esc(p.filename)}">
+      ${p.image ? `<img class="recent-thumb" src="${esc(p.image)}" alt="" loading="lazy"/>` : `<div class="recent-thumb" style="display:flex;align-items:center;justify-content:center;font-size:22px">🦷</div>`}
       <div>
-        <div class="recent-title">${p.title.length>55?p.title.slice(0,55)+'...':p.title}</div>
-        <div class="recent-date">${p.dateDisplay||p.date||''}</div>
+        <div class="recent-title">${esc(p.title.length>55?p.title.slice(0,55)+'...':p.title)}</div>
+        <div class="recent-date">${esc(p.dateDisplay||p.date||'')}</div>
       </div>
     </a>`).join('') || '<p style="font-size:13px;color:var(--light)">No posts yet.</p>';
 }

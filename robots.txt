@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://arul-selvar-s.github.io/test1/sitemap.xml

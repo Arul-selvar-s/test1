@@ -1,0 +1,106 @@
+# Settings for the blog editor (Sveltia CMS). Most people never need to open this file.
+# If you move to a new website address you do NOT need to change anything here:
+# the editor talks to the GitHub repository, not to the website address.
+
+backend:
+  name: github
+  repo: Arul-selvar-s/test1
+  branch: main
+
+# Where uploaded photos are saved in the repository
+media_folder: /images/blog
+public_folder: /images/blog
+
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      transformations:
+        raster_image:      # big photos are shrunk and saved as WebP so pages stay fast
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
+# Web addresses made from titles: plain letters, numbers and hyphens
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: blog
+    label: Blog articles
+    label_singular: Blog article
+    description: Write, edit, schedule or hide the articles shown on the Blog page and the homepage.
+    folder: /content/blog
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    fields:
+      - label: Article title
+        name: title
+        widget: string
+        required: true
+        pattern: ['^.{5,100}$', 'The title must be between 5 and 100 characters.']
+        hint: 'Clear and specific, for example: Why Regular Dental Checkups Matter (up to 100 characters).'
+
+      - label: Publish date
+        name: date
+        widget: datetime
+        type: date
+        required: true
+        hint: 'The day the article appears on the website. Pick a future day to schedule it: it goes live by itself early that morning.'
+
+      - label: Category
+        name: category
+        widget: select
+        required: true
+        options:
+          - Oral Health
+          - Cosmetic Dentistry
+          - Orthodontics
+          - Dental Implants
+          - Kids Dentistry
+          - Daily Tips
+          - Patient Stories
+          - Clinic News
+        hint: 'Decides which button on the Blog page this article appears under.'
+
+      - label: Short excerpt
+        name: excerpt
+        widget: text
+        required: true
+        pattern: ['^[\s\S]{20,180}$', 'Write between 20 and 180 characters: one or two sentences.']
+        hint: 'One or two sentences shown on the blog list and in Google results (up to 180 characters).'
+
+      - label: Cover photo
+        name: image
+        widget: image
+        required: true
+        hint: 'The main photo for the article. Use a photo you own or have permission to use. Wide (landscape) photos look best.'
+
+      - label: Photo description
+        name: image_alt
+        widget: string
+        required: false
+        hint: 'A few words describing the photo, for people who cannot see it (for example: Dentist showing a patient an X-ray). Leave empty to use the title.'
+
+      - label: Author
+        name: author
+        widget: string
+        default: Dr. Yokesh Kumar R
+        required: true
+
+      - label: Show on website
+        name: published
+        widget: boolean
+        default: false
+        hint: 'Switch ON when the article is ready for patients to read. OFF keeps it hidden (a draft).'
+
+      - label: Article text
+        name: body
+        widget: markdown
+        required: true
+        hint: 'Use the toolbar for headings, bold text, bullet lists and links. Do not write patient names or medical details about real patients.'
