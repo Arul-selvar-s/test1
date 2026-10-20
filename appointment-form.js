@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  var ACCESS_KEY = '4408ac14-5b0f-4656-ad8c-a76497a905a1';
+  var ACCESS_KEY = '94fa5af2-b53b-44ab-8940-298cd9a2d0c9';
   var ENDPOINT = 'https://api.web3forms.com/submit';
 
   var form = document.getElementById('booking-form');
