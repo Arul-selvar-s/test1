@@ -69,31 +69,31 @@
 
     /* ── HERO ── */
     .hero {
-      min-height: 78vh;
+      min-height: 62vh;
       display: grid; grid-template-columns: 1fr 1fr;
       overflow: hidden;
     }
     .hero-left {
-      padding: 3.5rem 3.5rem 3.5rem 4.5rem;
+      padding: 2.5rem 3.5rem 2.5rem max(4.5rem, calc((100vw - 1280px) / 2));
       display: flex; flex-direction: column; justify-content: center;
       position: relative;
     }
     .hero-tag {
       display: inline-flex; align-items: center; gap: 10px;
       font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--gold); font-weight: 500; margin-bottom: 1.75rem;
+      color: var(--gold); font-weight: 500; margin-bottom: 1.25rem;
     }
     .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--gold); }
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(50px, 5.5vw, 80px);
+      font-size: clamp(46px, 4.8vw, 68px);
       font-weight: 300; line-height: 1.07;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
     .hero-title em { font-style: italic; color: var(--sage-d); }
     .hero-sub {
       font-size: 15px; line-height: 1.9; color: var(--mid);
-      max-width: 400px; margin-bottom: 2.5rem;
+      max-width: 400px; margin-bottom: 1.75rem;
     }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn-p {
@@ -152,14 +152,14 @@
     .float-label { font-size: 11px; opacity: 0.75; margin-top: 3px; letter-spacing: 0.04em; }
 
     /* ── SECTION SHARED ── */
-    .sec { padding: 3.5rem 4.5rem; }
+    .sec { padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); }
     .sec-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.75rem; }
     .sec-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 3.5vw, 52px); font-weight: 300; line-height: 1.2; color: var(--dark); }
     .sec-title em { font-style: italic; color: var(--sage-d); }
 
     /* ── WHY CHOOSE US ── */
     .why { background: var(--warm); }
-    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
     .why-sub { font-size: 15px; line-height: 1.9; color: var(--mid); margin-top: 1.25rem; max-width: 420px; }
     .why-cards { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 0; }
     .why-card {
@@ -175,7 +175,7 @@
 
     /* ── SERVICES ── */
     .services { background: var(--cream); }
-    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.75rem; }
     .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
 
     .svc-card { height: 260px; perspective: 1000px; cursor: pointer; }
@@ -213,9 +213,9 @@
 
     /* ── CTA BAND ── */
     .cta-band {
-      margin: 0 4.5rem;
+      margin: 0 max(4.5rem, calc((100% - 1280px) / 2));
       background: var(--sage-d); border-radius: 28px;
-      padding: 2.5rem 4.5rem;
+      padding: 1.75rem 3rem;
       display: flex; justify-content: space-between; align-items: center; gap: 2rem;
     }
     .cta-band h2 {
@@ -235,8 +235,8 @@
     .btn-white:hover { background: var(--cream); transform: translateY(-2px); }
 
     /* ── BOOKING ── */
-    .booking { background: var(--warm); padding: 3.5rem 4.5rem; }
-    .booking-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; margin-top: 3rem; }
+    .booking { background: var(--warm); padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); }
+    .booking-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start; margin-top: 1.75rem; }
     .booking-info p { font-size: 15px; line-height: 1.9; color: var(--mid); margin-top: 1.25rem; }
     .booking-perks { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
     .perk { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--mid); }
@@ -266,7 +266,7 @@
     /* ── STATS COUNTER ── */
     .stats-section {
       background: var(--sage-d);
-      padding: 2.5rem 4.5rem;
+      padding: 1.75rem max(4.5rem, calc((100% - 1280px) / 2));
       display: flex; justify-content: center; gap: 0;
     }
     .stat-item {
@@ -328,8 +328,8 @@
     .reveal-delay-4 { transition-delay: 0.48s; }
 
     /* ── BEFORE / AFTER SLIDER ── */
-    .ba-section { background: var(--warm); padding: 3.5rem 4.5rem; }
-    .ba-header { text-align: center; margin-bottom: 3rem; }
+    .ba-section { background: var(--warm); padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); }
+    .ba-header { text-align: center; margin-bottom: 1.75rem; }
     .ba-single { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
     .ba-case-label { text-align: center; font-size: 12px; color: var(--light); letter-spacing: 0.08em; text-transform: uppercase; }
     .ba-wrap {
@@ -383,7 +383,7 @@
 
     /* ── REVIEW MARQUEE ── */
     .marquee-outer {
-      overflow: hidden; margin-top: 3rem;
+      overflow: hidden; margin-top: 1.75rem;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
@@ -405,8 +405,8 @@
     }
 
     /* ── TESTIMONIALS ── */
-    .testi { background: var(--cream); padding: 3.5rem 4.5rem; }
-    .testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .testi { background: var(--cream); padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); }
+    .testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 1.75rem; }
     .testi-card { background: rgba(255,255,255,0.55); backdrop-filter: blur(6px); border: 1px solid rgba(197,221,239,0.4); border-radius: 22px; padding: 2rem; }
     .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 1rem; }
     .testi-text { font-size: 14px; color: var(--mid); line-height: 1.85; font-style: italic; margin-bottom: 1.5rem; }
@@ -428,8 +428,8 @@
     .testi-footer a:hover { background: #BDD8F5; }
 
     /* ── CONTACT ── */
-    .contact { background: var(--warm); padding: 3.5rem 4.5rem; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 3rem; align-items: start; }
+    .contact { background: var(--warm); padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 1.75rem; align-items: start; }
     .contact-items { display: flex; flex-direction: column; gap: 1.75rem; }
     .contact-item { display: flex; gap: 1.25rem; align-items: flex-start; }
     .c-icon { width: 46px; height: 46px; border-radius: 12px; background: var(--sage-l); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
@@ -440,8 +440,8 @@
     .map-embed iframe { display: block; width: 100%; height: 360px; border: none; }
 
     /* ── FOOTER ── */
-    footer { background: #0d1f2d; padding: 4rem 4.5rem 2.5rem; }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
+    footer { background: #0d1f2d; padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)) 1.5rem; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
     .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #fff; font-weight: 300; margin-bottom: 0.75rem; }
     .footer-brand span { font-style: italic; color: var(--sage-l); }
     .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; }
@@ -453,7 +453,7 @@
 
 
     /* ── 360 VIEW PLACEHOLDER ── */
-    .view360-section { background: var(--cream); padding: 3.5rem 4.5rem; text-align: center; }
+    .view360-section { background: var(--cream); padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); text-align: center; }
     .view360-box {
       max-width: 800px; margin: 2.5rem auto 0;
       border: 2px dashed var(--border); border-radius: 24px;
@@ -471,8 +471,8 @@
     }
 
     /* ── BLOG SECTION ── */
-    .blog-section { background: var(--warm); padding: 3.5rem 4.5rem; }
-    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.5rem; margin: 3rem auto 0; max-width: 900px; }
+    .blog-section { background: var(--warm); padding: 2.5rem max(4.5rem, calc((100% - 1280px) / 2)); }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.5rem; margin: 1.75rem auto 0; max-width: 900px; }
     .blog-grid.one { max-width: 440px; }
     .blog-card {
       background: #fff; border: 1px solid var(--border);
@@ -501,7 +501,7 @@
     .blog-coming p { font-size: 14px; line-height: 1.8; }
     a.blog-card { display: block; text-decoration: none; color: inherit; }
     .blog-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .blog-all { text-align: center; margin-top: 2rem; }
+    .blog-all { text-align: center; margin-top: 1.25rem; }
     #booking-form { scroll-margin-top: 96px; }  /* 'Book appointment' links land with the form fully visible below the menu */
 
 
@@ -529,7 +529,7 @@
     /* ── STATS COUNTER ── */
     .stats-section {
       background: var(--sage-d);
-      padding: 2.5rem 4.5rem;
+      padding: 1.75rem max(4.5rem, calc((100% - 1280px) / 2));
       display: flex; justify-content: center; gap: 0;
     }
     .stat-item {
@@ -606,8 +606,7 @@
     .promo-slide {
       flex: 0 0 100%; min-width: 100%;
       display: grid; grid-template-columns: 1fr 1fr;
-      align-items: center; padding: 2.5rem 4.5rem; gap: 3rem;
-      min-height: 160px;
+      align-items: center; padding: 1.5rem max(4.5rem, calc((100% - 1280px) / 2)); gap: 2rem;
     }
     .promo-slide.alt { grid-template-columns: 1fr 1fr; }
     .promo-tag {
@@ -689,7 +688,7 @@
       .nav-cta { padding: 8px 16px; font-size: 12px; }
       .hero { grid-template-columns: 1fr; }
       .hero-right { min-height: 280px; }
-      .hero-left { padding: 2.5rem 1.25rem 2rem 1.25rem; }
+      .hero-left { padding: 2rem 1.25rem 1.5rem 1.25rem; }
       .hero-title { font-size: 38px; }
       .hero-tag { font-size: 10px; margin-bottom: 1rem; }
       .hero-btns { flex-wrap: wrap; gap: 0.75rem; }
@@ -697,14 +696,14 @@
       .why-grid, .booking-grid, .contact-grid { grid-template-columns: 1fr; gap: 1.75rem; }
       .sec, .booking, .testi, .contact,
       .services-wrap, .team-wrap, .contact-wrap,
-      .faq-wrap, .view360-section, .blog-section { padding: 2.5rem 1.25rem; }
+      .faq-wrap, .view360-section, .blog-section { padding: 2rem 1.25rem; }
 
-      .stats-section { flex-direction: column; gap: 1.5rem; padding: 2.5rem 1.25rem; }
+      .stats-section { flex-direction: column; gap: 1.25rem; padding: 1.75rem 1.25rem; }
       .stat-item:not(:last-child)::after { display: none; }
 
       .services-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-      .booking { padding: 2.5rem 1.25rem; }
+      .booking { padding: 2rem 1.25rem; }
       .booking-form { padding: 1.5rem; }
       .form-row { grid-template-columns: 1fr; gap: 0.75rem; }
       .booking-form h3 { font-size: 20px; margin-bottom: 1.25rem; }
@@ -713,7 +712,7 @@
 
       .cta-band { margin: 0 1.25rem; padding: 2rem 1.5rem; flex-direction: column; text-align: center; gap: 1.25rem; }
 
-      .ba-section { padding: 2.5rem 1.25rem; }
+      .ba-section { padding: 2rem 1.25rem; }
       .ba-single { max-width: 100%; }
 
       .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -750,7 +749,8 @@
       .ba-wrap { aspect-ratio: 4/3; }
 
       footer { padding: 2rem 1rem 1.5rem; }
-      .footer-top { grid-template-columns: 1fr; gap: 1.25rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+      .footer-top > :first-child { grid-column: 1 / -1; }
       .footer-col h4 { margin-bottom: 0.5rem; }
 
       .promo-slide { padding: 1.25rem 1rem; }
@@ -1335,8 +1335,8 @@
         <div>
           <div class="c-label">Social Media</div>
           <div class="c-val">
-            <a href="https://www.instagram.com/elysiandentallounge?igsh=cWR4ejV6cDVzYnMw&utm_source=qr" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:6px;">📸 Instagram — @elysiandentallounge</a><br/>
-            <a href="https://www.facebook.com/share/1Js1oQii7S/?mibextid=LQQJ4d" target="_blank" style="display:inline-flex;align-items:center;gap:6px;">👍 Facebook — Elysian Dental Lounge</a>
+            <a href="https://www.instagram.com/elysiandentallounge?igsh=cWR4ejV6cDVzYnMw&utm_source=qr" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:6px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" style="fill:#E4405F;flex-shrink:0;vertical-align:-4px"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>Instagram — @elysiandentallounge</a><br/>
+            <a href="https://www.facebook.com/share/1Js1oQii7S/?mibextid=LQQJ4d" target="_blank" style="display:inline-flex;align-items:center;gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" style="fill:#1877F2;flex-shrink:0;vertical-align:-4px"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>Facebook — Elysian Dental Lounge</a>
           </div>
         </div>
       </div>
@@ -1398,8 +1398,8 @@
     </div>
     <div class="footer-col">
       <h4>Follow Us</h4>
-      <a href="https://www.instagram.com/elysiandentallounge?igsh=cWR4ejV6cDVzYnMw&utm_source=qr" target="_blank">📸 Instagram</a>
-      <a href="https://www.facebook.com/share/1Js1oQii7S/?mibextid=LQQJ4d" target="_blank">👍 Facebook</a>
+      <a href="https://www.instagram.com/elysiandentallounge?igsh=cWR4ejV6cDVzYnMw&utm_source=qr" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" style="fill:#E4405F;flex-shrink:0;vertical-align:-4px;margin-right:6px"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg>Instagram</a>
+      <a href="https://www.facebook.com/share/1Js1oQii7S/?mibextid=LQQJ4d" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" style="fill:#1877F2;flex-shrink:0;vertical-align:-4px;margin-right:6px"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg>Facebook</a>
     </div>
   </div>
   <div class="footer-bottom">
