@@ -1,0 +1,30 @@
+# Elysian Dental Lounge
+
+> Dental clinic in Medavakkam, Chennai, India. Dentist: Dr. Yokesh Kumar R. Treatments include dental implants, orthodontics, Clearalign clear aligners, root canal treatment, smile designing, prosthodontics, paediatric dentistry and sedation dentistry.
+
+## Clinic details
+- Address: RAJA TOWERS, 2/461, Medavakkam Main Rd, Medavakkam, Chennai, Tamil Nadu 600129
+- Phone: +91 94980 52828, +91 94980 62828
+- Opening hours: Monday to Saturday 10:00 AM - 9:00 PM; Sunday 10:00 AM - 1:00 PM
+- Google Maps: https://www.google.com/maps/place/Elysian+Dental+Lounge
+
+## Main pages
+- [Home](https://arul-selvar-s.github.io/test1/): clinic overview, treatments, contact details and appointment enquiry form
+- [Blog](https://arul-selvar-s.github.io/test1/blog.html): dental health tips and articles
+
+## Treatments
+- [Prosthodontics](https://arul-selvar-s.github.io/test1/service-prosthodontics.html): Restore your smile with expert prosthodontic treatment at Elysian Dental Lounge, Medavakkam. Crowns, bridges, dentures and full-mouth rehabilitation by Dr. Yokesh Kumar R.
+- [Dental Implants](https://arul-selvar-s.github.io/test1/service-implants.html): Get permanent dental implants in Medavakkam, Chennai at Elysian Dental Lounge. Replace missing teeth with natural-looking, long-lasting implants by Dr. Yokesh Kumar R.
+- [Orthodontics](https://arul-selvar-s.github.io/test1/service-orthodontics.html): Straighten your teeth with orthodontic treatment at Elysian Dental Lounge, Medavakkam Chennai. Traditional braces and clear aligners for children, teens, and adults.
+- [Smile Designing](https://arul-selvar-s.github.io/test1/service-smile.html): Transform your smile with personalised smile design at Elysian Dental Lounge, Medavakkam Chennai. Veneers, bonding, contouring and whitening by Dr. Yokesh Kumar R.
+- [Clearalign](https://arul-selvar-s.github.io/test1/service-clearalign.html): Straighten your teeth invisibly with Clearalign at Elysian Dental Lounge, Medavakkam Chennai. Custom clear aligners for a discreet, comfortable smile transformation by Dr. Yokesh Kumar R.
+- [Root Canal Treatment](https://arul-selvar-s.github.io/test1/service-rootcanal.html): Painless root canal treatment in Medavakkam, Chennai at Elysian Dental Lounge. Save your natural tooth from infection with gentle, modern RCT by Dr. Yokesh Kumar R.
+- [Sedation Dentistry](https://arul-selvar-s.github.io/test1/service-sedation.html): Dental anxiety? Experience stress-free, pain-free dental treatment with sedation dentistry at Elysian Dental Lounge, Medavakkam Chennai. Safe, monitored sedation by Dr. Yokesh Kumar R.
+- [Paediatric Dentistry](https://arul-selvar-s.github.io/test1/service-paediatric.html): Gentle children's dental care at Elysian Dental Lounge, Medavakkam Chennai. Fun, fear-free dental visits for kids of all ages with expert paediatric care by Dr. Yokesh Kumar R.
+
+## Latest articles
+- [Clearalign vs Traditional Braces — What's Right for You?](https://arul-selvar-s.github.io/test1/blog-post-2.html): We break down the differences, comfort levels, costs, and ideal candidates for each option.
+
+## Notes
+- Articles are general information and are not a substitute for a dental examination.
+- To book, use the appointment enquiry form on the homepage or call the clinic.

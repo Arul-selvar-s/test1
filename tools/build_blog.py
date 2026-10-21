@@ -303,6 +303,7 @@ def date_display(d):
 
 def build_pages(live, site_url, template):
     wrote = 0
+    keep_share = set()
     cats = {}
     for p in live:
         cats[p["category"]] = cats.get(p["category"], 0) + 1
@@ -317,7 +318,8 @@ def build_pages(live, site_url, template):
             ('<a class="post-nav-btn" href="%s">%s →</a>' % (esc(newer["filename"]), esc(newer["title"]))) if newer else "<span></span>")
 
         page_url = (site_url + "/" + p["filename"]) if site_url else ""
-        og_img = absolute(site_url, p["image"])
+        og_img = post_share_image(p, site_url)
+        keep_share.add(os.path.basename(og_img))
         meta = ['<meta name="description" content="%s"/>' % esc(p["excerpt"])]
         if page_url:
             meta.append('<link rel="canonical" href="%s"/>' % esc(page_url))
@@ -339,6 +341,9 @@ def build_pages(live, site_url, template):
         if page_url:
             ld["mainEntityOfPage"] = page_url
         meta.append('<script type="application/ld+json">%s</script>' % json.dumps(ld, ensure_ascii=False).replace("</", "<\\/"))
+        if page_url:
+            meta.append(ld_script(breadcrumb_ld(site_url, [("Home", ""), ("Blog", "blog.html"), (p["title"], p["filename"])])))
+        meta = FAVICON_META + meta + [EXTRA_STYLE]
 
         hero = ('<img src="%s" alt="%s" fetchpriority="high"/>' % (esc(p["image"]), esc(p["alt"]))) if p["image"] else ""
         related = ""
@@ -351,6 +356,7 @@ def build_pages(live, site_url, template):
         page = re.sub(r"\{\{(\w+)\}\}", lambda m: values.get(m.group(1), m.group(0)), template)
         page = page.replace("<!DOCTYPE html>", "<!DOCTYPE html>\n" + MARKER, 1)
         wrote += write_if_changed(ROOT / p["filename"], page)
+    clean_share_images(keep_share)
     return wrote
 
 
@@ -504,6 +510,254 @@ def build_home_latest(live):
     return 1
 
 
+# --------------------------------------------------------------------------- site-wide SEO block
+# Facts below are copied from the clinic's own website (Contact section). If the clinic's phone number,
+# address or opening hours ever change, change them here too AND in index.html, then the search-engine
+# information is rewritten automatically on the next build.
+CLINIC_FACTS = {
+    "phones": ["+91 94980 52828", "+91 94980 62828"],
+    "street": "RAJA TOWERS, 2/461, Medavakkam Main Rd",
+    "locality": "Medavakkam",
+    "city": "Chennai",
+    "region": "Tamil Nadu",
+    "postcode": "600129",
+    "country": "IN",
+    "doctor": "Dr. Yokesh Kumar R",
+    "hours": [(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "10:00", "21:00"),
+              (["Sunday"], "10:00", "13:00")],
+    "hours_text": "Monday to Saturday 10:00 AM - 9:00 PM; Sunday 10:00 AM - 1:00 PM",
+    "maps": "https://www.google.com/maps/place/Elysian+Dental+Lounge",
+    "social": ["https://www.instagram.com/elysiandentallounge", "https://www.facebook.com/share/1Js1oQii7S/"],
+}
+HEAD_START = "<!--SEO:START (written automatically by tools/build_blog.py - do not edit between these two lines)-->"
+HEAD_END = "<!--SEO:END-->"
+# Small shared style rules: skip-to-content link, keyboard focus ring, reduced motion, print layout.
+EXTRA_CSS = (
+    ".skip-link{position:absolute;left:8px;top:8px;z-index:100000;background:#183b56;color:#fff;padding:.7rem 1rem;border-radius:8px;"
+    "font:500 14px 'DM Sans',system-ui,sans-serif;text-decoration:none;transform:translateY(-250%)}"
+    ".skip-link:focus{transform:none;outline:3px solid #0b69ff;outline-offset:2px}"
+    "#main-content:focus{outline:none}"
+    "a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #0b69ff;outline-offset:2px}"
+    "@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;"
+    "transition-duration:.01ms!important;scroll-behavior:auto!important}"
+    ".reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}}"
+    "@media print{nav,.nav-cta,.wa-btn,.skip-link,.hamburger,.mobile-menu,iframe,.booking-form,.footer-staff,.post-nav,.category-bar,.svc-hint,.svc-front-hint{display:none!important}"
+    "body{background:#fff!important;color:#000!important}.reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}"
+    "a{color:inherit!important;text-decoration:underline}img{max-width:100%!important;break-inside:avoid}h1,h2,h3{break-after:avoid}}"
+)
+FAVICON_META = ['<link rel="icon" href="favicon.ico" sizes="any"/>',
+                '<link rel="icon" type="image/png" sizes="32x32" href="images/site/favicon-32.png"/>',
+                '<link rel="apple-touch-icon" href="images/site/apple-touch-icon.png"/>',
+                '<meta name="theme-color" content="#183b56"/>',
+                '<link rel="preconnect" href="https://fonts.googleapis.com"/>',
+                '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>']
+EXTRA_STYLE = "<style>%s</style>" % EXTRA_CSS
+CARD_ALT = "Elysian Dental Lounge, Medavakkam, Chennai"
+
+
+def ld_script(obj):
+    return '<script type="application/ld+json">%s</script>' % json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
+
+
+def dentist_ld(site_url):
+    f = CLINIC_FACTS
+    d = {"@context": "https://schema.org", "@type": "Dentist", "name": CLINIC,
+         "telephone": f["phones"],
+         "address": {"@type": "PostalAddress", "streetAddress": f["street"], "addressLocality": f["locality"] + ", " + f["city"],
+                     "addressRegion": f["region"], "postalCode": f["postcode"], "addressCountry": f["country"]},
+         "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": days, "opens": o, "closes": c}
+                                       for days, o, c in f["hours"]],
+         "hasMap": f["maps"], "sameAs": f["social"],
+         "employee": {"@type": "Person", "name": f["doctor"], "jobTitle": "Dentist"}}
+    if site_url:
+        d["@id"] = site_url + "/#clinic"
+        d["url"] = site_url + "/"
+        d["image"] = site_url + "/images/social/default.jpg"
+        d["logo"] = site_url + "/images/site/logo-512.png"
+    return d
+
+
+def breadcrumb_ld(site_url, trail):
+    """trail = [(name, relative path or '' for home), ...]"""
+    return {"@context": "https://schema.org", "@type": "BreadcrumbList",
+            "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": site_url + "/" + p}
+                                for i, (n, p) in enumerate(trail)]}
+
+
+def page_meta(path, html_text):
+    t = re.search(r"<title>(.*?)</title>", html_text, re.S)
+    d = re.search(r'<meta\s+name="description"\s+content="(.*?)"\s*/?>', html_text, re.S)
+    return (html.unescape(t.group(1)).strip() if t else CLINIC, html.unescape(d.group(1)).strip() if d else "")
+
+
+def build_static_heads(site_url):
+    """Write the search-engine / link-preview / favicon block into the homepage, blog list and treatment pages."""
+    wrote = 0
+    pages = [ROOT / "index.html", ROOT / "blog.html"] + sorted(ROOT.glob("service-*.html"))
+    for path in pages:
+        if not path.exists():
+            continue
+        raw = path.read_bytes().decode("utf-8")
+        nl = "\r\n" if "\r\n" in raw else "\n"
+        text = raw.replace("\r\n", "\n")
+        if HEAD_START in text and HEAD_END in text:           # remove the old block, we write a fresh one
+            a = text.index(HEAD_START)
+            b = text.index(HEAD_END) + len(HEAD_END)
+            text = text[:a].rstrip(" ") + text[b:].lstrip("\n")
+        text = re.sub(r'[ \t]*<meta (?:property="og:|name="twitter:)[^>]*>\n?', "", text)
+        text = re.sub(r'[ \t]*<link rel="canonical"[^>]*>\n?', "", text)
+        title, desc = page_meta(path, text)
+        name = path.name
+        key = name[len("service-"):-len(".html")] if name.startswith("service-") else ""
+        card = "images/social/%s.jpg" % (key if key and (ROOT / "images/social" / (key + ".jpg")).exists() else "default")
+        lines = list(FAVICON_META)
+        ld = []
+        if site_url:
+            page_url = site_url + "/" + ("" if name == "index.html" else name)
+            lines += ['<link rel="canonical" href="%s"/>' % esc(page_url), '<meta property="og:url" content="%s"/>' % esc(page_url)]
+        lines += ['<meta property="og:type" content="website"/>', '<meta property="og:site_name" content="%s"/>' % CLINIC,
+                  '<meta property="og:locale" content="en_IN"/>', '<meta property="og:title" content="%s"/>' % esc(title),
+                  '<meta property="og:description" content="%s"/>' % esc(desc)]
+        if site_url:
+            lines += ['<meta property="og:image" content="%s"/>' % esc(site_url + "/" + card),
+                      '<meta property="og:image:width" content="1200"/>', '<meta property="og:image:height" content="630"/>',
+                      '<meta property="og:image:alt" content="%s"/>' % esc(CARD_ALT),
+                      '<meta name="twitter:card" content="summary_large_image"/>']
+        else:
+            lines.append('<meta name="twitter:card" content="summary"/>')
+        if site_url and name == "index.html":
+            ld.append(dentist_ld(site_url))
+        elif site_url and key in SERVICES:
+            ld.append(breadcrumb_ld(site_url, [("Home", ""), ("Services", "index.html#services"), (SERVICES[key], name)]))
+        lines += [ld_script(x) for x in ld]
+        lines.append(EXTRA_STYLE)
+        block = HEAD_START + "\n  " + "\n  ".join(lines) + "\n  " + HEAD_END
+        anchor = '<link href="https://fonts.googleapis.com'
+        if anchor not in text:
+            print("NOTE: %s has no Google Fonts line, so the search-engine block was not added there." % name)
+            continue
+        text = text.replace(anchor, block + "\n  " + anchor, 1)
+        out = text.replace("\n", nl)
+        if out != raw:
+            path.write_bytes(out.encode("utf-8"))
+            wrote += 1
+    return wrote
+
+
+def build_404(site_url):
+    base = (site_url + "/") if site_url else ""        # the 404 page can be opened from any address, so links must be absolute
+    treat = "".join('<li><a href="%sservice-%s.html">%s</a></li>' % (base, k, esc(v)) for k, v in SERVICES.items())
+    f = CLINIC_FACTS
+    tel = f["phones"][0]
+    page = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Page not found | Elysian Dental Lounge</title>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" href="{b}favicon.ico" sizes="any"/>
+  <link rel="apple-touch-icon" href="{b}images/site/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#183b56"/>
+  <style>
+    *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
+    body{{font-family:'DM Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#F0F6FF;color:#0d1f2d;line-height:1.6;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.25rem}}
+    main{{width:100%;max-width:560px;background:#fff;border:1px solid #C5DDEF;border-radius:20px;padding:2.25rem 1.5rem;text-align:center}}
+    img{{width:64px;height:auto;margin:0 auto 1rem;display:block}}
+    h1{{line-height:1.2;font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:clamp(28px,6vw,38px);color:#183b56;margin-bottom:.5rem}}
+    p{{color:#2E5275;margin-bottom:1.25rem}}
+    .btn{{display:inline-block;background:#183b56;color:#fff;text-decoration:none;padding:.8rem 1.6rem;border-radius:30px;font-weight:500;margin:.25rem}}
+    .btn.alt{{background:#fff;color:#183b56;border:1px solid #183b56}}
+    h2{{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2E5275;margin:1.75rem 0 .6rem;font-weight:500}}
+    ul{{list-style:none;display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}}
+    li a{{display:inline-block;padding:.5rem .9rem;border:1px solid #C5DDEF;border-radius:20px;color:#183b56;text-decoration:none;font-size:14px}}
+    li a:hover,.btn:hover{{opacity:.85}}
+    a:focus-visible{{outline:3px solid #0b69ff;outline-offset:2px}}
+    .tel{{margin-top:1.5rem;font-size:14px;color:#2E5275}} .tel a{{color:#183b56;font-weight:500}}
+  </style>
+</head>
+<body>
+<main id="main-content">
+  <img src="{b}images/site/logo.webp" alt="Elysian Dental Lounge logo" width="48" height="66"/>
+  <h1>Sorry, we can't find that page</h1>
+  <p>The link may be old or mistyped. Here are some places to go instead.</p>
+  <a class="btn" href="{b}index.html">Go to the homepage</a>
+  <a class="btn alt" href="{b}index.html#booking-form">Book an appointment</a>
+  <h2>Our treatments</h2>
+  <ul>{treat}<li><a href="{b}blog.html">Blog</a></li></ul>
+  <p class="tel">Or call us: <a href="tel:{telraw}">{tel}</a></p>
+</main>
+</body>
+</html>
+""".format(b=base, treat=treat, tel=tel, telraw=re.sub(r"\s", "", tel))
+    return write_if_changed(ROOT / "404.html", page.replace("<!DOCTYPE html>", "<!DOCTYPE html>\n" + MARKER, 1))
+
+
+def build_llms(live, site_url):
+    f = CLINIC_FACTS
+    def link(path):
+        return (site_url + "/" + path) if site_url else path
+    lines = ["# %s" % CLINIC, "",
+             "> Dental clinic in %s, %s, India. Dentist: %s. Treatments include dental implants, orthodontics, Clearalign clear aligners, "
+             "root canal treatment, smile designing, prosthodontics, paediatric dentistry and sedation dentistry." % (f["locality"], f["city"], f["doctor"]), "",
+             "## Clinic details",
+             "- Address: %s, %s, %s, %s %s" % (f["street"], f["locality"], f["city"], f["region"], f["postcode"]),
+             "- Phone: %s" % ", ".join(f["phones"]),
+             "- Opening hours: %s" % f["hours_text"],
+             "- Google Maps: %s" % f["maps"], "",
+             "## Main pages",
+             "- [Home](%s): clinic overview, treatments, contact details and appointment enquiry form" % link(""),
+             "- [Blog](%s): dental health tips and articles" % link("blog.html"), "",
+             "## Treatments"]
+    for key, name in SERVICES.items():
+        p = ROOT / ("service-%s.html" % key)
+        if p.exists():
+            _, d = page_meta(p, p.read_text(encoding="utf-8"))
+            lines.append("- [%s](%s): %s" % (name, link(p.name), d))
+    if live:
+        lines += ["", "## Latest articles"]
+        for p in live[:10]:
+            lines.append("- [%s](%s): %s" % (p["title"], link(p["filename"]), p["excerpt"]))
+    lines += ["", "## Notes",
+              "- Articles are general information and are not a substitute for a dental examination.",
+              "- To book, use the appointment enquiry form on the homepage or call the clinic."]
+    return write_if_changed(ROOT / "llms.txt", "\n".join(lines) + "\n")
+
+
+def post_share_image(p, site_url):
+    """Link-preview picture for an article. WhatsApp/Facebook are happiest with a 1200x630 JPG, so a local
+    photo is converted (needs Pillow; without it the original photo is used). Articles without a photo
+    use the clinic's default card."""
+    img = p["image"]
+    if not img:
+        return absolute(site_url, "images/social/default.jpg")
+    if re.match(r"^(https?:)?//", img):
+        return img
+    src = ROOT / img
+    try:
+        from PIL import Image, ImageOps
+        if not src.exists():
+            return absolute(site_url, img)
+        import hashlib
+        h = hashlib.sha1(src.read_bytes()).hexdigest()[:8]
+        rel = "images/social/post-%s-%s.jpg" % (p["slug"], h)
+        out = ROOT / rel
+        if not out.exists():
+            im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
+            im = ImageOps.fit(im, (1200, 630), Image.LANCZOS, centering=(0.5, 0.4))
+            out.parent.mkdir(parents=True, exist_ok=True)
+            im.save(out, "JPEG", quality=82, optimize=True, progressive=True)
+        return absolute(site_url, rel)
+    except Exception:
+        return absolute(site_url, img)
+
+
+def clean_share_images(live_slugs_hashes_keep):
+    for f in (ROOT / "images" / "social").glob("post-*.jpg"):
+        if f.name not in live_slugs_hashes_keep:
+            f.unlink()
+
+
 # --------------------------------------------------------------------------- main
 def main():
     if not TEMPLATE.exists():
@@ -519,6 +773,9 @@ def main():
     changed += build_posts_json(live)
     changed += build_home_latest(live)
     changed += build_seo_files(live, site_url)
+    changed += build_static_heads(site_url)
+    changed += build_404(site_url)
+    changed += build_llms(live, site_url)
     changed += build_status_page(posts, problems, site_url)
 
     print("Website address used: %s" % (site_url or "(none found - sitemap skipped)"))

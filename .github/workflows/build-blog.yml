@@ -34,7 +34,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install helper packages
-        run: pip install markdown pyyaml
+        run: pip install markdown pyyaml pillow
 
       - name: Build blog pages
         run: python tools/build_blog.py

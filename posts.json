@@ -1,37 +1,6 @@
 {
   "posts": [
     {
-      "id": "test2",
-      "title": "Test2",
-      "category": "Oral Health",
-      "author": "ArulSelvar S",
-      "date": "2026-10-21",
-      "dateDisplay": "October 21, 2026",
-      "day": "21",
-      "month": "Oct",
-      "excerpt": "Sueie8oe rkeiejr rnrir t t.t. Y u y u g gh h",
-      "image": "images/blog/1000336526.webp",
-      "filename": "blog-post-test2.html",
-      "services": [
-        "smile",
-        "paediatric"
-      ]
-    },
-    {
-      "id": "testing",
-      "title": "Testing",
-      "category": "Daily Tips",
-      "author": "Dr. Yokesh Kumar R",
-      "date": "2026-10-20",
-      "dateDisplay": "October 20, 2026",
-      "day": "20",
-      "month": "Oct",
-      "excerpt": "Test 1 on today rjrirbrji",
-      "image": "images/blog/1000337304.webp",
-      "filename": "blog-post-testing.html",
-      "services": []
-    },
-    {
       "id": "clearalign-vs-traditional-braces",
       "title": "Clearalign vs Traditional Braces — What's Right for You?",
       "category": "Orthodontics",
