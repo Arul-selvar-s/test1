@@ -670,17 +670,18 @@
     /* Service card front hint */
     .svc-front-hint {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(24,59,86,0.85) 0%, transparent 100%);
-      padding: 1.5rem 1rem 0.85rem;
-      display: flex; align-items: center; justify-content: center;
+      bottom: 1rem; right: 1.25rem;
+      padding: 0;
+      display: flex; align-items: center; justify-content: flex-end;
       gap: 6px;
-      font-size: 12px; color: #fff;
-      letter-spacing: 0.06em;
+      font-size: 12px; color: var(--mid);
+      letter-spacing: 0.04em;
       pointer-events: none;
       transition: opacity 0.2s;
     }
     .svc-front-hint span { font-size: 14px; }
+    /* Two cards per row on narrow screens leaves no room for the words, so only the flip icon is shown */
+    @media (min-width: 481px) and (max-width: 620px) { .svc-front-hint { font-size: 0; } }
     /* Desktop: CSS hover flip */
     @media (hover: hover) {
       .svc-card:hover .svc-inner { transform: rotateY(180deg); }
@@ -973,7 +974,7 @@
     <div class="svc-card" id="svc-prosthodontics">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=600&q=80" alt="Prosthodontics"/>
+          <img class="svc-img" src="images/services/prosthodontics.svg" alt="Illustration of a dental crown being placed over a prepared tooth" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Prosthodontics</div><span class="svc-tag">Restoration</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -990,7 +991,7 @@
     <div class="svc-card" id="svc-implants">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=600&q=80" alt="Dental Implants"/>
+          <img class="svc-img" src="images/services/implants.svg" alt="Illustration of a dental implant with abutment and crown placed in the jawbone" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Dental Implants</div><span class="svc-tag">Permanent Fix</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -1007,7 +1008,7 @@
     <div class="svc-card" id="svc-orthodontics">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=600&q=80" alt="Orthodontics"/>
+          <img class="svc-img" src="images/services/orthodontics.svg" alt="Illustration of teeth with braces and an archwire" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Orthodontics</div><span class="svc-tag">Alignment</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -1024,7 +1025,7 @@
     <div class="svc-card" id="svc-rootcanal">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=600&q=80" alt="Root Canal Treatment"/>
+          <img class="svc-img" src="images/services/rootcanal.svg" alt="Illustration of a tooth with a cleaned and filled root canal" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Root Canal Treatment</div><span class="svc-tag">Pain Relief</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -1041,7 +1042,7 @@
     <div class="svc-card" id="svc-smile">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?w=600&q=80" alt="Smile Designing"/>
+          <img class="svc-img" src="images/services/smile.svg" alt="Illustration of a bright, even smile" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Smile Designing</div><span class="svc-tag">Cosmetic</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -1058,7 +1059,7 @@
     <div class="svc-card" id="svc-paediatric">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?w=600&q=80" alt="Paediatric Dentistry"/>
+          <img class="svc-img" src="images/services/paediatric.svg" alt="Illustration of a happy child-friendly tooth with a toothbrush" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Paediatric Dentistry</div><span class="svc-tag">For Kids</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -1075,7 +1076,7 @@
     <div class="svc-card" id="svc-sedation">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&q=80" alt="Sedation Dentistry" />
+          <img class="svc-img" src="images/services/sedation.svg" alt="Illustration of a calm, sleeping tooth under the moon" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Sedation Dentistry</div><span class="svc-tag">Anxiety-Free</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
@@ -1092,7 +1093,7 @@
     <div class="svc-card" id="svc-clearalign">
       <div class="svc-inner">
         <div class="svc-front">
-          <img class="svc-img" src="https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=600&q=80" alt="Clearalign"/>
+          <img class="svc-img" src="images/services/clearalign.svg" alt="Illustration of a clear aligner tray over straight teeth" width="600" height="360" loading="lazy"/>
           <div class="svc-body"><div class="svc-name">Clearalign</div><span class="svc-tag">Invisible Braces</span></div>
           <div class="svc-front-hint"><span>↺</span> Tap to learn more</div>
         </div>
