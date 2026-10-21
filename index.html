@@ -24,8 +24,8 @@
       --light: #6B93B8;
       --border: #C5DDEF;
     }
-    html { scroll-behavior: smooth; overflow-x: hidden; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; max-width: 100%; }
+    html { scroll-behavior: smooth; overflow-x: hidden; overflow-x: clip; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; overflow-x: clip; max-width: 100%; }
 
     /* ── NAV ── */
     nav {
@@ -322,6 +322,10 @@
     .reveal.visible, .reveal-left.visible, .reveal-right.visible {
       opacity: 1; transform: translate(0);
     }
+    /* On phones and tablets nothing slides in from the side (it would sit outside the screen and could shift the page when a link jumps to it) */
+    @media (max-width: 900px) {
+      .reveal.from-left, .reveal.from-right, .reveal-left, .reveal-right { transform: translateY(24px); }
+    }
     .reveal-delay-1 { transition-delay: 0.12s; }
     .reveal-delay-2 { transition-delay: 0.24s; }
     .reveal-delay-3 { transition-delay: 0.36s; }
@@ -583,6 +587,7 @@
       opacity: 1;
       transform: translate(0, 0);
     }
+    @media (max-width: 900px) { .reveal.from-left, .reveal.from-right { transform: translateY(24px); } .reveal.visible { transform: translate(0, 0); } }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
@@ -1285,13 +1290,18 @@
   </div>
 </section>
 
-<!-- LATEST ARTICLES (filled in automatically from posts.json; stays hidden if there are no published articles) -->
-<section class="blog-section" id="latest-articles" hidden>
+<!-- LATEST ARTICLES: written into this page automatically by tools/build_blog.py (the 2 newest published articles). Do not edit between the markers by hand. -->
+<!--LATEST-ARTICLES:START-->
+<section class="blog-section" id="latest-articles">
   <div class="sec-label reveal">From Our Blog</div>
   <h2 class="sec-title reveal">Dental tips &amp;<br><em>advice</em></h2>
-  <div class="blog-grid" id="latest-blog-grid"></div>
+  <div class="blog-grid" id="latest-blog-grid">
+    <a class="blog-card" href="blog-post-testing.html"><div class="blog-thumb"><img src="images/blog/1000337304.webp" alt="" loading="lazy" width="400" height="160"/></div><div class="blog-body"><div class="blog-date">October 20, 2026 · Daily Tips</div><div class="blog-title">Testing</div><p class="blog-excerpt">Test 1 on today rjrirbrji</p><span class="blog-link">Read more →</span></div></a>
+    <a class="blog-card" href="blog-post-2.html"><div class="blog-thumb"><img src="https://images.unsplash.com/photo-1598256742736-a1c08ce6e536?w=1200&amp;q=80" alt="" loading="lazy" width="400" height="160"/></div><div class="blog-body"><div class="blog-date">April 8, 2026 · Orthodontics</div><div class="blog-title">Clearalign vs Traditional Braces — What&#x27;s Right for You?</div><p class="blog-excerpt">We break down the differences, comfort levels, costs, and ideal candidates for each option.</p><span class="blog-link">Read more →</span></div></a>
+  </div>
   <p class="blog-all"><a class="blog-link" href="blog.html">Read all articles →</a></p>
 </section>
+<!--LATEST-ARTICLES:END-->
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
@@ -1603,31 +1613,6 @@
   });
 </script>
 
-<script>
-/* Latest articles: reads posts.json (made automatically from the admin editor). If it cannot be read, the section just stays hidden. */
-(function () {
-  var sec = document.getElementById('latest-articles'), grid = document.getElementById('latest-blog-grid');
-  if (!sec || !grid) return;
-  function esc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-  fetch('posts.json', { cache: 'no-cache' })
-    .then(function (r) { if (!r.ok) throw new Error('status ' + r.status); return r.json(); })
-    .then(function (d) {
-      var posts = (d.posts || []).filter(function (p) { return !p.draft; })
-        .sort(function (a, b) { return String(b.date || '').localeCompare(String(a.date || '')); }).slice(0, 2);   // only the 2 newest on the homepage
-      if (!posts.length) return;
-      grid.className = 'blog-grid' + (posts.length === 1 ? ' one' : '');
-      grid.innerHTML = posts.map(function (p) {
-        var thumb = p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" width="400" height="160"/>' : '\uD83E\uDDB7';
-        return '<a class="blog-card" href="' + esc(p.filename) + '"><div class="blog-thumb">' + thumb + '</div><div class="blog-body">' +
-          '<div class="blog-date">' + esc(p.dateDisplay || p.date) + ' \u00B7 ' + esc(p.category) + '</div>' +
-          '<div class="blog-title">' + esc(p.title) + '</div><p class="blog-excerpt">' + esc(p.excerpt) + '</p>' +
-          '<span class="blog-link">Read more \u2192</span></div></a>';
-      }).join('');
-      sec.hidden = false;
-    })
-    .catch(function (e) { console.warn('Latest articles not shown:', e); });
-})();
-</script>
 <script src="site-enhancements.js" defer></script>
 <script src="appointment-form.js" defer></script>
 </body>

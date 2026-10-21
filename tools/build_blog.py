@@ -458,6 +458,52 @@ def build_status_page(posts, problems, site_url):
     return write_if_changed(path, page)
 
 
+HOME_START = "<!--LATEST-ARTICLES:START-->"
+HOME_END = "<!--LATEST-ARTICLES:END-->"
+
+
+def build_home_latest(live):
+    """Write the 2 newest published articles into the homepage ("From Our Blog" section).
+    They are written into the page itself (not loaded later) so the page never jumps
+    around while it opens, and so the section also works without JavaScript."""
+    path = ROOT / "index.html"
+    if not path.exists():
+        return 0
+    raw = path.read_bytes().decode("utf-8")
+    nl = "\r\n" if "\r\n" in raw else "\n"
+    text = raw.replace("\r\n", "\n")
+    if HOME_START not in text or HOME_END not in text:
+        print("NOTE: index.html has no latest-articles markers (%s ... %s), so the homepage list was not updated. "
+              "Put the two marker lines back where the 'From Our Blog' section should be." % (HOME_START, HOME_END))
+        return 0
+    latest = live[:2]
+    if latest:
+        cards = []
+        for p in latest:
+            thumb = ('<img src="%s" alt="" loading="lazy" width="400" height="160"/>' % esc(p["image"])) if p["image"] else "\U0001F9B7"
+            cards.append(
+                '    <a class="blog-card" href="%s"><div class="blog-thumb">%s</div><div class="blog-body">'
+                '<div class="blog-date">%s \u00B7 %s</div><div class="blog-title">%s</div>'
+                '<p class="blog-excerpt">%s</p><span class="blog-link">Read more \u2192</span></div></a>'
+                % (esc(p["filename"]), thumb, esc(date_display(p["date"])), esc(p["category"]), esc(p["title"]), esc(p["excerpt"])))
+        block = (
+            '<section class="blog-section" id="latest-articles">\n'
+            '  <div class="sec-label reveal">From Our Blog</div>\n'
+            '  <h2 class="sec-title reveal">Dental tips &amp;<br><em>advice</em></h2>\n'
+            '  <div class="blog-grid%s" id="latest-blog-grid">\n%s\n  </div>\n'
+            '  <p class="blog-all"><a class="blog-link" href="blog.html">Read all articles \u2192</a></p>\n'
+            '</section>\n' % (" one" if len(latest) == 1 else "", "\n".join(cards)))
+    else:
+        block = ""
+    a = text.index(HOME_START) + len(HOME_START)
+    b = text.index(HOME_END)
+    new = text[:a] + "\n" + block + text[b:]
+    if new == text:
+        return 0
+    path.write_bytes(new.replace("\n", nl).encode("utf-8"))
+    return 1
+
+
 # --------------------------------------------------------------------------- main
 def main():
     if not TEMPLATE.exists():
@@ -471,6 +517,7 @@ def main():
     changed = build_pages(live, site_url, template)
     removed = remove_stale_pages(live)
     changed += build_posts_json(live)
+    changed += build_home_latest(live)
     changed += build_seo_files(live, site_url)
     changed += build_status_page(posts, problems, site_url)
 
