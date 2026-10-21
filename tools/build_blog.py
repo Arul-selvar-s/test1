@@ -390,7 +390,7 @@ def build_seo_files(live, site_url):
     wrote = 0
     if not site_url:
         return 0
-    urls = [("", None), ("blog.html", None)]
+    urls = [("", None), ("blog.html", None), ("privacy.html", None)]
     urls += [(f.name, None) for f in sorted(ROOT.glob("service-*.html"))]
     urls += [(p["filename"], p["date"].isoformat()) for p in live]
     xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -531,27 +531,16 @@ CLINIC_FACTS = {
 }
 HEAD_START = "<!--SEO:START (written automatically by tools/build_blog.py - do not edit between these two lines)-->"
 HEAD_END = "<!--SEO:END-->"
-# Small shared style rules: skip-to-content link, keyboard focus ring, reduced motion, print layout.
-EXTRA_CSS = (
-    ".skip-link{position:absolute;left:8px;top:8px;z-index:100000;background:#183b56;color:#fff;padding:.7rem 1rem;border-radius:8px;"
-    "font:500 14px 'DM Sans',system-ui,sans-serif;text-decoration:none;transform:translateY(-250%)}"
-    ".skip-link:focus{transform:none;outline:3px solid #0b69ff;outline-offset:2px}"
-    "#main-content:focus{outline:none}"
-    "a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #0b69ff;outline-offset:2px}"
-    "@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;"
-    "transition-duration:.01ms!important;scroll-behavior:auto!important}"
-    ".reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}}"
-    "@media print{nav,.nav-cta,.wa-btn,.skip-link,.hamburger,.mobile-menu,iframe,.booking-form,.footer-staff,.post-nav,.category-bar,.svc-hint,.svc-front-hint{display:none!important}"
-    "body{background:#fff!important;color:#000!important}.reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}"
-    "a{color:inherit!important;text-decoration:underline}img{max-width:100%!important;break-inside:avoid}h1,h2,h3{break-after:avoid}}"
-)
 FAVICON_META = ['<link rel="icon" href="favicon.ico" sizes="any"/>',
                 '<link rel="icon" type="image/png" sizes="32x32" href="images/site/favicon-32.png"/>',
                 '<link rel="apple-touch-icon" href="images/site/apple-touch-icon.png"/>',
                 '<meta name="theme-color" content="#183b56"/>',
                 '<link rel="preconnect" href="https://fonts.googleapis.com"/>',
                 '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>']
-EXTRA_STYLE = "<style>%s</style>" % EXTRA_CSS
+# Shared look-and-feel extras live in site-extras.css; this tiny script applies a saved dark-mode choice before the page paints.
+THEME_SCRIPT = ("<script>try{if(localStorage.getItem('elysian-theme')==='dark')"
+                "document.documentElement.setAttribute('data-theme','dark')}catch(e){}</script>")
+EXTRA_STYLE = '<link rel="stylesheet" href="site-extras.css"/>\n  ' + THEME_SCRIPT
 CARD_ALT = "Elysian Dental Lounge, Medavakkam, Chennai"
 
 
@@ -593,7 +582,7 @@ def page_meta(path, html_text):
 def build_static_heads(site_url):
     """Write the search-engine / link-preview / favicon block into the homepage, blog list and treatment pages."""
     wrote = 0
-    pages = [ROOT / "index.html", ROOT / "blog.html"] + sorted(ROOT.glob("service-*.html"))
+    pages = [ROOT / "index.html", ROOT / "blog.html", ROOT / "privacy.html"] + sorted(ROOT.glob("service-*.html"))
     for path in pages:
         if not path.exists():
             continue
@@ -758,6 +747,143 @@ def clean_share_images(live_slugs_hashes_keep):
             f.unlink()
 
 
+
+PRIVACY_BODY = """
+<p>This page explains, in plain words, what information this website handles. It is general information and may be updated if the website changes.</p>
+
+<h2>Who we are</h2>
+<p>Elysian Dental Lounge, __ADDRESS__. Phone: __PHONES__.</p>
+
+<h2>The appointment enquiry form</h2>
+<p>When you send an enquiry we receive the details you type in: your name, phone number, preferred date and time, the treatment you pick, and an optional message. We use them only to contact you about your appointment.</p>
+<p>Please do not write medical history or other sensitive health details in the message box. The dentist will ask about these in person.</p>
+<p>The form is delivered by a service called <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms</a>, which passes your enquiry to the clinic by email. Your enquiry is only shown as sent when that service confirms it.</p>
+<p>If you arrive through a campaign link (one that contains <em>utm_</em> labels), the label is kept for your current visit only and is added to your enquiry so we know which link brought you.</p>
+
+<h2>WhatsApp, phone, maps and social media</h2>
+<p>The WhatsApp buttons, the optional &ldquo;send these details on WhatsApp&rdquo; button, and our Instagram and Facebook links take you to those services. They have their own privacy terms. Nothing is sent to WhatsApp unless you press Send there.</p>
+
+<h2>Cookies and what is stored on your device</h2>
+<p>This website does not use advertising or tracking cookies, and it does not run visitor analytics. Your browser keeps three small things on your own device only: your light/dark choice, whether you have dismissed the privacy notice, and (for the current visit) any campaign label described above.</p>
+
+<h2>Content from other companies</h2>
+<p>The page fonts and the embedded map are loaded from Google. When they load, Google can receive your internet address and browser details, as with any website that uses these services.</p>
+
+<h2>Your choices</h2>
+<p>To ask us to correct or delete details you have sent us, call us on __PHONES__.</p>
+<p>If we ever add analytics or other tools that collect visitor data, we will update this page first.</p>
+"""
+
+
+def build_privacy(site_url):
+    f = CLINIC_FACTS
+    addr = "%s, %s, %s, %s %s" % (f["street"], f["locality"], f["city"], f["region"], f["postcode"])
+    body = PRIVACY_BODY.replace("__ADDRESS__", esc(addr)).replace("__PHONES__", esc(" or ".join(f["phones"])))
+    page = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy information | Elysian Dental Lounge</title>
+  <meta name="description" content="How Elysian Dental Lounge handles the details you send through its appointment form, and what this website stores on your device."/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cream:#F0F6FF;--warm:#E8F1FC;--sage:#4A8FD4;--sage-l:#BDD8F5;--sage-d:#183b56;--gold:#0b69ff;--dark:#0d1f2d;--mid:#2E5275;--light:#6B93B8;--border:#C5DDEF}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);line-height:1.7}
+    nav{position:sticky;top:0;z-index:200;background:rgba(240,246,255,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 4rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .nav-logo-img{width:48px;height:48px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--border);padding:3px}
+    .nav-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;letter-spacing:0.06em;color:var(--dark)}
+    .nav-name span{color:var(--sage-d);font-style:italic}
+    .nav-links{display:flex;gap:2.5rem}
+    .nav-links a{font-size:13px;color:var(--mid);text-decoration:none;letter-spacing:0.04em}
+    .nav-links a:hover{color:var(--sage-d);font-weight:500}
+    .nav-cta{background:var(--sage-d);color:#fff;padding:10px 22px;border-radius:30px;font-size:13px;text-decoration:none;display:inline-block}
+    .band{background:var(--sage-d);padding:2.5rem 4rem;text-align:center}
+    .band h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(30px,5vw,46px);color:#fff;line-height:1.15}
+    .wrap{max-width:780px;margin:0 auto;padding:2rem 1.5rem 3rem}
+    .wrap h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:26px;color:var(--sage-d);margin:1.75rem 0 .5rem}
+    .wrap p{font-size:15px;color:var(--mid);margin-bottom:.9rem}
+    .wrap a{color:var(--sage-d)}
+    footer{background:var(--dark);color:rgba(255,255,255,.7);padding:1.5rem 4rem;font-size:13px;display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;justify-content:space-between;padding-right:5rem}
+    footer a{color:rgba(255,255,255,.85)}
+    .wa-btn{position:fixed;bottom:2rem;right:2rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none}
+    .wa-btn svg{width:28px;height:28px;fill:#fff}
+    @media(max-width:700px){nav{padding:0 1.5rem}.nav-links{display:none}.band{padding:2rem 1.25rem}footer{padding:1.5rem}}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav>
+  <a class="nav-brand" href="index.html">
+    <img class="nav-logo-img" src="images/site/logo.webp" alt="Elysian Dental Lounge logo" width="48" height="48"/>
+    <span class="nav-name">Elysian <span>Dental</span> Lounge</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#booking-form">Book</a>
+    <a href="blog.html">Blog</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a class="nav-cta" href="index.html#booking-form">Book Appointment</a>
+</nav>
+<div class="band" id="main-content" tabindex="-1"><h1>Privacy information</h1></div>
+<main class="wrap">__BODY__</main>
+<footer>
+  <span>&copy; 2026 Elysian Dental Lounge. All rights reserved.</span>
+  <span><a href="index.html">Home</a> &middot; <a href="blog.html">Blog</a> &middot; <a href="privacy.html">Privacy</a></span>
+</footer>
+<a class="wa-btn" href="https://wa.me/919498052828" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script src="site-enhancements.js" defer></script>
+<script src="site-features.js" defer></script>
+</body>
+</html>
+""".replace("__BODY__", body)
+    path = ROOT / "privacy.html"
+    if path.exists():                      # the SEO block is added afterwards, so compare without it
+        old = path.read_text(encoding="utf-8")
+        if HEAD_START in old and HEAD_END in old:
+            a = old.index(HEAD_START)
+            b = old.index(HEAD_END) + len(HEAD_END)
+            old = old[:a].rstrip(" ") + old[b:].lstrip("\n")
+        if old == page:
+            return 0
+    return write_if_changed(path, page)
+
+
+def strip_tags(s):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s))).strip()
+
+
+def build_search_index(live):
+    """search-index.json: what the search button on every page looks through."""
+    items = [
+        {"t": "Home", "u": "index.html", "k": "Page", "d": "Elysian Dental Lounge, Medavakkam, Chennai.", "x": "clinic dentist dental care"},
+        {"t": "Book an appointment", "u": "index.html#booking-form", "k": "Page",
+         "d": "Send an appointment enquiry. We call you to confirm.", "x": "appointment booking enquiry form visit consultation"},
+        {"t": "Contact, address and opening hours", "u": "index.html#contact", "k": "Page",
+         "d": "Address, phone numbers, WhatsApp, opening hours and map.", "x": "location directions map timings hours open phone call whatsapp address"},
+        {"t": "Patient reviews", "u": "index.html#reviews", "k": "Page", "d": "What patients say about us.", "x": "testimonials rating google"},
+        {"t": "Common questions", "u": "index.html#faq", "k": "Page", "d": "Quick answers about booking, timings, location and treatments.", "x": "faq questions emi walk in"},
+        {"t": "Blog", "u": "blog.html", "k": "Page", "d": "Dental health tips and articles from our dentist.", "x": "articles tips advice"},
+        {"t": "Privacy information", "u": "privacy.html", "k": "Page", "d": "How this website handles your details.", "x": "cookies data privacy"},
+    ]
+    for key, name in SERVICES.items():
+        p = ROOT / ("service-%s.html" % key)
+        if not p.exists():
+            continue
+        text = p.read_text(encoding="utf-8")
+        _, d = page_meta(p, text)
+        heads = [strip_tags(h) for h in re.findall(r"<h2[^>]*>(.*?)</h2>", text, re.S)]
+        qs = [strip_tags(q) for q in re.findall(r'class="faq-q"[^>]*>(.*?)<span', text, re.S)]
+        items.append({"t": name, "u": p.name, "k": "Treatment", "d": d, "x": " ".join(heads + qs)})
+    for a in live:
+        items.append({"t": a["title"], "u": a["filename"], "k": "Article", "d": a["excerpt"], "x": a["category"]})
+    return write_if_changed(ROOT / "search-index.json", json.dumps({"items": items}, ensure_ascii=False, indent=1) + "\n")
+
+
 # --------------------------------------------------------------------------- main
 def main():
     if not TEMPLATE.exists():
@@ -773,6 +899,8 @@ def main():
     changed += build_posts_json(live)
     changed += build_home_latest(live)
     changed += build_seo_files(live, site_url)
+    changed += build_privacy(site_url)
+    changed += build_search_index(live)
     changed += build_static_heads(site_url)
     changed += build_404(site_url)
     changed += build_llms(live, site_url)

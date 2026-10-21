@@ -1,0 +1,103 @@
+/* Elysian Dental Lounge - shared extras (loaded on every page)
+   skip link, keyboard focus, reduced motion, print layout, scroll progress bar, back-to-top,
+   search window, privacy notice, copy buttons, confirmation window and dark mode. */
+
+/* ---- skip link and keyboard focus ---- */
+.skip-link{position:absolute;left:8px;top:8px;z-index:100000;background:#183b56;color:#fff;padding:.7rem 1rem;border-radius:8px;font:500 14px 'DM Sans',system-ui,sans-serif;text-decoration:none;transform:translateY(-250%)}
+.skip-link:focus{transform:none;outline:3px solid #0b69ff;outline-offset:2px}
+#main-content:focus{outline:none}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #0b69ff;outline-offset:2px}
+
+/* ---- scroll progress bar ---- */
+.scroll-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100001;pointer-events:none;transform-origin:0 50%;transform:scaleX(0);background:#0b69ff}
+
+/* ---- back to top ---- */
+.to-top{position:fixed;right:calc(2rem + 5px);bottom:calc(2rem + 54px + 14px + env(safe-area-inset-bottom,0px));z-index:998;width:44px;height:44px;border-radius:50%;border:1px solid #C5DDEF;background:#fff;color:#183b56;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(13,31,45,.15);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility .2s;padding:0}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.to-top:hover{background:#183b56;color:#fff}
+
+/* ---- nav tool buttons (search, dark mode) ---- */
+.nav-tool{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid #C5DDEF;border-radius:50%;background:#fff;color:#183b56;cursor:pointer;padding:0;margin-left:.5rem;flex-shrink:0}
+.nav-tool:hover{background:#183b56;color:#fff}
+.nav-tool svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-tool .ic-sun{display:none}
+html[data-theme="dark"] .nav-tool .ic-sun{display:block}
+html[data-theme="dark"] .nav-tool .ic-moon{display:none}
+@media(max-width:900px){nav .nav-tool{display:none}}
+.nav-links a.nav-menu-tool{display:none;background:none;border:0;border-bottom:1px solid #E8F1FC;text-align:left;font:inherit;cursor:pointer;width:100%}
+@media(max-width:900px){nav.nav-open .nav-links a.nav-menu-tool{display:block;font-size:15px;padding:14px 4px;color:#2E5275}}
+
+/* ---- windows (search, confirmation) ---- */
+.ed-overlay{position:fixed;inset:0;z-index:100002;background:rgba(13,31,45,.55);display:flex;align-items:flex-start;justify-content:center;padding:max(1rem,env(safe-area-inset-top)) 1rem 1rem;overflow-y:auto}
+.ed-overlay[hidden]{display:none}
+.ed-dialog{background:#fff;color:#0d1f2d;width:100%;max-width:560px;border-radius:20px;padding:1.5rem;margin-top:8vh;box-shadow:0 24px 60px rgba(13,31,45,.35);font-family:'DM Sans',system-ui,sans-serif}
+.ed-dialog.center{margin-top:auto;margin-bottom:auto}
+.ed-dialog h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:26px;color:#183b56;margin:0 0 .5rem;line-height:1.2}
+.ed-dialog p{font-size:15px;line-height:1.7;color:#2E5275;margin:0 0 .75rem}
+.ed-close{float:right;margin:-.25rem -.25rem 0 .5rem;width:40px;height:40px;border-radius:50%;border:1px solid #C5DDEF;background:#fff;color:#183b56;font-size:22px;line-height:1;cursor:pointer;padding:0}
+.ed-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 22px;border-radius:30px;border:1px solid #183b56;background:#183b56;color:#fff;font:500 14px 'DM Sans',system-ui,sans-serif;cursor:pointer;text-decoration:none}
+.ed-btn.alt{background:#fff;color:#183b56}
+.ed-actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem}
+.ed-search-input{width:100%;font:16px 'DM Sans',system-ui,sans-serif;padding:12px 14px;border:1px solid #C5DDEF;border-radius:12px;background:#fff;color:#0d1f2d}
+.ed-results{list-style:none;margin:.75rem 0 0;padding:0}
+.ed-results li a{display:block;padding:10px 12px;border-radius:12px;text-decoration:none;color:#0d1f2d}
+.ed-results li a:hover,.ed-results li a:focus-visible{background:#E8F1FC}
+.ed-results .r-title{font-weight:500;font-size:15px}
+.ed-results .r-kind{display:inline-block;margin-left:8px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#2E5275}
+.ed-results .r-desc{display:block;font-size:13px;color:#2E5275;margin-top:2px;line-height:1.5}
+.ed-empty{font-size:14px;color:#2E5275;margin:.75rem 0 0}
+
+/* ---- privacy notice ---- */
+.privacy-notice{position:fixed;left:0;right:0;bottom:0;z-index:997;background:#0d1f2d;color:#fff;padding:.7rem 5.5rem calc(.7rem + env(safe-area-inset-bottom,0px)) 1.25rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;font:12.5px/1.5 'DM Sans',system-ui,sans-serif}
+.privacy-notice[hidden]{display:none}
+.privacy-notice p{margin:0;flex:1 1 280px;color:rgba(255,255,255,.9)}
+.privacy-notice a{color:#BDD8F5}
+.privacy-notice button{min-height:40px;padding:6px 20px;border-radius:30px;border:0;background:#fff;color:#183b56;font:500 14px 'DM Sans',system-ui,sans-serif;cursor:pointer}
+
+/* ---- copy buttons ---- */
+.copy-btn{display:inline-flex;align-items:center;gap:4px;margin-left:8px;min-height:32px;padding:2px 10px;border:1px solid #C5DDEF;border-radius:16px;background:#fff;color:#183b56;font:12px 'DM Sans',system-ui,sans-serif;cursor:pointer;vertical-align:middle}
+.copy-btn:hover{background:#E8F1FC}
+.ed-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---- last updated line ---- */
+.last-updated{opacity:.8}
+
+/* ---- homepage questions (expandable) ---- */
+.home-faq{padding:2.5rem max(4.5rem,calc((100% - 1280px)/2));background:var(--cream,#F0F6FF)}
+.home-faq-list{max-width:820px;margin:1.5rem auto 0}
+.home-faq details{background:#fff;border:1px solid var(--border,#C5DDEF);border-radius:14px;margin-bottom:.75rem}
+.home-faq summary{cursor:pointer;list-style:none;padding:1rem 1.25rem;font-size:15px;font-weight:500;color:var(--dark,#0d1f2d);display:flex;justify-content:space-between;gap:1rem;align-items:center;min-height:48px}
+.home-faq summary::-webkit-details-marker{display:none}
+.home-faq summary::after{content:"\25BE";color:var(--sage-d,#183b56);transition:transform .2s}
+.home-faq details[open] summary::after{transform:rotate(180deg)}
+.home-faq details p{padding:0 1.25rem 1.1rem;font-size:14px;line-height:1.8;color:var(--mid,#2E5275);margin:0}
+.home-faq details a{color:var(--sage-d,#183b56)}
+@media(max-width:900px){.home-faq{padding:2rem 1.25rem}}
+@media(max-width:600px){.home-faq{padding:2rem 1rem}}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}
+}
+
+/* ---- dark mode (turned on with the moon button; the choice is remembered on this device) ---- */
+html[data-theme="dark"]{filter:invert(1) hue-rotate(180deg);background:#fff}
+html[data-theme="dark"] img,html[data-theme="dark"] video,html[data-theme="dark"] iframe,html[data-theme="dark"] .no-dark-invert{filter:invert(1) hue-rotate(180deg)}
+/* Bands that are dark on purpose keep their normal look (turned back the right way up) */
+html[data-theme="dark"] .promo-bar,html[data-theme="dark"] footer,html[data-theme="dark"] .privacy-notice,html[data-theme="dark"] .svc-hero,html[data-theme="dark"] .post-hero,html[data-theme="dark"] .blog-hero,html[data-theme="dark"] .band{filter:invert(1) hue-rotate(180deg)}
+html[data-theme="dark"] .svc-hero img{filter:brightness(.42)}
+html[data-theme="dark"] .post-hero img,html[data-theme="dark"] .blog-hero img{filter:none}
+
+/* ---- print ---- */
+@media print{
+  nav,.nav-cta,.nav-tool,.wa-btn,.skip-link,.hamburger,.mobile-menu,iframe,.booking-form,.footer-staff,.post-nav,.category-bar,.svc-hint,.svc-front-hint,.to-top,.scroll-progress,.privacy-notice,.ed-overlay,.copy-btn{display:none!important}
+  html[data-theme="dark"]{filter:none!important}
+  html[data-theme="dark"] img,html[data-theme="dark"] iframe{filter:none!important}
+  body{background:#fff!important;color:#000!important}
+  .reveal,.reveal-left,.reveal-right{opacity:1!important;transform:none!important}
+  a{color:inherit!important;text-decoration:underline}
+  img{max-width:100%!important;break-inside:avoid}
+  h1,h2,h3{break-after:avoid}
+}

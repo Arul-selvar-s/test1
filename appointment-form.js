@@ -58,6 +58,40 @@
     note.textContent = 'Optional. Opens WhatsApp with your details ready to send, so we can reach you faster.';
     status.appendChild(a);
     status.appendChild(note);
+    return a.href;
+  }
+
+  // A small confirmation window, shown only after the email has really been delivered.
+  function showConfirmation(firstName, waHref) {
+    if (!window.ElysianUI) return;
+    window.ElysianUI.openDialog({
+      title: 'Request received',
+      center: true,
+      build: function (box, close) {
+        var p = document.createElement('p');
+        p.textContent = 'Thank you, ' + firstName + '! We have received your request and will call you shortly to confirm your appointment.';
+        box.appendChild(p);
+        var actions = document.createElement('div');
+        actions.className = 'ed-actions';
+        if (waHref) {
+          var wa = document.createElement('a');
+          wa.className = 'ed-btn alt';
+          wa.href = waHref;
+          wa.target = '_blank';
+          wa.rel = 'noopener';
+          wa.textContent = 'Also send on WhatsApp';
+          actions.appendChild(wa);
+        }
+        var ok = document.createElement('button');
+        ok.type = 'button';
+        ok.className = 'ed-btn';
+        ok.textContent = 'Done';
+        ok.setAttribute('data-autofocus', '');
+        ok.addEventListener('click', close);
+        actions.appendChild(ok);
+        box.appendChild(actions);
+      }
+    });
   }
 
   function clearInvalid() {
@@ -110,6 +144,9 @@
       service: serviceEl.value,
       message: msgEl.value.trim()
     };
+    // If the visitor arrived through a campaign link (utm_ labels), tell us which one.
+    var utm = window.ElysianUtm ? window.ElysianUtm() : {};
+    for (var k in utm) { if (Object.prototype.hasOwnProperty.call(utm, k)) payload[k] = utm[k]; }
 
     var originalLabel = btn.textContent;
     btn.disabled = true;
@@ -129,7 +166,8 @@
         if (res.ok && res.data && res.data.success === true) {
           var first = name.split(/\s+/)[0];
           showStatus('ok', 'Thank you, ' + first + '! We have received your request and will call you shortly to confirm your appointment.');
-          addWhatsAppCopy({ name: name, phone: payload.phone, date: payload.preferred_date, time: payload.preferred_time, service: payload.service, message: payload.message });
+          var waHref = addWhatsAppCopy({ name: name, phone: payload.phone, date: payload.preferred_date, time: payload.preferred_time, service: payload.service, message: payload.message });
+          showConfirmation(first, waHref);
           form.reset();
           timeEl.innerHTML = '<option value="">— Select a date first —</option>';
         } else {

@@ -16,3 +16,6 @@ Nothing is tied to one address. All links are relative. The builder reads the `C
 
 ## Appointment form
 `appointment-form.js` sends enquiries through Web3Forms (public access key at the top of the file).
+
+## Shared features
+`site-extras.css` and `site-features.js` (loaded on every page) provide dark mode, site search (reads the automatic `search-index.json`), scroll progress bar, back-to-top, privacy notice, copy buttons and the footer "Last updated" date (the date the site was last published). `privacy.html` is written by the builder: if analytics or other tracking is ever added, update the text in `PRIVACY_BODY` in `tools/build_blog.py` first.

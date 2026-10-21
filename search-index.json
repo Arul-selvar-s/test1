@@ -1,0 +1,116 @@
+{
+ "items": [
+  {
+   "t": "Home",
+   "u": "index.html",
+   "k": "Page",
+   "d": "Elysian Dental Lounge, Medavakkam, Chennai.",
+   "x": "clinic dentist dental care"
+  },
+  {
+   "t": "Book an appointment",
+   "u": "index.html#booking-form",
+   "k": "Page",
+   "d": "Send an appointment enquiry. We call you to confirm.",
+   "x": "appointment booking enquiry form visit consultation"
+  },
+  {
+   "t": "Contact, address and opening hours",
+   "u": "index.html#contact",
+   "k": "Page",
+   "d": "Address, phone numbers, WhatsApp, opening hours and map.",
+   "x": "location directions map timings hours open phone call whatsapp address"
+  },
+  {
+   "t": "Patient reviews",
+   "u": "index.html#reviews",
+   "k": "Page",
+   "d": "What patients say about us.",
+   "x": "testimonials rating google"
+  },
+  {
+   "t": "Common questions",
+   "u": "index.html#faq",
+   "k": "Page",
+   "d": "Quick answers about booking, timings, location and treatments.",
+   "x": "faq questions emi walk in"
+  },
+  {
+   "t": "Blog",
+   "u": "blog.html",
+   "k": "Page",
+   "d": "Dental health tips and articles from our dentist.",
+   "x": "articles tips advice"
+  },
+  {
+   "t": "Privacy information",
+   "u": "privacy.html",
+   "k": "Page",
+   "d": "How this website handles your details.",
+   "x": "cookies data privacy"
+  },
+  {
+   "t": "Prosthodontics",
+   "u": "service-prosthodontics.html",
+   "k": "Treatment",
+   "d": "Restore your smile with expert prosthodontic treatment at Elysian Dental Lounge, Medavakkam. Crowns, bridges, dentures and full-mouth rehabilitation by Dr. Yokesh Kumar R.",
+   "x": "What Is Prosthodontics? Types of Prosthodontic Treatments We Offer Why Restoring Damaged Teeth Matters Frequently Asked Questions Explore Other Services How long does a dental crown last? Is getting a crown painful? What is the difference between a crown and a veneer? Can I eat normally with dentures?"
+  },
+  {
+   "t": "Dental Implants",
+   "u": "service-implants.html",
+   "k": "Treatment",
+   "d": "Get dental implants in Medavakkam, Chennai at Elysian Dental Lounge. Replace missing teeth with natural-looking, long-lasting implants by Dr. Yokesh Kumar R.",
+   "x": "What Are Dental Implants? The Dental Implant Procedure Step by Step Implants vs Dentures vs Bridges Frequently Asked Questions Explore Other Services Am I a good candidate for dental implants? How long do dental implants last? Is the implant surgery painful? How much do dental implants cost in Chennai?"
+  },
+  {
+   "t": "Orthodontics",
+   "u": "service-orthodontics.html",
+   "k": "Treatment",
+   "d": "Straighten your teeth with orthodontic treatment at Elysian Dental Lounge, Medavakkam Chennai. Traditional braces and clear aligners for children, teens, and adults.",
+   "x": "What Is Orthodontics? Orthodontic Problems We Treat Treatment Options: Braces vs Clear Aligners Frequently Asked Questions Explore Other Services How long does orthodontic treatment take? Does orthodontic treatment hurt? Can adults get braces? Will I need a retainer after treatment?"
+  },
+  {
+   "t": "Smile Designing",
+   "u": "service-smile.html",
+   "k": "Treatment",
+   "d": "Transform your smile with personalised smile design at Elysian Dental Lounge, Medavakkam Chennai. Veneers, bonding, contouring and whitening by Dr. Yokesh Kumar R.",
+   "x": "What Is Smile Designing? Treatments Included in Smile Designing What Results Can You Expect? Frequently Asked Questions Explore Other Services How long does smile designing take? Are veneers permanent? Will my smile look natural? Is smile designing only for cosmetic purposes?"
+  },
+  {
+   "t": "Clearalign",
+   "u": "service-clearalign.html",
+   "k": "Treatment",
+   "d": "Straighten your teeth invisibly with Clearalign at Elysian Dental Lounge, Medavakkam Chennai. Custom clear aligners for a discreet, comfortable smile transformation by Dr. Yokesh Kumar R.",
+   "x": "What Is Clearalign? How Clearalign Treatment Works Is Clearalign Right for You? Frequently Asked Questions Explore Other Services How long does Clearalign treatment take? Can I eat and drink with Clearalign in? How do I clean my aligners? Will Clearalign affect my speech?"
+  },
+  {
+   "t": "Root Canal Treatment",
+   "u": "service-rootcanal.html",
+   "k": "Treatment",
+   "d": "Gentle, comfortable root canal treatment in Medavakkam, Chennai at Elysian Dental Lounge. Save your natural tooth from infection with gentle, modern RCT by Dr. Yokesh Kumar R.",
+   "x": "What Is Root Canal Treatment? Signs You May Need a Root Canal The Root Canal Procedure — Step by Step Frequently Asked Questions Explore Other Services Is root canal treatment painful? How many visits does a root canal take? Do I need a crown after root canal treatment? What happens if I don't get a root canal?"
+  },
+  {
+   "t": "Sedation Dentistry",
+   "u": "service-sedation.html",
+   "k": "Treatment",
+   "d": "Dental anxiety? Experience calm, comfortable dental treatment with sedation dentistry at Elysian Dental Lounge, Medavakkam Chennai. Safe, monitored sedation by Dr. Yokesh Kumar R.",
+   "x": "What Is Sedation Dentistry? Who Benefits from Sedation Dentistry? Is Sedation Dentistry Safe? Frequently Asked Questions Explore Other Services Will I be completely unconscious during sedation? Can I drive home after sedation? Is sedation available for children? Does sedation mean I won't need anaesthesia?"
+  },
+  {
+   "t": "Paediatric Dentistry",
+   "u": "service-paediatric.html",
+   "k": "Treatment",
+   "d": "Gentle children's dental care at Elysian Dental Lounge, Medavakkam Chennai. Fun, fear-free dental visits for kids of all ages with expert paediatric care by Dr. Yokesh Kumar R.",
+   "x": "Why Children's Dental Care Is Different Services We Provide for Children How We Make Visits Fear-Free Frequently Asked Questions Explore Other Services When should my child first visit a dentist? My child is scared of the dentist. What should I do? Do baby teeth really need to be treated? They will fall out anyway. At what age should orthodontic evaluation start?"
+  },
+  {
+   "t": "Clearalign vs Traditional Braces — What's Right for You?",
+   "u": "blog-post-2.html",
+   "k": "Article",
+   "d": "We break down the differences, comfort levels, costs, and ideal candidates for each option.",
+   "x": "Orthodontics"
+  }
+ ]
+}
