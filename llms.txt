@@ -6,7 +6,7 @@
 - Address: RAJA TOWERS, 2/461, Medavakkam Main Rd, Medavakkam, Chennai, Tamil Nadu 600129
 - Phone: +91 94980 52828, +91 94980 62828
 - Opening hours: Monday to Saturday 10:00 AM - 9:00 PM; Sunday 10:00 AM - 1:00 PM
-- Google Maps: https://www.google.com/maps/place/Elysian+Dental+Lounge
+- Google Maps: https://maps.app.goo.gl/T5H23QsCKQkjLMFh9
 
 ## Main pages
 - [Home](https://arul-selvar-s.github.io/test1/): clinic overview, treatments, contact details and appointment enquiry form

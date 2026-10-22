@@ -526,7 +526,7 @@ CLINIC_FACTS = {
     "hours": [(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "10:00", "21:00"),
               (["Sunday"], "10:00", "13:00")],
     "hours_text": "Monday to Saturday 10:00 AM - 9:00 PM; Sunday 10:00 AM - 1:00 PM",
-    "maps": "https://www.google.com/maps/place/Elysian+Dental+Lounge",
+    "maps": "https://maps.app.goo.gl/T5H23QsCKQkjLMFh9",
     "social": ["https://www.instagram.com/elysiandentallounge", "https://www.facebook.com/share/1Js1oQii7S/"],
 }
 HEAD_START = "<!--SEO:START (written automatically by tools/build_blog.py - do not edit between these two lines)-->"
