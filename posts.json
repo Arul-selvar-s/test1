@@ -1,3 +1,21 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "id": "clearalign-vs-traditional-braces",
+      "title": "Clearalign vs Traditional Braces — What's Right for You?",
+      "category": "Orthodontics",
+      "author": "Dr. Yokesh Kumar R",
+      "date": "2026-04-08",
+      "dateDisplay": "April 8, 2026",
+      "day": "08",
+      "month": "Apr",
+      "excerpt": "We break down the differences, comfort levels, costs, and ideal candidates for each option.",
+      "image": "https://alignerco.com/cdn/shop/articles/Types_of_clear_braces.png?v=1776081785",
+      "filename": "blog-post-2.html",
+      "services": [
+        "clearalign",
+        "orthodontics"
+      ]
+    }
+  ]
 }
