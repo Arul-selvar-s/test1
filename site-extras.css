@@ -101,3 +101,15 @@ html[data-theme="dark"] .post-hero img,html[data-theme="dark"] .blog-hero img{fi
   img{max-width:100%!important;break-inside:avoid}
   h1,h2,h3{break-after:avoid}
 }
+
+/* ---- developer credit strip (bottom of every page footer) ---- */
+.dev-credit{
+  background:#0d1c28;color:#a8bfcf;
+  text-align:center;padding:.6rem 1rem;
+  font-size:12px;letter-spacing:.02em;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.35rem .5rem;
+}
+.dev-label{color:#cddbe6;}
+.dev-sep{opacity:.4;}
+.dev-contact{color:#7fb8d4;text-decoration:none;white-space:nowrap;}
+.dev-contact:hover{color:#fff;text-decoration:underline;}
