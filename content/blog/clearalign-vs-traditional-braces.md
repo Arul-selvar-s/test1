@@ -9,7 +9,7 @@ excerpt: We break down the differences, comfort levels, costs, and ideal candida
 image: https://alignerco.com/cdn/shop/articles/Types_of_clear_braces.png?v=1776081785
 image_alt: ''
 author: Dr. Yokesh Kumar R
-published: false
+published: true
 ---
 
 ## The Big Question Every Orthodontic Patient Asks
