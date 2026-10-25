@@ -606,7 +606,8 @@ def build_static_heads(site_url):
             lines += ['<link rel="canonical" href="%s"/>' % esc(page_url), '<meta property="og:url" content="%s"/>' % esc(page_url)]
         lines += ['<meta property="og:type" content="website"/>', '<meta property="og:site_name" content="%s"/>' % CLINIC,
                   '<meta property="og:locale" content="en_IN"/>', '<meta property="og:title" content="%s"/>' % esc(title),
-                  '<meta property="og:description" content="%s"/>' % esc(desc)]
+                  '<meta property="og:description" content="%s"/>' % esc(desc),
+                  '<meta name="site:updated" content="%s"/>' % TODAY.isoformat()]
         if site_url:
             lines += ['<meta property="og:image" content="%s"/>' % esc(site_url + "/" + card),
                       '<meta property="og:image:width" content="1200"/>', '<meta property="og:image:height" content="630"/>',

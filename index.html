@@ -19,6 +19,7 @@
   <meta property="og:locale" content="en_IN"/>
   <meta property="og:title" content="Elysian Dental Lounge – Dentist in Medavakkam, Chennai"/>
   <meta property="og:description" content="Dental clinic in Medavakkam, Chennai: implants, orthodontics, root canal, smile designing and paediatric care by Dr. Yokesh Kumar R. Book an appointment."/>
+  <meta name="site:updated" content="2026-10-25"/>
   <meta property="og:image" content="https://arul-selvar-s.github.io/test1/images/social/default.jpg"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
@@ -939,7 +940,7 @@
   <div class="stat-item reveal">
     <div class="stat-icon">🏆</div>
     <div class="stat-num-wrap">
-      <span class="stat-num" data-target="4">0</span>
+      <span class="stat-num" data-auto-years="2022">0</span>
       <span class="stat-plus">+ yrs</span>
     </div>
     <div class="stat-label">Years of Experience</div>
@@ -955,7 +956,7 @@
   <div class="stat-item reveal">
     <div class="stat-icon">😊</div>
     <div class="stat-num-wrap">
-      <span class="stat-num" data-target="700">0</span>
+      <span class="stat-num" data-auto-patients="700" data-patients-base-date="2026-10-25" data-patients-daily="3">0</span>
       <span class="stat-plus">+</span>
     </div>
     <div class="stat-label">Patients Treated</div>
@@ -1514,6 +1515,25 @@
 
   /* ── STATS COUNTER ANIMATION ── */
   (function() {
+    /* ── Auto-calculate years of experience ── */
+    document.querySelectorAll('.stat-num[data-auto-years]').forEach(function(el) {
+      var startYear = parseInt(el.getAttribute('data-auto-years'));
+      var yrs = new Date().getFullYear() - startYear;
+      el.setAttribute('data-target', yrs);
+    });
+
+    /* ── Auto-calculate patient count (floor to nearest 50, shown as N00+) ── */
+    document.querySelectorAll('.stat-num[data-auto-patients]').forEach(function(el) {
+      var base      = parseInt(el.getAttribute('data-auto-patients'));      // confirmed count on base date
+      var baseDate  = new Date(el.getAttribute('data-patients-base-date')); // YYYY-MM-DD
+      var daily     = parseFloat(el.getAttribute('data-patients-daily') || '3');
+      var today     = new Date();
+      var daysPast  = Math.max(0, Math.floor((today - baseDate) / 864e5));
+      var total     = base + daysPast * daily;
+      var floored   = Math.floor(total / 50) * 50;                          // e.g. 752 → 750
+      el.setAttribute('data-target', floored);
+    });
+
     var counters = document.querySelectorAll('.stat-num[data-target]');
     var animated = false;
 

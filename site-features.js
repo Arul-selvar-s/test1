@@ -339,9 +339,43 @@
   function addLastUpdated() {
     var host = doc.querySelector('footer .footer-bottom') || doc.querySelector('footer');
     if (!host) return;
-    var d = new Date(doc.lastModified);
-    if (isNaN(d.getTime()) || d.getFullYear() < 2024 || d.getTime() > Date.now() + 864e5) return;
-    var s = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    /* Prefer the build-date meta injected by build_blog.py; fall back to lastModified */
+    var d;
+    var meta = doc.querySelector('meta[name="site:updated"]');
+    if (meta && meta.content) {
+      d = new Date(meta.content + 'T00:00:00+05:30'); // treat as IST midnight
+    } else {
+      d = new Date(doc.lastModified);
+    }
+    if (isNaN(d.getTime()) || d.getFullYear() < 2024) return;
+
+    /* If the recorded date is in the future (clock skew, cached page), cap at today */
+    var now = new Date();
+    if (d > now) d = now;
+
+    /*
+     * Display rule:
+     *  - If d falls within the current ISO week (Mon–Sun ending today's week), show d as-is.
+     *  - Otherwise show the most recent Sunday that has already passed.
+     * "Current week" = the 7-day window ending on the coming Sunday (or today if today is Sunday).
+     */
+    function lastSunday(from) {
+      /* Returns midnight IST of the most recent Sunday ≤ from */
+      var day = from.getDay(); // 0 = Sun
+      var copy = new Date(from);
+      copy.setDate(copy.getDate() - day);        // go back to Sunday
+      copy.setHours(0, 0, 0, 0);
+      return copy;
+    }
+
+    var todaySunday  = lastSunday(now);           // Sunday of the current week
+    var weekStart    = new Date(todaySunday);
+    weekStart.setDate(weekStart.getDate() - 6);   // Monday before this Sunday (7-day window)
+
+    var display = (d >= weekStart) ? d : todaySunday;
+
+    var s = display.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
     var p = el('p', 'footer-copy last-updated', 'Last updated: ' + s);
     host.appendChild(p);
   }
