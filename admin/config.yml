@@ -6,6 +6,8 @@ backend:
   name: github
   repo: Arul-selvar-s/test1
   branch: main
+  base_url: https://api.sveltia.com
+  auth_endpoint: auth
 
 # Where uploaded photos are saved in the repository
 media_folder: /images/blog
