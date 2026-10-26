@@ -9,21 +9,21 @@
 - Google Maps: https://maps.app.goo.gl/T5H23QsCKQkjLMFh9
 
 ## Main pages
-- [Home](https://elysiandentallounge.in/): clinic overview, treatments, contact details and appointment enquiry form
-- [Blog](https://elysiandentallounge.in/blog.html): dental health tips and articles
+- [Home](https://arul-selvar-s.github.io/test1/): clinic overview, treatments, contact details and appointment enquiry form
+- [Blog](https://arul-selvar-s.github.io/test1/blog.html): dental health tips and articles
 
 ## Treatments
-- [Prosthodontics](https://elysiandentallounge.in/service-prosthodontics.html): Restore your smile with expert prosthodontic treatment at Elysian Dental Lounge, Medavakkam. Crowns, bridges, dentures and full-mouth rehabilitation by Dr. Yokesh Kumar R.
-- [Dental Implants](https://elysiandentallounge.in/service-implants.html): Get dental implants in Medavakkam, Chennai at Elysian Dental Lounge. Replace missing teeth with natural-looking, long-lasting implants by Dr. Yokesh Kumar R.
-- [Orthodontics](https://elysiandentallounge.in/service-orthodontics.html): Straighten your teeth with orthodontic treatment at Elysian Dental Lounge, Medavakkam Chennai. Traditional braces and clear aligners for children, teens, and adults.
-- [Smile Designing](https://elysiandentallounge.in/service-smile.html): Transform your smile with personalised smile design at Elysian Dental Lounge, Medavakkam Chennai. Veneers, bonding, contouring and whitening by Dr. Yokesh Kumar R.
-- [Clearalign](https://elysiandentallounge.in/service-clearalign.html): Straighten your teeth invisibly with Clearalign at Elysian Dental Lounge, Medavakkam Chennai. Custom clear aligners for a discreet, comfortable smile transformation by Dr. Yokesh Kumar R.
-- [Root Canal Treatment](https://elysiandentallounge.in/service-rootcanal.html): Gentle, comfortable root canal treatment in Medavakkam, Chennai at Elysian Dental Lounge. Save your natural tooth from infection with gentle, modern RCT by Dr. Yokesh Kumar R.
-- [Sedation Dentistry](https://elysiandentallounge.in/service-sedation.html): Dental anxiety? Experience calm, comfortable dental treatment with sedation dentistry at Elysian Dental Lounge, Medavakkam Chennai. Safe, monitored sedation by Dr. Yokesh Kumar R.
-- [Paediatric Dentistry](https://elysiandentallounge.in/service-paediatric.html): Gentle children's dental care at Elysian Dental Lounge, Medavakkam Chennai. Fun, fear-free dental visits for kids of all ages with expert paediatric care by Dr. Yokesh Kumar R.
+- [Prosthodontics](https://arul-selvar-s.github.io/test1/service-prosthodontics.html): Restore your smile with expert prosthodontic treatment at Elysian Dental Lounge, Medavakkam. Crowns, bridges, dentures and full-mouth rehabilitation by Dr. Yokesh Kumar R.
+- [Dental Implants](https://arul-selvar-s.github.io/test1/service-implants.html): Get dental implants in Medavakkam, Chennai at Elysian Dental Lounge. Replace missing teeth with natural-looking, long-lasting implants by Dr. Yokesh Kumar R.
+- [Orthodontics](https://arul-selvar-s.github.io/test1/service-orthodontics.html): Straighten your teeth with orthodontic treatment at Elysian Dental Lounge, Medavakkam Chennai. Traditional braces and clear aligners for children, teens, and adults.
+- [Smile Designing](https://arul-selvar-s.github.io/test1/service-smile.html): Transform your smile with personalised smile design at Elysian Dental Lounge, Medavakkam Chennai. Veneers, bonding, contouring and whitening by Dr. Yokesh Kumar R.
+- [Clearalign](https://arul-selvar-s.github.io/test1/service-clearalign.html): Straighten your teeth invisibly with Clearalign at Elysian Dental Lounge, Medavakkam Chennai. Custom clear aligners for a discreet, comfortable smile transformation by Dr. Yokesh Kumar R.
+- [Root Canal Treatment](https://arul-selvar-s.github.io/test1/service-rootcanal.html): Gentle, comfortable root canal treatment in Medavakkam, Chennai at Elysian Dental Lounge. Save your natural tooth from infection with gentle, modern RCT by Dr. Yokesh Kumar R.
+- [Sedation Dentistry](https://arul-selvar-s.github.io/test1/service-sedation.html): Dental anxiety? Experience calm, comfortable dental treatment with sedation dentistry at Elysian Dental Lounge, Medavakkam Chennai. Safe, monitored sedation by Dr. Yokesh Kumar R.
+- [Paediatric Dentistry](https://arul-selvar-s.github.io/test1/service-paediatric.html): Gentle children's dental care at Elysian Dental Lounge, Medavakkam Chennai. Fun, fear-free dental visits for kids of all ages with expert paediatric care by Dr. Yokesh Kumar R.
 
 ## Latest articles
-- [Clearalign vs Traditional Braces — What's Right for You?](https://elysiandentallounge.in/blog-post-2.html): We break down the differences, comfort levels, costs, and ideal candidates for each option.
+- [Clearalign vs Traditional Braces — What's Right for You?](https://arul-selvar-s.github.io/test1/blog-post-2.html): We break down the differences, comfort levels, costs, and ideal candidates for each option.
 
 ## Notes
 - Articles are general information and are not a substitute for a dental examination.

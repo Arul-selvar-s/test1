@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://elysiandentallounge.in/sitemap.xml
+Sitemap: https://arul-selvar-s.github.io/test1/sitemap.xml
