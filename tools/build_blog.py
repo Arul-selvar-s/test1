@@ -582,7 +582,8 @@ def page_meta(path, html_text):
 def build_static_heads(site_url):
     """Write the search-engine / link-preview / favicon block into the homepage, blog list and treatment pages."""
     wrote = 0
-    pages = [ROOT / "index.html", ROOT / "blog.html", ROOT / "privacy.html"] + sorted(ROOT.glob("service-*.html"))
+    pages = [ROOT / "index.html", ROOT / "blog.html", ROOT / "privacy.html",
+             ROOT / "contact.html", ROOT / "smile-gallery.html"] + sorted(ROOT.glob("service-*.html"))
     for path in pages:
         if not path.exists():
             continue
@@ -863,6 +864,61 @@ def strip_tags(s):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s))).strip()
 
 
+# --------------------------------------------------------------------------- gallery
+GALLERY_CONTENT = ROOT / "content" / "gallery"
+GALLERY_CATEGORIES = {
+    "smile-designing":  "Smile Designing",
+    "dental-implants":  "Dental Implants",
+    "orthodontics":     "Orthodontics",
+    "teeth-whitening":  "Teeth Whitening",
+    "root-canal":       "Root Canal",
+    "prosthodontics":   "Prosthodontics",
+    "paediatric":       "Paediatric",
+    "clearalign":       "Clearalign",
+}
+
+
+def load_gallery_items():
+    """Read all .md files in content/gallery/, return published items sorted by order then title."""
+    if not GALLERY_CONTENT.exists():
+        return []
+    items = []
+    for md_file in sorted(GALLERY_CONTENT.glob("*.md")):
+        try:
+            raw = md_file.read_text(encoding="utf-8")
+        except Exception:
+            continue
+        fm, _ = {}, ""
+        if raw.startswith("---"):
+            parts = raw.split("---", 2)
+            if len(parts) >= 2:
+                try:
+                    fm = yaml.safe_load(parts[1]) or {}
+                except Exception:
+                    fm = {}
+        if fm.get("draft", False):
+            continue
+        cat_key = str(fm.get("category", "")).strip()
+        items.append({
+            "title":          str(fm.get("title", md_file.stem)).strip(),
+            "category":       cat_key,
+            "category_label": GALLERY_CATEGORIES.get(cat_key, cat_key.replace("-", " ").title()),
+            "before_image":   str(fm.get("before_image", "")).strip(),
+            "after_image":    str(fm.get("after_image", "")).strip(),
+            "description":    str(fm.get("description", "")).strip(),
+            "order":          int(fm.get("order", 999)),
+        })
+    items.sort(key=lambda x: (x["order"], x["title"]))
+    return items
+
+
+def build_gallery_json():
+    """Write gallery.json from published content/gallery/ items."""
+    items = load_gallery_items()
+    dest = ROOT / "gallery.json"
+    return write_if_changed(dest, json.dumps(items, ensure_ascii=False, indent=2) + "\n")
+
+
 def build_search_index(live):
     """search-index.json: what the search button on every page looks through."""
     items = [
@@ -874,6 +930,8 @@ def build_search_index(live):
         {"t": "Patient reviews", "u": "index.html#reviews", "k": "Page", "d": "What patients say about us.", "x": "testimonials rating google"},
         {"t": "Common questions", "u": "index.html#faq", "k": "Page", "d": "Quick answers about booking, timings, location and treatments.", "x": "faq questions emi walk in"},
         {"t": "Blog", "u": "blog.html", "k": "Page", "d": "Dental health tips and articles from our dentist.", "x": "articles tips advice"},
+        {"t": "Contact Us", "u": "contact.html", "k": "Page", "d": "Call, WhatsApp, email or visit Elysian Dental Lounge. Clinic hours and directions.", "x": "contact phone whatsapp email address hours map directions enquiry"},
+        {"t": "Smile Gallery", "u": "smile-gallery.html", "k": "Page", "d": "Before and after smile transformations by Dr. Yokesh Kumar R.", "x": "gallery before after transformation smile results photos cases"},
         {"t": "Privacy information", "u": "privacy.html", "k": "Page", "d": "How this website handles your details.", "x": "cookies data privacy"},
     ]
     for key, name in SERVICES.items():
@@ -907,6 +965,7 @@ def main():
     changed += build_seo_files(live, site_url)
     changed += build_privacy(site_url)
     changed += build_search_index(live)
+    changed += build_gallery_json()
     changed += build_static_heads(site_url)
     changed += build_404(site_url)
     changed += build_llms(live, site_url)

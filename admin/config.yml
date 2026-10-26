@@ -120,3 +120,75 @@ collections:
         widget: markdown
         required: true
         hint: 'Use the toolbar for headings, bold text, bullet lists and links. Do not write patient names or medical details about real patients.'
+
+  - name: gallery
+    label: Smile Gallery
+    label_singular: Smile transformation
+    description: Upload before and after photos to the Smile Gallery page. Each entry needs a Before photo, an After photo, a treatment category and a title.
+    folder: /content/gallery
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}} — {{category_label}}'
+    sortable_fields: ['order', 'title', 'category']
+    view_groups:
+      - label: By treatment
+        field: category
+    fields:
+      - label: Case title
+        name: title
+        widget: string
+        required: true
+        hint: 'A short label for this transformation, e.g. "Full Smile Makeover with Veneers". Visible to patients on the gallery page.'
+
+      - label: Treatment category
+        name: category
+        widget: select
+        required: true
+        options:
+          - { label: Smile Designing,  value: smile-designing }
+          - { label: Dental Implants,  value: dental-implants }
+          - { label: Orthodontics,     value: orthodontics }
+          - { label: Teeth Whitening,  value: teeth-whitening }
+          - { label: Root Canal,       value: root-canal }
+          - { label: Prosthodontics,   value: prosthodontics }
+          - { label: Paediatric,       value: paediatric }
+          - { label: Clearalign,       value: clearalign }
+        hint: 'Decides which filter button this case appears under on the gallery page.'
+
+      - label: Before photo
+        name: before_image
+        widget: image
+        required: true
+        media_folder: /images/gallery
+        public_folder: /images/gallery
+        hint: 'The photo taken before treatment. Use a clear, well-lit photo. Patient consent must be obtained before uploading.'
+
+      - label: After photo
+        name: after_image
+        widget: image
+        required: true
+        media_folder: /images/gallery
+        public_folder: /images/gallery
+        hint: 'The photo taken after treatment, from the same angle as the Before photo.'
+
+      - label: Short description
+        name: description
+        widget: text
+        required: false
+        hint: 'Optional. One or two sentences shown below the photos, e.g. "Complete smile makeover using ceramic veneers. Completed in 2 visits."'
+
+      - label: Display order
+        name: order
+        widget: number
+        default: 999
+        value_type: int
+        min: 1
+        hint: 'Controls the order cards appear on the page. 1 appears first, 999 appears last. Use whole numbers like 1, 2, 3…'
+
+      - label: Show on website
+        name: draft
+        widget: boolean
+        default: true
+        hint: 'When ON (default), this case is hidden — use this while you are preparing it. Switch OFF to make it visible to patients on the gallery page.'
