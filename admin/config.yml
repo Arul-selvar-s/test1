@@ -132,7 +132,7 @@ collections:
     format: frontmatter
     create: true
     slug: '{{slug}}'
-    summary: '{{title}} — {{category_label}}'
+    summary: '{{title}} — {{category}}'
     sortable_fields: ['order', 'title', 'category']
     view_groups:
       - label: By treatment
